@@ -9,6 +9,7 @@ namespace ShapesProject
             this.Radius1 = Radius1;
             this.Radius2 = Radius2;
         }
+        public Ellipse() { this.Radius1 = 0; this.Radius2 = 0; }
 
         public double Area => System.Math.PI * Radius1 * Radius2;
     }

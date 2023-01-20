@@ -7,6 +7,7 @@ namespace ShapesProject
             Length = Length1;
             Width = Length2;
         }
+        public Rectangle() { Length = 0; Width = 0; }
 
         public double Length { get; set; }
         public double Width { get; set; }

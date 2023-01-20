@@ -6,6 +6,7 @@ namespace ShapesProject
         {
             Side = side;
         }
+        public Square() { Side = 0; }
 
         public double Side { get; set; }
 

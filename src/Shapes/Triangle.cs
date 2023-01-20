@@ -8,6 +8,7 @@ namespace ShapesProject
             this.Side2 = Side2;
             this.Side3 = Side3;
         }
+        public Triangle() { Side1 = 0; Side2 = 0; Side3 = 0; }
 
         public double Side1 { get; set; }
         public double Side2 { get; set; }

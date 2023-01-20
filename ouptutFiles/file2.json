@@ -1,0 +1,20 @@
+{
+  "Circles": [
+    {
+      "Radius": 2.0,
+      "Area": 12.566370614359172
+    },
+    {
+      "Radius": 9.0,
+      "Area": 254.46900494077323
+    },
+    {
+      "Radius": 2.0,
+      "Area": 12.566370614359172
+    }
+  ],
+  "Ellipses": null,
+  "Squares": null,
+  "Rectangles": null,
+  "Triangles": null
+}
