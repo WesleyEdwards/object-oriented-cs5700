@@ -1,20 +1,24 @@
 ﻿namespace ShapesProject
 {
+    using Newtonsoft;
+    using Newtonsoft.Json;
     internal class Program
     {
         private static void Main(string[] args)
         {
-            var circle = new Circle(5);
-            var oval = new Ellipse(5, 10);
-            var square = new Square(5);
-            var rectangle = new Rectangle(5, 10);
-            var triangle = new Triangle(5, 10, 13);
+            var fileName = "./jsonFiles/file2.json";
 
-            System.Console.WriteLine(circle.Area);
-            System.Console.WriteLine(oval.Area);
-            System.Console.WriteLine(square.Area);
-            System.Console.WriteLine(rectangle.Area);
-            System.Console.WriteLine(triangle.Area);
+            var file = File.ReadAllText(fileName);
+            var shapes = JsonConvert.DeserializeObject<RootShapesObject>(File.ReadAllText(fileName));
+
+            if (shapes == null) throw new Exception("Could not deserialize file");
+
+
+            System.Console.WriteLine("\n\nCircles:");
+            foreach (var shape in shapes.Circles) System.Console.WriteLine(shape.Area);
+            System.Console.WriteLine("\n\nRectangles:");
+            foreach (var shape in shapes.Rectangles) System.Console.WriteLine(shape.Area);
+
         }
     }
 }

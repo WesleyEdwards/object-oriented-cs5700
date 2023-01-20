@@ -1,0 +1,59 @@
+{
+  "Circles": [
+    {
+      "Radius": 2
+    },
+    {
+      "Radius": 3
+    },
+    {
+      "Radius": 4
+    }
+  ],
+  "Ellipses": [
+    {
+      "Radius1": 2,
+      "Radius2": 4
+    },
+    {
+      "Radius1": 1,
+      "Radius2": 8
+    },
+    {
+      "Radius1": 4,
+      "Radius2": 5
+    }
+  ],
+  "Triangles": [
+    {
+      "Side1": 2,
+      "Side2": 3,
+      "Side3": 4
+    }
+  ],
+  "Squares": [
+    {
+      "Side": 2
+    },
+    {
+      "Side": 3
+    },
+    {
+      "Side": 4
+    }
+  ],
+  "Rectangles": [
+    {
+      "Length1": 2,
+      "Length2": 3
+    },
+    {
+      "Length1": 3,
+      "Length2": 4
+    },
+    {
+      "Length1": 4,
+      "Length2": 5
+    }
+  ]
+}

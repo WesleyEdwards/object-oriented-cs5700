@@ -2,10 +2,10 @@ namespace ShapesProject
 {
     public class Rectangle : IShape
     {
-        public Rectangle(double length, double width)
+        public Rectangle(double Length1, double Length2)
         {
-            Length = length;
-            Width = width;
+            Length = Length1;
+            Width = Length2;
         }
 
         public double Length { get; set; }

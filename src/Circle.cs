@@ -2,10 +2,7 @@ namespace ShapesProject
 {
     public class Circle : IShape
     {
-        public Circle(double radius)
-        {
-            Radius = radius;
-        }
+        public Circle(double Radius) { this.Radius = Radius;}
 
         public double Radius { get; set; }
 

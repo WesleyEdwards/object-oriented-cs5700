@@ -2,11 +2,11 @@ namespace ShapesProject
 {
     public class Triangle : IShape
     {
-        public Triangle(double side1, double side2, double side3)
+        public Triangle(double Side1, double Side2, double Side3)
         {
-            Side1 = side1;
-            Side2 = side2;
-            Side3 = side3;
+            this.Side1 = Side1;
+            this.Side2 = Side2;
+            this.Side3 = Side3;
         }
 
         public double Side1 { get; set; }
