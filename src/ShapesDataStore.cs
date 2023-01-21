@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace ShapesProject
 
 {
@@ -16,17 +18,20 @@ namespace ShapesProject
 
         public ShapesDataStore(IDeserializer serializerManager)
         {
-            this.Shapes = new RootShapesObject();
-            this.SerializerManager = serializerManager;
+            Shapes = new RootShapesObject();
+            SerializerManager = serializerManager;
         }
 
         public void DisplayStats()
         {
-            System.Console.WriteLine($"Circles: {this.Shapes.Circles?.Length}");
-            System.Console.WriteLine($"Ellipses: {this.Shapes.Ellipses?.Length}");
-            System.Console.WriteLine($"Squares: {this.Shapes.Squares?.Length}");
-            System.Console.WriteLine($"Rectangles: {this.Shapes.Rectangles?.Length}");
-            System.Console.WriteLine($"Triangles: {this.Shapes.Triangles?.Length}");
+            var shapesStats = this.Shapes.GetShapesStats();
+            System.Console.WriteLine($"\n\nTotal area of all shapes: {this.Shapes.GetTotalArea()}");
+            foreach (var shapeStat in shapesStats)
+            {
+                System.Console.WriteLine($"{shapeStat.ShapeName}: {shapeStat.TotalShapes}");
+            }
+            System.Console.WriteLine("\n\n");
+
         }
 
         public void DeserializeFile(string FileName)
@@ -36,6 +41,31 @@ namespace ShapesProject
         public void CreateOutputFile(string FileName)
         {
             this.SerializerManager.Serialize(FileName, this.Shapes);
+        }
+        public void CreateCsvFile(string filePath)
+        {
+            var csv = new StringBuilder();
+
+            string title = "Total area of all shapes";
+            int area = this.Shapes.GetTotalArea();
+
+            var newLine = string.Format("{0},{1},{2},{3}", 1, "", title, area);
+            csv.AppendLine(newLine);
+
+            var shapeStats = this.Shapes.GetShapesStats();
+            var index = 2;
+            foreach (var stats in shapeStats)
+            {
+                var line = string.Format("{0},{1},{2},{3}", index, stats.TotalShapes, stats.ShapeName, stats.TotalArea);
+                csv.AppendLine(line);
+                index++;
+            }
+
+
+            File.WriteAllText(filePath, csv.ToString());
+
+
+
         }
     }
 }
