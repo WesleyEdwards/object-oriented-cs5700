@@ -7,6 +7,14 @@
         {
             InputHandler inputHandler = new InputHandler();
 
+            bool test = inputHandler.RunTests();
+            if (test)
+            {
+                var Tests = new Tests();
+                Tests.RunTests();
+                System.Environment.Exit(0);
+            }
+
             FileType fileType = inputHandler.GetFileType();
 
             string FilePath = inputHandler.GetFilePath(fileType);

@@ -76,5 +76,12 @@ namespace ShapesProject
             Console.WriteLine($"\nFile will be saved to ./outputFiles/{fileName}.csv\n");
             return $"./outputFiles/{fileName}.csv";
         }
+
+        public bool RunTests()
+        {
+            string res = GetInput("Run tests? (y/n): ", new string[2] { "y", "n" });
+            if (res == "y") return true;
+            return false;
+        }
     }
 }

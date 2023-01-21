@@ -25,13 +25,12 @@ namespace ShapesProject
         public void DisplayStats()
         {
             var shapesStats = this.Shapes.GetShapesStats();
-            System.Console.WriteLine($"\n\nTotal area of all shapes: {this.Shapes.GetTotalArea()}");
+            Console.WriteLine($"\n\nTotal area of all shapes: {this.Shapes.GetTotalArea()}");
             foreach (var shapeStat in shapesStats)
             {
-                System.Console.WriteLine($"{shapeStat.ShapeName}: {shapeStat.TotalShapes}");
+                Console.WriteLine($"{shapeStat.ShapeName}: {shapeStat.TotalShapes}");
             }
-            System.Console.WriteLine("\n\n");
-
+            Console.WriteLine("\n\n");
         }
 
         public void DeserializeFile(string FileName)

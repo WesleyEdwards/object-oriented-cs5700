@@ -1,15 +1,26 @@
 namespace ShapesProject
 {
+   
+   
     public class Square : IShape
     {
-        public Square(double side)
+        public QuadCoordinates Points { get; set; }
+        public Square(QuadCoordinates points)
+        { this.Points = points; }
+        public Square()
         {
-            Side = side;
+            this.Points = new QuadCoordinates();
         }
-        public Square() { Side = 0; }
 
         public double Side { get; set; }
 
-        public double Area => Side * Side;
+        public double Area
+        {
+            get
+            {
+                var areaCalculator = new AreaCalculator();
+                return areaCalculator.AreaOfQuad(this.Points.Point1, this.Points.Point2, this.Points.Point3, this.Points.Point4);
+            }
+        }
     }
 }

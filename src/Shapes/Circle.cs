@@ -2,13 +2,20 @@ namespace ShapesProject
 {
     public class Circle : IShape
     {
-        public Circle(double Radius) { this.Radius = Radius; }
+        public double Radius { get; set; }
 
         public Circle() { this.Radius = 0; }
 
-        public double Radius { get; set; }
 
-        public double Area => System.Math.PI * Radius * Radius;
+        public double Area
+        {
+            get
+            {
+                Console.WriteLine("Circle Area" + Radius);
+                var areaCalculator = new AreaCalculator();
+                return areaCalculator.AreaOfEllipse(Radius, Radius);
+            }
+        }
 
     }
 }

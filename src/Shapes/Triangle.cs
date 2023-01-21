@@ -2,24 +2,23 @@ namespace ShapesProject
 {
     public class Triangle : IShape
     {
-        public Triangle(double Side1, double Side2, double Side3)
+        public ITriCoordinates points { get; set; }
+        public Triangle(ICoordinates point1, ICoordinates point2, ICoordinates point3)
         {
-            this.Side1 = Side1;
-            this.Side2 = Side2;
-            this.Side3 = Side3;
+            Console.WriteLine("Triangle Constructor");
+            this.points = new TriCoordinates(point1, point2, point3);
         }
-        public Triangle() { Side1 = 0; Side2 = 0; Side3 = 0; }
-
-        public double Side1 { get; set; }
-        public double Side2 { get; set; }
-        public double Side3 { get; set; }
+        public Triangle()
+        {
+            this.points = new TriCoordinates();
+        }
 
         public double Area
         {
             get
             {
-                double s = (Side1 + Side2 + Side3) / 2;
-                return System.Math.Sqrt(s * (s - Side1) * (s - Side2) * (s - Side3));
+                var areaCalculator = new AreaCalculator();
+                return areaCalculator.AreaOfTriangle(this.points.Point1, this.points.Point2, this.points.Point3);
             }
         }
     }
