@@ -19,7 +19,8 @@ namespace ShapesProject
             get
             {
                 double s = (Side1 + Side2 + Side3) / 2;
-                return System.Math.Sqrt(s * (s - Side1) * (s - Side2) * (s - Side3));
+                double equation = Math.Abs(s * (s - Side1) * (s - Side2) * (s - Side3));
+                return Math.Sqrt(equation);
             }
         }
     }

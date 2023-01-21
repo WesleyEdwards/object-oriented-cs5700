@@ -4,14 +4,14 @@ namespace ShapesProject
     {
         public Rectangle(double Length1, double Length2)
         {
-            Length = Length1;
-            Width = Length2;
+            this.Length1 = Length1;
+            this.Length2 = Length2;
         }
-        public Rectangle() { Length = 0; Width = 0; }
+        public Rectangle() { Length1 = 0; Length2 = 0; }
 
-        public double Length { get; set; }
-        public double Width { get; set; }
+        public double Length1 { get; set; }
+        public double Length2 { get; set; }
 
-        public double Area => Length * Width;
+        public double Area => Length1 * Length2;
     }
 }
