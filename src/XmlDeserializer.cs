@@ -18,7 +18,10 @@ namespace ShapesProject
             if (deserializer == null || (RootShapesObject)deserializer == null)
                 throw new Exception("Could not open file {fileName}");
 
-            return (RootShapesObject)deserializer;
+            var shapes = (RootShapesObject)deserializer;
+            shapes.filter();
+
+            return shapes;
         }
 
         public void Serialize(string newFileName, RootShapesObject shapes)

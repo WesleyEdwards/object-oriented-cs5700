@@ -13,6 +13,7 @@ namespace ShapesProject
             var shapes = JsonConvert.DeserializeObject<RootShapesObject>(File.ReadAllText(fileName));
 
             if (shapes == null) throw new Exception("Could not deserialize file {fileName}");
+            shapes.filter();
 
             return shapes;
         }

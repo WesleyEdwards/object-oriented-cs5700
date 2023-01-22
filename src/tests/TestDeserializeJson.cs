@@ -30,7 +30,7 @@ namespace ShapesProject
             },
             Triangles = new Triangle[]
             {
-                new Triangle(1, 2, 3),
+                // new Triangle(1, 2, 3), This one should be thrown out because it is not a valid triangle
                 new Triangle(2, 3, 4),
             }
         };
@@ -48,11 +48,11 @@ namespace ShapesProject
         private void TestNumberOfShapes(RootShapesObject shapes)
         {
             Console.WriteLine("\tTesting number of shapes");
-            if (shapes.Circles?.Length != this.expected.Circles?.Length) throw new Exception("Incorrect number of shapes");
-            if (shapes.Ellipses?.Length != this.expected.Ellipses?.Length) throw new Exception("Incorrect number of shapes");
-            if (shapes.Squares?.Length != this.expected.Squares?.Length) throw new Exception("Incorrect number of shapes");
-            if (shapes.Rectangles?.Length != this.expected.Rectangles?.Length) throw new Exception("Incorrect number of shapes");
-            if (shapes.Triangles?.Length != this.expected.Triangles?.Length) throw new Exception("Incorrect number of shapes");
+            if (shapes.Circles?.Length != this.expected.Circles?.Length) throw new Exception("Incorrect number of Circles");
+            if (shapes.Ellipses?.Length != this.expected.Ellipses?.Length) throw new Exception("Incorrect number of Ellipses");
+            if (shapes.Squares?.Length != this.expected.Squares?.Length) throw new Exception("Incorrect number of Squares");
+            if (shapes.Rectangles?.Length != this.expected.Rectangles?.Length) throw new Exception("Incorrect number of Rectangles");
+            if (shapes.Triangles?.Length != this.expected.Triangles?.Length) throw new Exception("Incorrect number of Triangles");
         }
 
         private void TestShapeProperties(RootShapesObject shapes)

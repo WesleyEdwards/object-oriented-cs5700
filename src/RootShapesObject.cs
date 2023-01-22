@@ -22,16 +22,33 @@ namespace ShapesProject
         public RootShapesObject() { }
         public ShapeStatsContainer[] GetShapesStats()
         {
+            var circle = this.GetAreaOfShape(this.Circles);
+            var ellipse = this.GetAreaOfShape(this.Ellipses);
+            var square = this.GetAreaOfShape(this.Squares);
+            var rectangle = this.GetAreaOfShape(this.Rectangles);
+
+            var triangle = this.GetAreaOfShape(this.Triangles);
+            var scalene = this.GetAreaTriangle(this.Triangles, TriType.Scalene);
+            var isosceles = this.GetAreaTriangle(this.Triangles, TriType.Isosceles);
+            var equilateral = this.GetAreaTriangle(this.Triangles, TriType.Equilateral);
+
+            var polyLength = (this.Squares?.Length ?? 0) + (this.Rectangles?.Length ?? 0) + (this.Triangles?.Length ?? 0);
+
             return new ShapeStatsContainer[]
             {
-                new ShapeStatsContainer("Circles", GetAreaOfShape(this.Circles), this.Circles?.Length ?? 0),
-                new ShapeStatsContainer("Ellipses", GetAreaOfShape(this.Ellipses), this.Ellipses?.Length ?? 0),
-                new ShapeStatsContainer("Squares", GetAreaOfShape(this.Squares), this.Squares?.Length ?? 0),
-                new ShapeStatsContainer("Rectangles", GetAreaOfShape(this.Rectangles), this.Rectangles?.Length ?? 0),
-                new ShapeStatsContainer("Triangles", GetAreaOfShape(this.Triangles), this.Triangles?.Length ?? 0)
+                new ShapeStatsContainer("Ellipses", circle + ellipse, this.Ellipses?.Length ?? 0),
+                new ShapeStatsContainer("Circles", circle, this.Circles?.Length ?? 0),
+                new ShapeStatsContainer("Non-Circular Ellipses", ellipse, this.Ellipses?.Length ?? 0),
+                new ShapeStatsContainer("Convex Polygons", square + rectangle + triangle, polyLength),
+                new ShapeStatsContainer("Triangles", triangle, this.Triangles?.Length ?? 0),
+                new ShapeStatsContainer("Scalene", scalene, this?.GetTriLength(TriType.Scalene) ?? 0),
+                new ShapeStatsContainer("Isosceles", isosceles, this?.GetTriLength(TriType.Isosceles) ?? 0),
+                new ShapeStatsContainer("Equilateral", equilateral, this?.GetTriLength(TriType.Equilateral) ?? 0),
+                new ShapeStatsContainer("Rectangles", rectangle, this.Rectangles?.Length ?? 0),
+                new ShapeStatsContainer("Squares", square, this.Squares?.Length ?? 0),
             };
         }
-        private int GetAreaOfShape(IShape[]? shapes)
+        public int GetAreaOfShape(IShape[]? shapes)
         {
             int totalArea = 0;
             if (shapes != null)
@@ -43,6 +60,36 @@ namespace ShapesProject
             }
             return totalArea;
         }
+        public int GetAreaTriangle(Triangle[]? shapes, TriType type)
+        {
+            int totalArea = 0;
+            if (shapes != null)
+            {
+                foreach (var shape in shapes)
+                {
+                    if (shape.Type == type)
+                    {
+                        totalArea += (int)shape.Area;
+                    }
+                }
+            }
+            return totalArea;
+        }
+        public int GetTriLength(TriType type)
+        {
+            int totalLength = 0;
+            if (this.Triangles != null)
+            {
+                foreach (var tri in this.Triangles)
+                {
+                    if (tri.Type == type)
+                    {
+                        totalLength++;
+                    }
+                }
+            }
+            return totalLength;
+        }
 
         public int GetTotalArea()
         {
@@ -53,6 +100,15 @@ namespace ShapesProject
             totalArea += GetAreaOfShape(this.Rectangles);
             totalArea += GetAreaOfShape(this.Triangles);
             return totalArea;
+        }
+
+        public void filter()
+        {
+            this.Circles = this.Circles?.Where(x => x.Area > 0).ToArray();
+            this.Ellipses = this.Ellipses?.Where(x => x.Area > 0).ToArray();
+            this.Squares = this.Squares?.Where(x => x.Area > 0).ToArray();
+            this.Rectangles = this.Rectangles?.Where(x => x.Area > 0).ToArray();
+            this.Triangles = this.Triangles?.Where(x => x.Area > 0).ToArray();
         }
     }
 
