@@ -4,20 +4,24 @@ namespace ShapesProject
     public class JsonDeserializer : IDeserializer
     {
 
-        public JsonDeserializer() { }
-
-        public RootShapesObject Deserialize(string fileName)
+        public string FilePath { get; set; }
+        public JsonDeserializer(string filePath)
         {
-            var file = File.ReadAllText(fileName);
+            this.FilePath = filePath;
+        }
 
-            var shapes = JsonConvert.DeserializeObject<RootShapesObject>(File.ReadAllText(fileName));
+        public ShapesContainer Deserialize()
+        {
+            var file = File.ReadAllText(this.FilePath);
+
+            var shapes = JsonConvert.DeserializeObject<ShapesContainer>(File.ReadAllText(this.FilePath));
 
             if (shapes == null) throw new Exception("Could not deserialize file {fileName}");
             shapes.filter();
 
             return shapes;
         }
-        public void Serialize(string newFileName, RootShapesObject shapes)
+        public void Serialize(string newFileName, ShapesContainer shapes)
         {
             var json = JsonConvert.SerializeObject(shapes, Formatting.Indented);
             File.WriteAllText(newFileName, json);

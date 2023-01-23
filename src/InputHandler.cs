@@ -1,7 +1,6 @@
 namespace ShapesProject
 {
     public enum FileType { Json, Xml }
-    public enum Actions { Display, Write, Exit }
 
     public class InputHandler
     {
@@ -57,19 +56,6 @@ namespace ShapesProject
             return $"./{fileType.ToString().ToLower()}Files/{fileName}";
         }
 
-        public Actions GetAction()
-        {
-            string message = "Enter action \n d -> Display Stats\n w -> write Stats to CSV file\n e -> exit\n";
-            string res = GetInput(message, new string[3] { "d", "w", "e" });
-            return res switch
-            {
-                "d" => Actions.Display,
-                "w" => Actions.Write,
-                "e" => Actions.Exit,
-                _ => throw new Exception("Invalid action")
-            };
-        }
-
         public string GetNewFilePath()
         {
             string fileName = GetInput("Enter the desired name of the file (do not include the file extension): ", null);
@@ -81,6 +67,19 @@ namespace ShapesProject
             string res = GetInput("Run tests? (y/n): ", new string[2] { "y", "n" });
             if (res == "y") return true;
             return false;
+        }
+        public OutputDest GetOutputDest()
+        {
+            string res = GetInput("Output to console or file? (c/f): ", new string[2] { "c", "f" });
+            OutputDest outputDest = new OutputDest();
+            if (res == "c")
+            {
+                outputDest.outputType = OutputType.Console;
+                return outputDest;
+            }
+            outputDest.outputType = OutputType.File;
+            outputDest.FilePath = GetNewFilePath();
+            return outputDest;
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace ShapesProject
 {
-
     internal class Program
     {
         private static void Main(string[] args)
@@ -16,37 +15,30 @@
             }
 
             FileType fileType = inputHandler.GetFileType();
-
             string FilePath = inputHandler.GetFilePath(fileType);
+            OutputDest outPutDest = inputHandler.GetOutputDest();
 
             IDeserializer deserializer = fileType switch
             {
-                FileType.Json => new JsonDeserializer(),
-                FileType.Xml => new XmlDeserializer(),
+                FileType.Json => new JsonDeserializer(FilePath),
+                FileType.Xml => new XmlDeserializer(FilePath),
                 _ => throw new System.Exception("Invalid file type")
             };
 
-            var DataStore = new ShapesDataStore(deserializer);
 
-            DataStore.DeserializeFile(FilePath);
-
-            while (true)
+            IOutputWriter outputWriter = outPutDest.outputType switch
             {
-                Actions action = inputHandler.GetAction();
+                OutputType.Console => new ConsoleOutput(),
+                OutputType.File => new FileOutput(outPutDest.FilePath ?? ""),
+                _ => throw new System.Exception("Invalid output type")
+            };
 
-                if (action == Actions.Exit) break;
-                if (action == Actions.Display)
-                {
-                    DataStore.DisplayStats();
-                    continue;
-                }
-                if (action == Actions.Write)
-                {
-                    string NewFilePath = inputHandler.GetNewFilePath();
-                    DataStore.CreateCsvFile(NewFilePath);
-                    continue;
-                }
-            }
+            ShapesDataStore dataStore = new ShapesDataStore(deserializer, outputWriter);
+
+            dataStore.DeserializeFile();
+            dataStore.Write();
+
+
         }
     }
 }

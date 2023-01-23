@@ -2,7 +2,7 @@ namespace ShapesProject
 {
     public class TestDeserializeJson : ITest
     {
-        private RootShapesObject expected = new RootShapesObject()
+        private ShapesContainer expected = new ShapesContainer()
         {
             Circles = new Circle[]
             {
@@ -37,15 +37,15 @@ namespace ShapesProject
         public TestDeserializeJson() { }
         public void RunTests()
         {
-            var deserializer = new JsonDeserializer();
-            var shapes = deserializer.Deserialize("./src/tests/testFiles/testFile1.json");
+            var deserializer = new JsonDeserializer("./src/tests/testFiles/testFile1.json");
+            var shapes = deserializer.Deserialize();
             if (shapes == null) throw new Exception("Could not deserialize file");
 
             this.TestNumberOfShapes(shapes);
             this.TestShapeProperties(shapes);
         }
 
-        private void TestNumberOfShapes(RootShapesObject shapes)
+        private void TestNumberOfShapes(ShapesContainer shapes)
         {
             Console.WriteLine("\tTesting number of shapes");
             if (shapes.Circles?.Length != this.expected.Circles?.Length) throw new Exception("Incorrect number of Circles");
@@ -55,7 +55,7 @@ namespace ShapesProject
             if (shapes.Triangles?.Length != this.expected.Triangles?.Length) throw new Exception("Incorrect number of Triangles");
         }
 
-        private void TestShapeProperties(RootShapesObject shapes)
+        private void TestShapeProperties(ShapesContainer shapes)
         {
             Console.WriteLine("\tTesting shape properties");
             this.TestShapeArea(shapes.Circles, this.expected.Circles, "Circles");
