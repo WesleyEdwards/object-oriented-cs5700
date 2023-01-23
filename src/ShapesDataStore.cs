@@ -27,9 +27,10 @@ namespace ShapesProject
             var tab = "      ";
 
             var circle = this.Shapes.GetAreaOfShape(this.Shapes.Circles);
-            var ellipse = this.Shapes.GetAreaOfShape(this.Shapes.Ellipses);
+            var nonCircleEllipse = this.Shapes.GetAreaOfShape(this.Shapes.Ellipses);
+            var nonSquareRectangle = this.Shapes.GetAreaOfShape(this.Shapes.Rectangles);
             var square = this.Shapes.GetAreaOfShape(this.Shapes.Squares);
-            var rectangle = this.Shapes.GetAreaOfShape(this.Shapes.Rectangles);
+            var rectangle = nonSquareRectangle + square;
 
             var triangle = this.Shapes.GetAreaOfShape(this.Shapes.Triangles);
             var scalene = this.Shapes.GetAreaTriangle(this.Shapes.Triangles, TriType.Scalene);
@@ -39,9 +40,9 @@ namespace ShapesProject
             string[] stats = new string[]
             {
                 $"\n{"Total area of all shapes:",-55} {this.Shapes.GetTotalArea(),20}",
-                $"{"Ellipses:",-55} {circle + ellipse,20}",
+                $"{"Ellipses:",-55} {circle + nonCircleEllipse,20}",
                 $"{$"{tab}Circles:",-55} {circle,20}",
-                $"{$"{tab}Non-circle Ellipses:",-55} {ellipse,20}",
+                $"{$"{tab}Non-circle Ellipses:",-55} {nonCircleEllipse,20}",
                 $"{"Convex Polygons:",-55} {square + triangle + rectangle,20}",
                 $"{$"{tab}Triangles:",-55} {triangle,20}",
                 $"{$"{tab + tab}Equilateral:",-55} {equilateral,20}",
@@ -49,6 +50,7 @@ namespace ShapesProject
                 $"{$"{tab + tab}Scalene:",-55} {scalene,20}",
                 $"{$"{tab}Rectangles:",-55} {rectangle,20}",
                 $"{$"{tab + tab}Squares:",-55} {square,20}",
+                $"{$"{tab + tab}Non-square Rectangle:",-55} {nonSquareRectangle,20}",
                 // $"{$"{tab + tab}Non-square Rectangles:",-55} {square,20}"
             };
 
