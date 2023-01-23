@@ -1,23 +1,43 @@
 ﻿namespace ShapesProject
 {
-    using Newtonsoft;
-    using Newtonsoft.Json;
     internal class Program
     {
         private static void Main(string[] args)
         {
-            var fileName = "./jsonFiles/file2.json";
+            InputHandler inputHandler = new InputHandler();
 
-            var file = File.ReadAllText(fileName);
-            var shapes = JsonConvert.DeserializeObject<RootShapesObject>(File.ReadAllText(fileName));
+            bool test = inputHandler.GetRunTests();
+            if (test)
+            {
+                var Tests = new Tests();
+                Tests.RunTests();
+                System.Environment.Exit(0);
+            }
 
-            if (shapes == null) throw new Exception("Could not deserialize file");
+            FileType fileType = inputHandler.GetFileType();
+            string FilePath = inputHandler.GetFilePath(fileType);
+            OutputDest outPutDest = inputHandler.GetOutputDest();
+
+            IDeserializer deserializer = fileType switch
+            {
+                FileType.Json => new JsonDeserializer(FilePath),
+                FileType.Xml => new XmlDeserializer(FilePath),
+                _ => throw new System.Exception("Invalid file type")
+            };
 
 
-            System.Console.WriteLine("\n\nCircles:");
-            foreach (var shape in shapes.Circles) System.Console.WriteLine(shape.Area);
-            System.Console.WriteLine("\n\nRectangles:");
-            foreach (var shape in shapes.Rectangles) System.Console.WriteLine(shape.Area);
+            IOutputWriter outputWriter = outPutDest.outputType switch
+            {
+                OutputType.Console => new ConsoleOutput(),
+                OutputType.File => new FileOutput(outPutDest.FilePath ?? ""),
+                _ => throw new System.Exception("Invalid output type")
+            };
+
+            ShapesDataStore dataStore = new ShapesDataStore(deserializer, outputWriter);
+
+            dataStore.DeserializeFile();
+            dataStore.Write();
+
 
         }
     }

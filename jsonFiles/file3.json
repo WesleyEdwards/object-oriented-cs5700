@@ -31,14 +31,19 @@
       "Side3": 4
     },
     {
-      "Side1": 5,
-      "Side2": 5,
-      "Side3": 5
+      "Side1": 2,
+      "Side2": 2,
+      "Side3": 1
     },
     {
       "Side1": 6,
-      "Side2": 7,
-      "Side3": 7
+      "Side2": 6,
+      "Side3": 6
+    },
+    {
+      "Side1": 5,
+      "Side2": 1,
+      "Side3": 3
     }
   ],
   "Squares": [
