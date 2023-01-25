@@ -23,7 +23,7 @@ namespace ShapesProject
                 throw new Exception("Could not open file {fileName}");
 
             var shapes = (ShapesContainer)deserializer;
-            shapes.filter();
+            // shapes.filter();
 
             return shapes;
         }

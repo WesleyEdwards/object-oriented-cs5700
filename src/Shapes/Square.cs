@@ -11,5 +11,6 @@ namespace ShapesProject
         public double Side { get; set; }
 
         public double Area => Side * Side;
+        public bool isValid() => (Side > 0);
     }
 }

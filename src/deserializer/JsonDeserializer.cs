@@ -14,10 +14,10 @@ namespace ShapesProject
         {
             var file = File.ReadAllText(this.FilePath);
 
-            var shapes = JsonConvert.DeserializeObject<ShapesContainer>(File.ReadAllText(this.FilePath));
+            ShapesContainer? shapes = JsonConvert.DeserializeObject<ShapesContainer>(File.ReadAllText(this.FilePath));
 
             if (shapes == null) throw new Exception("Could not deserialize file {fileName}");
-            shapes.filter();
+            // shapes.filter();
 
             return shapes;
         }

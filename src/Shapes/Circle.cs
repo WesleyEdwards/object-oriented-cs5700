@@ -1,6 +1,10 @@
 namespace ShapesProject
 {
-    public class Circle : IShape
+    public interface ICircle : IEllipse
+    {
+        double Radius { get; set; }
+    }
+    public class Circle : ICircle
     {
         public Circle(double Radius) { this.Radius = Radius; }
 
@@ -8,7 +12,10 @@ namespace ShapesProject
 
         public double Radius { get; set; }
 
-        public double Area => System.Math.PI * Radius * Radius;
+        public double Area => Math.PI * Radius * Radius;
 
+        public double Radius1 { get => this.Radius; }
+        public double Radius2 { get => this.Radius; }
+        public bool isValid() => (this.Radius > 0);
     }
 }
