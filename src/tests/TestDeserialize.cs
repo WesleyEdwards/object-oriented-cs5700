@@ -26,32 +26,32 @@ namespace ShapesProject
         }
         public void RunTests()
         {
-            Console.WriteLine("\n\nTesting deserialization of JSON file");
-
-            
 
             var shapes = this.deserializer.Deserialize();
             if (shapes == null) throw new Exception("Could not deserialize file");
 
+            Console.WriteLine("\t\tTesting number of shapes in deserialized data");
             this.TestNumberOfShapes(shapes);
+
+            Console.WriteLine("\t\tTesting shape properties in deserialized data");
             this.TestShapeProperties(shapes);
         }
 
         private void TestNumberOfShapes(ShapesContainer shapes)
         {
-            Console.WriteLine("\tTesting number of shapes in deserialized data");
-            if (shapes.Ellipses?.Circles?.Length != this.expected?.Ellipses?.Circles?.Length) throw new Exception("Incorrect number of Circles");
-            if (shapes.Ellipses?.NonCircles?.Length != this.expected?.Ellipses?.NonCircles?.Length) throw new Exception("Incorrect number of NonCircles");
-            if (shapes.Triangles?.Scalenes?.Length != this.expected?.Triangles?.Scalenes?.Length) throw new Exception("Incorrect number of Scalenes");
-            if (shapes.Triangles?.Equilaterals?.Length != this.expected?.Triangles?.Equilaterals?.Length) throw new Exception("Incorrect number of Equilaterals");
-            if (shapes.Triangles?.Isosceles?.Length != this.expected?.Triangles?.Isosceles?.Length) throw new Exception("Incorrect number of Isosceles");
-            if (shapes.Rectangles?.Squares?.Length != this.expected?.Rectangles?.Squares?.Length) throw new Exception("Incorrect number of Squares");
-            if (shapes.Rectangles?.NonSquares?.Length != this.expected?.Rectangles?.NonSquares?.Length) throw new Exception("Incorrect number of NonSquares");
+
+            if (shapes.Ellipses?.Circles?.Length != this.expected?.Ellipses?.Circles?.Length) this.Fail("Incorrect number of Circles");
+            if (shapes.Ellipses?.NonCircles?.Length != this.expected?.Ellipses?.NonCircles?.Length) this.Fail("Incorrect number of NonCircles");
+            if (shapes.Triangles?.Scalenes?.Length != this.expected?.Triangles?.Scalenes?.Length) this.Fail("Incorrect number of Scalenes");
+            if (shapes.Triangles?.Equilaterals?.Length != this.expected?.Triangles?.Equilaterals?.Length) this.Fail("Incorrect number of Equilaterals");
+            if (shapes.Triangles?.Isosceles?.Length != this.expected?.Triangles?.Isosceles?.Length) this.Fail("Incorrect number of Isosceles");
+            if (shapes.Rectangles?.Squares?.Length != this.expected?.Rectangles?.Squares?.Length) this.Fail("Incorrect number of Squares");
+            if (shapes.Rectangles?.NonSquares?.Length != this.expected?.Rectangles?.NonSquares?.Length) this.Fail("Incorrect number of NonSquares");
         }
 
         private void TestShapeProperties(ShapesContainer shapes)
         {
-            Console.WriteLine("\tTesting shape properties in deserialized data");
+
             this.TestShapeArea(shapes.Ellipses?.Circles, this.expected.Ellipses?.Circles, "Circles");
             this.TestShapeArea(shapes.Ellipses?.NonCircles, this.expected.Ellipses?.NonCircles, "NonCircles");
             this.TestShapeArea(shapes.Triangles?.Scalenes, this.expected.Triangles?.Scalenes, "Scalenes");
@@ -65,8 +65,16 @@ namespace ShapesProject
             if (shape == null || expectedShape == null) return;
             for (int i = 0; i < shape.Length; i++)
             {
-                if (shape[i].Area != expectedShape[i].Area) throw new Exception($"Incorrect area for shape {name}");
+                if (shape[i].Area != expectedShape[i].Area) this.Fail($"Incorrect area for shape {name}");
             }
+        }
+
+        private void Fail(string message)
+        {
+            System.Console.WriteLine("\n\n*********************************************");
+            System.Console.WriteLine("\nTEST FAILED: " + message + "\n");
+            System.Console.WriteLine("*********************************************");
+            System.Environment.Exit(1);
         }
     }
 }

@@ -13,9 +13,9 @@ namespace ShapesProject
         public ShapesContainer Deserialize()
         {
 
-            XmlSerializer serializer = new XmlSerializer(typeof(XmlShapesContainer));
+            XmlSerializer serializer = new XmlSerializer(typeof(root));
 
-            XmlShapesContainer container;
+            root container;
 
             using (Stream reader = new FileStream(this.FilePath, FileMode.Open))
             {
@@ -23,7 +23,7 @@ namespace ShapesProject
                 if (deserializer == null)
                     throw new Exception("Could not open file {fileName}");
 
-                container = (XmlShapesContainer)deserializer;
+                container = (root)deserializer;
             }
 
 
@@ -34,7 +34,7 @@ namespace ShapesProject
             return shapes;
         }
 
-        public ShapesContainer Translate(XmlShapesContainer xmlShapesContainer)
+        public ShapesContainer Translate(root xmlShapesContainer)
         {
             List<NonCircle> nonCircles = new List<NonCircle>();
             List<Circle> circlesForCont = new List<Circle>();
@@ -46,41 +46,49 @@ namespace ShapesProject
             List<Square> squaresForCont = new List<Square>();
             List<NonSquare> rectanglesForCont = new List<NonSquare>();
 
-            foreach (var non in xmlShapesContainer.NonCircles)
-            { nonCircles.Add(new NonCircle(toDouble(non.Radius1), toDouble(non.Radius2))); }
-
-            foreach (var circle in xmlShapesContainer.Circles)
-            { circlesForCont.Add(new Circle(toDouble(circle.Radius))); }
-
-
-            foreach (var tri in xmlShapesContainer.Triangles)
+            foreach (var item in xmlShapesContainer.Items)
             {
-                foreach (var scalene in tri.Scalenes)
+                var type = item.GetType();
+                if (type == typeof(rootEllipses))
                 {
-                    var triangle1 = new Scalene(toDouble(scalene.Side1), toDouble(scalene.Side2), toDouble(scalene.Side3));
-                    scaleneForCont.Add(triangle1);
+                    foreach (var non in ((rootEllipses)item).NonCircles)
+                    {
+                        nonCircles.Add(new NonCircle(toDouble(non.Radius1), toDouble(non.Radius2)));
+                    }
+                    foreach (var circle in ((rootEllipses)item).Circles)
+                    {
+                        circlesForCont.Add(new Circle(toDouble(circle.Radius)));
+                    }
                 }
-                foreach (var isosceles in tri.Isosceles)
+                if (type == typeof(rootRectangles))
                 {
-                    var tempTri = new Isosceles(toDouble(isosceles.Side1), toDouble(isosceles.OtherSides));
-                    isoscelesForCont.Add(tempTri);
+                    foreach (var square in ((rootRectangles)item).Squares)
+                    {
+                        squaresForCont.Add(new Square(toDouble(square.Side)));
+                    }
+                    foreach (var rectangle in ((rootRectangles)item).NonSquares)
+                    {
+                        rectanglesForCont.Add(new NonSquare(toDouble(rectangle.Length1), toDouble(rectangle.Length2)));
+                    }
                 }
-                foreach (var equilateral in tri.Equilaterals)
+                if (type == typeof(rootTriangles))
                 {
-                    var tempTri = new Equilateral(toDouble(equilateral.Side));
-                    equilateralForCont.Add(tempTri);
+                    foreach (var scalene in ((rootTriangles)item).Scalenes)
+                    {
+                        var triangle1 = new Scalene(toDouble(scalene.Side1), toDouble(scalene.Side2), toDouble(scalene.Side3));
+                        scaleneForCont.Add(triangle1);
+                    }
+                    foreach (var isosceles in ((rootTriangles)item).Isosceles)
+                    {
+                        var tempTri = new Isosceles(toDouble(isosceles.Side1), toDouble(isosceles.OtherSides));
+                        isoscelesForCont.Add(tempTri);
+                    }
+                    foreach (var equilateral in ((rootTriangles)item).Equilaterals)
+                    {
+                        var tempTri = new Equilateral(toDouble(equilateral.Side));
+                        equilateralForCont.Add(tempTri);
+                    }
                 }
-            }
-
-            var rectangles = xmlShapesContainer.Rectangles;
-
-            foreach (var rect in rectangles)
-            {
-                foreach (var square in rect.Squares)
-                { squaresForCont.Add(new Square(toDouble(square.Side))); }
-
-                foreach (var nonSquare in rect.NonSquares)
-                { rectanglesForCont.Add(new NonSquare(toDouble(nonSquare.Length1), toDouble(nonSquare.Length2))); }
             }
 
             return new ShapesContainer(
