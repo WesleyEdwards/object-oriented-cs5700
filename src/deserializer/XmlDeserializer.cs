@@ -28,17 +28,10 @@ namespace ShapesProject
 
 
             var shapes = this.Translate(container);
+
+            shapes.Filter();
+
             return shapes;
-        }
-
-        public void Serialize(string newFileName, ShapesContainer shapes)
-        {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ShapesContainer));
-
-            using (TextWriter writer = new StreamWriter("./xmlFiles/file2.xml"))
-            {
-                xmlSerializer.Serialize(writer, shapes);
-            }
         }
 
         public ShapesContainer Translate(XmlShapesContainer xmlShapesContainer)
@@ -54,31 +47,40 @@ namespace ShapesProject
             List<NonSquare> rectanglesForCont = new List<NonSquare>();
 
             foreach (var non in xmlShapesContainer.NonCircles)
-            { nonCircles.Add(new NonCircle(Convert.ToDouble(non.Radius1), Convert.ToDouble(non.Radius2))); }
+            { nonCircles.Add(new NonCircle(toDouble(non.Radius1), toDouble(non.Radius2))); }
 
             foreach (var circle in xmlShapesContainer.Circles)
-            { circlesForCont.Add(new Circle(Convert.ToDouble(circle.Radius))); }
+            { circlesForCont.Add(new Circle(toDouble(circle.Radius))); }
 
 
             foreach (var tri in xmlShapesContainer.Triangles)
             {
                 foreach (var scalene in tri.Scalenes)
-                { scaleneForCont.Add(new Scalene(Convert.ToDouble(scalene.Side1), Convert.ToDouble(scalene.Side2), Convert.ToDouble(scalene.Side3))); }
+                {
+                    var triangle1 = new Scalene(toDouble(scalene.Side1), toDouble(scalene.Side2), toDouble(scalene.Side3));
+                    scaleneForCont.Add(triangle1);
+                }
                 foreach (var isosceles in tri.Isosceles)
-                { isoscelesForCont.Add(new Isosceles(Convert.ToDouble(isosceles.Side1), Convert.ToDouble(isosceles.OtherSides))); }
+                {
+                    var tempTri = new Isosceles(toDouble(isosceles.Side1), toDouble(isosceles.OtherSides));
+                    isoscelesForCont.Add(tempTri);
+                }
                 foreach (var equilateral in tri.Equilaterals)
-                { equilateralForCont.Add(new Equilateral(Convert.ToDouble(equilateral.Side))); }
+                {
+                    var tempTri = new Equilateral(toDouble(equilateral.Side));
+                    equilateralForCont.Add(tempTri);
+                }
             }
-
 
             var rectangles = xmlShapesContainer.Rectangles;
 
             foreach (var rect in rectangles)
             {
                 foreach (var square in rect.Squares)
-                { squaresForCont.Add(new Square(Convert.ToDouble(square.Side))); }
+                { squaresForCont.Add(new Square(toDouble(square.Side))); }
+
                 foreach (var nonSquare in rect.NonSquares)
-                { rectanglesForCont.Add(new NonSquare(Convert.ToDouble(nonSquare.Length1), Convert.ToDouble(nonSquare.Length2))); }
+                { rectanglesForCont.Add(new NonSquare(toDouble(nonSquare.Length1), toDouble(nonSquare.Length2))); }
             }
 
             return new ShapesContainer(
@@ -86,6 +88,10 @@ namespace ShapesProject
                 new TriangleContainer(scaleneForCont.ToArray(), equilateralForCont.ToArray(), isoscelesForCont.ToArray()),
                 new RectangleContainer(squaresForCont.ToArray(), rectanglesForCont.ToArray())
             ); ;
+        }
+        public double toDouble(string value)
+        {
+            return Convert.ToDouble(value);
         }
     }
 }

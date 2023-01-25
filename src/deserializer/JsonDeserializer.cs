@@ -17,7 +17,7 @@ namespace ShapesProject
             ShapesContainer? shapes = JsonConvert.DeserializeObject<ShapesContainer>(File.ReadAllText(this.FilePath));
 
             if (shapes == null) throw new Exception("Could not deserialize file {fileName}");
-            // shapes.filter();
+            shapes.Filter();
 
             return shapes;
         }

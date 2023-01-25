@@ -6,17 +6,16 @@
         {
             InputHandler inputHandler = new InputHandler();
 
-            // bool test = inputHandler.GetRunTests();
-            // if (test)
-            // {
-            //     var Tests = new Tests();
-            //     Tests.RunTests();
-            //     System.Environment.Exit(0);
-            // }
+            bool test = inputHandler.GetRunTests();
+            if (test)
+            {
+                var Tests = new Tests();
+                Tests.RunTests();
+                System.Environment.Exit(0);
+            }
 
             FileType fileType = inputHandler.GetFileType();
             string FilePath = inputHandler.GetFilePath(fileType);
-            // string FilePath = $"./{fileType.ToString().ToLower()}Files/file1.json";
 
             OutputDest outPutDest = inputHandler.GetOutputDest();
 
@@ -39,7 +38,6 @@
 
             dataStore.DeserializeFile();
             dataStore.Write();
-
 
         }
     }

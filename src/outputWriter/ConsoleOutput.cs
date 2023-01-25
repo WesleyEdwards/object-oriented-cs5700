@@ -7,6 +7,8 @@ namespace ShapesProject
         public ConsoleOutput() { }
         public void Write(ShapesContainer shapes)
         {
+            System.Console.WriteLine(shapes.Triangles?.ScalenesArea());
+            System.Console.WriteLine("Area of all shapes: " + shapes.TotalArea());
             var tab = "      ";
 
             var total = shapes.TotalArea();
