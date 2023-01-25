@@ -7,7 +7,7 @@ namespace ShapesProject
         public InputHandler() { }
         public string GetInput(string prompt, string[]? possibilities)
         {
-            Console.Write(prompt);
+            Console.Write("\n" + prompt + "\n");
             while (true)
             {
                 var response = Console.ReadLine();
@@ -38,22 +38,13 @@ namespace ShapesProject
             string[] fileOptions = fileType switch
             {
                 FileType.Json => new string[2] { "file1.json", "file2.json" },
-                FileType.Xml => new string[2] { "file1.xml", "file2.xml" },
+                FileType.Xml => new string[2] { "file1.xml", "file2.xml" }, 
                 _ => throw new Exception("Invalid file type")
             };
 
-            string message = "Enter file name found in either ./jsonFiles or ./xmlFiles (eg. file1.json): ";
-            string[] options = new string[] {
-                "file1.json",
-                "file2.json",
-                "file3.json",
-                "file1.xml",
-                "file2.xml",
-                "file3.xml",
-            };
-            string fileName = GetInput(message, options);
+            string message = "Enter the relative path of a file (eg. './sampleFiles/file1.json' ). Sample files are found in the 'sample' directory:";
 
-            return $"./{fileType.ToString().ToLower()}Files/{fileName}";
+            return GetInput(message, null);
         }
 
         public string GetNewFilePath()
