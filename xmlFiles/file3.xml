@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ShapesContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<XmlShapesContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <Ellipses>
 
@@ -14,11 +14,28 @@
         <Circle>
             <Radius>2</Radius>
         </Circle>
+        <Circle>
+            <Radius>9</Radius>
+        </Circle>
+        <Circle>
+            <Radius>3</Radius>
+        </Circle>
+        <Circle>
+            <Radius>4</Radius>
+        </Circle>
     </Circles>
     <NonCircles>
         <NonCircle>
             <Radius1>2</Radius1>
             <Radius2>3</Radius2>
+        </NonCircle>
+        <NonCircle>
+            <Radius1>2</Radius1>
+            <Radius2>3</Radius2>
+        </NonCircle>
+        <NonCircle>
+            <Radius1>1</Radius1>
+            <Radius2>4</Radius2>
         </NonCircle>
     </NonCircles>
 
@@ -54,8 +71,18 @@
         <Scalenes>
             <Scalene>
                 <Side1>2</Side1>
-                <Side2>2</Side2>
+                <Side2>5</Side2>
+                <Side3>7</Side3>
+            </Scalene>
+            <Scalene>
+                <Side1>3</Side1>
+                <Side2>1</Side2>
                 <Side3>2</Side3>
+            </Scalene>
+            <Scalene>
+                <Side1>2</Side1>
+                <Side2>7</Side2>
+                <Side3>5</Side3>
             </Scalene>
         </Scalenes>
         <Isosceles>
@@ -63,11 +90,25 @@
                 <Side1>2</Side1>
                 <OtherSides>2</OtherSides>
             </Isoscele>
+            <Isoscele>
+                <Side1>65</Side1>
+                <OtherSides>2</OtherSides>
+            </Isoscele>
+            <Isoscele>
+                <Side1>7</Side1>
+                <OtherSides>5</OtherSides>
+            </Isoscele>
         </Isosceles>
         <Equilaterals>
             <Equilateral>
                 <Side>2</Side>
             </Equilateral>
+            <Equilateral>
+                <Side>4</Side>
+            </Equilateral>
+            <Equilateral>
+                <Side>3</Side>
+            </Equilateral>
         </Equilaterals>
     </Triangles>
-</ShapesContainer>
+</XmlShapesContainer>
