@@ -26,7 +26,7 @@ namespace ShapesProject
             var csv = new StringBuilder();
 
             string title = "Total area of all shapes";
-            double area = shapes.TotalArea();
+            double area = Math.Round(shapes.TotalArea(), 2);
 
             var newLine = string.Format("{0},{1},{2},{3}", 1, "", title, area);
             csv.AppendLine(newLine);
