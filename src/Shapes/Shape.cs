@@ -14,8 +14,8 @@ namespace ShapesProject
     }
     public interface IRectangle : IShape
     {
-        double Length { get; }
-        double Width { get; }
+        double Length1 { get; }
+        double Length2 { get; }
     }
     public interface IEllipse : IShape
     {

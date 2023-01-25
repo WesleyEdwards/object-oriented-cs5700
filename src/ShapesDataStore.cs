@@ -20,7 +20,7 @@ namespace ShapesProject
         {
             this.Shapes = this.SerializerManager.Deserialize();
         }
-        public void Write()
+        public void WriteOutput()
         {
             this.Output.Write(this.Shapes);
         }

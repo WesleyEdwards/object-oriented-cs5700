@@ -14,8 +14,6 @@ namespace ShapesProject
 
         public double Area => Length1 * Length2;
 
-        public double Length { get => this.Length1; }
-        public double Width { get => this.Length2; }
         public bool isValid() => (Length1 > 0 && Length2 > 0);
     }
 }

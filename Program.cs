@@ -37,7 +37,7 @@
             ShapesDataStore dataStore = new ShapesDataStore(deserializer, outputWriter);
 
             dataStore.DeserializeFile();
-            dataStore.Write();
+            dataStore.WriteOutput();
 
         }
     }

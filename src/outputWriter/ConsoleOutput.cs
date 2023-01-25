@@ -47,10 +47,17 @@ namespace ShapesProject
                     sb.AppendLine($"{stat.Key,-55} {Math.Round(stat.Value, 2),20}");
                 }
             }
+            this.WriteToConsole(sb.ToString());
 
-            Console.WriteLine("\n\n");
-            Console.WriteLine(sb.ToString());
-            Console.WriteLine("\n\n");
+
         }
+        private void WriteToConsole(string output)
+        {
+            Console.WriteLine("\n\n");
+            Console.WriteLine(output);
+            Console.WriteLine("\n\n");
+
+        }
+
     }
 }

@@ -81,7 +81,12 @@ namespace ShapesProject
                 index++;
             }
 
-            File.WriteAllText(this.FilePath, csv.ToString());
+            this.WriteToFile(csv.ToString());
+        }
+
+        private void WriteToFile(string text)
+        {
+            File.WriteAllText(this.FilePath, text);
         }
     }
 }
