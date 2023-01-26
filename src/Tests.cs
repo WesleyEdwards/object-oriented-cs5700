@@ -14,12 +14,17 @@ namespace ShapesProject
             var jsonTest = new TestDeserialize(jsonDeserializer);
             var xmlTest = new TestDeserialize(xmlDeserializer);
 
+            var areaTest = new TestAreas();
+
             System.Console.WriteLine("\n***Running Tests***\n");
 
             System.Console.WriteLine("\tTesting Deserialization of Json File");
             jsonTest.RunTests();
             System.Console.WriteLine("\tTesting Deserialization of Xml File");
             xmlTest.RunTests();
+
+            System.Console.WriteLine("\tTesting Area Calculation");
+            areaTest.RunTests();
 
             System.Console.WriteLine("\n***All Tests Passed with no errors.***\n\n");
 

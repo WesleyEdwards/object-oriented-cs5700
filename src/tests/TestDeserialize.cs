@@ -51,7 +51,8 @@ namespace ShapesProject
 
         private void TestShapeProperties(ShapesContainer shapes)
         {
-
+            // This doesn't compare every single value, but it does test the areas, 
+            // which will almost certainly be wrong if it didn't deserialize correctly
             this.TestShapeArea(shapes.Ellipses?.Circles, this.expected.Ellipses?.Circles, "Circles");
             this.TestShapeArea(shapes.Ellipses?.NonCircles, this.expected.Ellipses?.NonCircles, "NonCircles");
             this.TestShapeArea(shapes.Triangles?.Scalenes, this.expected.Triangles?.Scalenes, "Scalenes");

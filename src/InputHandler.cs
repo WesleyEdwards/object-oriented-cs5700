@@ -35,16 +35,16 @@ namespace ShapesProject
         }
         public string GetFilePath(FileType fileType)
         {
-            string[] fileOptions = fileType switch
+
+            string message = $"Enter the relative path of a file (eg. './sampleFiles/file1.{fileType.ToString().ToLower()}' ). Sample files are found in the 'sample' directory:";
+
+            while (true)
             {
-                FileType.Json => new string[2] { "file1.json", "file2.json" },
-                FileType.Xml => new string[2] { "file1.xml", "file2.xml" }, 
-                _ => throw new Exception("Invalid file type")
-            };
-
-            string message = "Enter the relative path of a file (eg. './sampleFiles/file1.json' ). Sample files are found in the 'sample' directory:";
-
-            return GetInput(message, null);
+                var path = GetInput(message, null);
+                if (fileType == FileType.Json && path.EndsWith(".json")) { return path; }
+                if (fileType == FileType.Xml && path.EndsWith(".xml")) { return path; }
+                Console.WriteLine("Please enter a valid file path.\n");
+            }
         }
 
         public string GetNewFilePath()
