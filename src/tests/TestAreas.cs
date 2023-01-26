@@ -19,10 +19,10 @@ namespace ShapesProject
         );
         public void RunTests()
         {
-
+            this.RunAreaTests();
         }
 
-        public TestAreas()
+        public void RunAreaTests()
         {
             this.TestShapeArea(this.expected.Ellipses?.Circles, "Circles");
             this.TestShapeArea(this.expected.Ellipses?.NonCircles, "NonCircles");
@@ -34,8 +34,9 @@ namespace ShapesProject
 
         }
 
-        private bool TestShapeArea(IShape[]? shapes, string message)
+        private bool TestShapeArea(IShape[]? shapes, string title)
         {
+            System.Console.WriteLine("\t\tTesting " + title + " area");
             if (shapes == null) { return true; }
 
             foreach (var shape in shapes)

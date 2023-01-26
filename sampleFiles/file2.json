@@ -2,12 +2,6 @@
   "Ellipses": {
     "Circles": [
       {
-        "Radius": 5
-      },
-      {
-        "Radius": 6
-      },
-      {
         "Radius": 9
       }
     ],
@@ -30,23 +24,7 @@
   "Triangles": {
     "Equilaterals": [
       {
-        "Side": 2
-      },
-      {
-        "Side": 7
-      },
-      {
-        "Side": 8
-      }
-    ],
-    "Isosceles": [
-      {
-        "Side1": 2,
-        "OtherSides": 3
-      },
-      {
-        "Side1": 11,
-        "OtherSides": 12
+        "Side": 12
       }
     ],
     "Scalenes": [
@@ -54,32 +32,11 @@
         "Side1": 2,
         "Side2": 3,
         "Side3": 4
-      },
-      {
-        "Side1": 4,
-        "Side2": 5,
-        "Side3": 6
-      },
-      {
-        "Side1": 9,
-        "Side2": 2,
-        "Side3": 10
       }
     ]
   },
 
   "Rectangles": {
-    "Squares": [
-      {
-        "Side": 2
-      },
-      {
-        "Side": 3
-      },
-      {
-        "Side": 4
-      }
-    ],
     "NonSquares": [
       {
         "Length1": 2,
