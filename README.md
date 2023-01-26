@@ -38,6 +38,10 @@ There are two test classes used:<br>
 
 - This test checks whether the areas of each shape class correctly calculates the area. For each shape class, it calculates the area of that shape using both the Calculate Area function held within the class and checks it against equations contained within the testing environment that make sure the area is correctly calculated by the classes.
 
+## Uml
+- The Uml diagrams can be found under the UmlDiagrams directory. It contains one that shows how the relationship between shapes is stored in the program<br>
+The other diagram shows a more general view of the program, showing how it implements the Strategy design pattern.
+
 ## References
 
 I used this tool to create the XML schema for parsing the xml document<br>
