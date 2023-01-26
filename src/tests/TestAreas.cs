@@ -24,13 +24,13 @@ namespace ShapesProject
 
         public void RunAreaTests()
         {
-            this.TestShapeArea(this.expected.Ellipses?.Circles, "Circles");
-            this.TestShapeArea(this.expected.Ellipses?.NonCircles, "NonCircles");
-            this.TestShapeArea(this.expected.Triangles?.Scalenes, "Scalenes");
-            this.TestShapeArea(this.expected.Triangles?.Equilaterals, "Equilaterals");
-            this.TestShapeArea(this.expected.Triangles?.Isosceles, "Isosceles");
-            this.TestShapeArea(this.expected.Rectangles?.Squares, "Squares");
-            this.TestShapeArea(this.expected.Rectangles?.NonSquares, "NonSquares");
+            if (!this.TestShapeArea(this.expected.Ellipses?.Circles, "Circles")) this.Fail("Incorrect Area of Circles");
+            if (!this.TestShapeArea(this.expected.Ellipses?.NonCircles, "NonCircles")) this.Fail("Incorrect Area of NonCircles");
+            if (!this.TestShapeArea(this.expected.Triangles?.Scalenes, "Scalenes")) this.Fail("Incorrect Area of Scalenes");
+            if (!this.TestShapeArea(this.expected.Triangles?.Equilaterals, "Equilaterals")) this.Fail("Incorrect Area of Equilaterals");
+            if (!this.TestShapeArea(this.expected.Triangles?.Isosceles, "Isosceles")) this.Fail("Incorrect Area of Isosceles");
+            if (!this.TestShapeArea(this.expected.Rectangles?.Squares, "Squares")) this.Fail("Incorrect Area of Squares");
+            if (!this.TestShapeArea(this.expected.Rectangles?.NonSquares, "NonSquares")) this.Fail("Incorrect Area of NonSquares");
 
         }
 
@@ -50,50 +50,50 @@ namespace ShapesProject
                 if (shape is NonSquare) { this.TestNonSquareArea((NonSquare)shape); }
             }
 
-            return false;
+            return true;
         }
 
         private bool TestCircleArea(Circle circle)
         {
             var expected = this.EllipseArea(circle.Radius, circle.Radius);
             var actual = circle.Area;
-            return expected == actual;
+            return this.AreEqual(expected, actual);
         }
         private bool TestEllipseArea(NonCircle ellipse)
         {
             var expected = this.EllipseArea(ellipse.Radius1, ellipse.Radius2);
             var actual = ellipse.Area;
-            return expected == actual;
+            return this.AreEqual(expected, actual);
         }
         private bool TestScaleneArea(Scalene triangle)
         {
             var expected = this.TriangleArea(triangle.Side1, triangle.Side2, triangle.Side3);
             var actual = triangle.Area;
-            return expected == actual;
+            return this.AreEqual(expected, actual);
         }
         private bool TestEquilateralArea(Equilateral triangle)
         {
             var expected = this.TriangleArea(triangle.Side1, triangle.Side1, triangle.Side1);
             var actual = triangle.Area;
-            return expected == actual;
+            return this.AreEqual(expected, actual);
         }
         private bool TestIsoscelesArea(Isosceles triangle)
         {
             var expected = this.TriangleArea(triangle.Side1, triangle.Side1, triangle.Side2);
             var actual = triangle.Area;
-            return expected == actual;
+            return this.AreEqual(expected, actual);
         }
         private bool TestSquareArea(Square rectangle)
         {
             var expected = this.RectangleArea(rectangle.Length1, rectangle.Length2);
             var actual = rectangle.Area;
-            return expected == actual;
+            return this.AreEqual(expected, actual);
         }
         private bool TestNonSquareArea(NonSquare rectangle)
         {
             var expected = this.RectangleArea(rectangle.Length1, rectangle.Length2);
             var actual = rectangle.Area;
-            return expected == actual;
+            return this.AreEqual(expected, actual);
         }
 
         private double EllipseArea(double Radius1, double Radius2) => Math.PI * Radius1 * Radius2;
@@ -106,5 +106,15 @@ namespace ShapesProject
             return Math.Sqrt(s * (s - Side1) * (s - Side2) * (s - Side3));
         }
 
+        // To a certain degree of accuracy
+        private bool AreEqual(double a, double b) => Math.Round(a, 2) == Math.Round(b, 2);
+
+        private void Fail(string message)
+        {
+            System.Console.WriteLine("\n\n*********************************************");
+            System.Console.WriteLine("\nTEST FAILED: " + message + "\n");
+            System.Console.WriteLine("*********************************************");
+            System.Environment.Exit(1);
+        }
     }
 }

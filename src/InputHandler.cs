@@ -36,7 +36,7 @@ namespace ShapesProject
         public string GetFilePath(FileType fileType)
         {
 
-            string message = $"Enter the relative path of a file (eg. './sampleFiles/file1.{fileType.ToString().ToLower()}' ). Sample files are found in the 'sample' directory:";
+            string message = $"Enter the relative path of a file (eg. './sample/file1.{fileType.ToString().ToLower()}' ). Sample files are found in the 'sample' directory:";
 
             while (true)
             {
