@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import { Puzzle } from "../solver";
+import { Puzzle } from "../solvers/SolverTemplate";
 import { cellPixelSize } from "../utils";
 
 type PuzzleViewProps = {
@@ -15,9 +15,9 @@ export const PuzzleView = (props: PuzzleViewProps) => {
 
   return (
     <>
-      {initial && <Typography textAlign="center">Initial</Typography>}
+      {initial && <Typography textAlign="center">Unsolved Puzzle</Typography>}
       <Stack direction="column" height={`${widthHeight}px`} alignSelf="center">
-        {sudoku.puzzle.map((row, rowIndex) => {
+        {sudoku.sudokuGrid.map((row, rowIndex) => {
           return (
             <Stack
               direction="row"
@@ -34,7 +34,7 @@ export const PuzzleView = (props: PuzzleViewProps) => {
                     justifyContent="center"
                   >
                     <Typography textAlign="center" variant="h6">
-                      {cell}
+                      {initial ? cell.originalValue : cell.assignedValue}
                     </Typography>
                   </Stack>
                 );

@@ -1,4 +1,4 @@
-import { Puzzle } from "./solver";
+import { Cell, Puzzle, SudokuGrid } from "./solvers/SolverTemplate";
 
 export const cellPixelSize: Record<number, number> = {
   4: 40,
@@ -7,6 +7,13 @@ export const cellPixelSize: Record<number, number> = {
   25: 25,
   36: 20,
 };
+
+const emptyCell: Cell = {
+  originalValue: undefined,
+  assignedValue: undefined,
+  testValue: undefined,
+};
+
 export function parsePuzzle(
   event: React.ChangeEvent<HTMLInputElement>
 ): Promise<Puzzle> {
@@ -34,10 +41,18 @@ export function parsePuzzle(
 
       const sudoku: string[][] = newRows.map((row) => row.split(" "));
 
+      const sudokuGrid: SudokuGrid = sudoku.map((row) => {
+        return row.map((cell) => {
+          return cell === "-"
+            ? { ...emptyCell, originalValue: undefined }
+            : { ...emptyCell, originalValue: cell, assignedValue: cell };
+        });
+      });
+
       const formattedSudoku: Puzzle = {
         dimensions: parseInt(firstRow),
         fileName: event.target.files[0].name,
-        puzzle: sudoku,
+        sudokuGrid,
       };
       resolve(formattedSudoku);
     };

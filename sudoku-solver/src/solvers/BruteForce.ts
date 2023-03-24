@@ -1,13 +1,13 @@
-import { Puzzle, SudokuTemplate } from "../solver";
+import { Puzzle, SolverTemplate } from "./SolverTemplate";
 
-export class GuessAndCheck implements SudokuTemplate {
+export class BruteForce implements SolverTemplate {
   private initialPuzzle: Puzzle;
   constructor(puzzle: Puzzle) {
     this.initialPuzzle = puzzle;
   }
 
   solve() {
-    return;
+    return this.initialPuzzle;
   }
 
   solveSection() {
