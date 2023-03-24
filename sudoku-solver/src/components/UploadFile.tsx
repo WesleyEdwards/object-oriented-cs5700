@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Puzzle } from "../solver";
 import ClearIcon from "@mui/icons-material/Clear";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
+import { parsePuzzle } from "../utils";
 
 type UploadFileProps = {
   setSudoku: (sudoku: Puzzle | undefined) => void;
@@ -12,29 +13,11 @@ export const UploadFile = (props: UploadFileProps) => {
   const { setSudoku, sudoku } = props;
 
   const handleSelectFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      if (!e.target || !event.target.files) return;
-      const rows: string[] = (e.target.result as string).split("\n");
-
-      const newRows = rows.map((row) => {
-        return row.replace(/[\r\n]/g, "");
+    parsePuzzle(event)
+      .then(setSudoku)
+      .catch(() => {
+        alert("Invalid file format");
       });
-      const firstRow = newRows.shift() ?? "";
-
-      newRows.length = parseInt(firstRow);
-
-      const sudoku: string[][] = newRows.map((row) => row.split(" "));
-      setSudoku({
-        dimensions: parseInt(firstRow),
-        fileName: event.target.files[0].name,
-        puzzle: sudoku,
-      });
-    };
-    const myFile = event.target.files[0];
-    reader.readAsText(myFile);
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
