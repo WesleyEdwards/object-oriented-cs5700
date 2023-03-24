@@ -15,7 +15,7 @@ namespace ShapesProject
             var circle = shapes.Ellipses?.CirclesArea() ?? 0;
             var nonCircleEllipse = shapes.Ellipses?.EllipsesArea() ?? 0;
 
-            var rectangle = shapes.Rectangles?.SquaresArea() ?? 0;
+            var rectangle = shapes.Rectangles?.TotalArea() ?? 0;
             var nonSquareRectangle = shapes.Rectangles?.NonSquaresArea() ?? 0;
             var square = shapes.Rectangles?.SquaresArea() ?? 0;
 

@@ -39,9 +39,9 @@ namespace ShapesProject
             var nonCircleEllipse = shapes.Ellipses?.EllipsesArea() ?? 0;
             var nonCircleEllipseLen = circleLen + ellipseLen;
 
-            var rectangle = shapes.Rectangles?.SquaresArea() ?? 0;
             var nonSquareRectangle = shapes.Rectangles?.NonSquaresArea() ?? 0;
             var nonSquareRectangleLen = shapes.Rectangles?.NonSquares?.Length ?? 0;
+            var rectangle = shapes.Rectangles?.TotalArea() ?? 0;
             var square = shapes.Rectangles?.SquaresArea() ?? 0;
             var squareLen = shapes.Rectangles?.Squares?.Length ?? 0;
             var rectangleLen = nonSquareRectangleLen + squareLen;
@@ -68,9 +68,9 @@ namespace ShapesProject
                 new ShapeStatContainer("Equilateral", equilateral, equilateralLen),
                 new ShapeStatContainer("Isosceles", isosceles, isoscelesLen),
                 new ShapeStatContainer("Scalene", scalene, scaleneLen),
-                new ShapeStatContainer("Rectangles", rectangle, nonSquareRectangleLen),
+                new ShapeStatContainer("Rectangles", rectangle, rectangleLen),
                 new ShapeStatContainer("Squares", square, squareLen),
-                new ShapeStatContainer("Non-square Rectangles", rectangle, rectangleLen)
+                new ShapeStatContainer("Non-square Rectangles", nonSquareRectangle, nonSquareRectangleLen)
             };
 
             var index = 2;
