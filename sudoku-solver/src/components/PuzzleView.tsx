@@ -1,6 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import { Puzzle } from "../solvers/SolverTemplate";
 import { cellPixelSize } from "../utils";
+import { RenderCell } from "./RenderCell";
 
 type PuzzleViewProps = {
   sudoku: Puzzle;
@@ -26,17 +27,12 @@ export const PuzzleView = (props: PuzzleViewProps) => {
             >
               {row.map((cell, cellIndex) => {
                 return (
-                  <Stack
-                    sx={{ width: `${eachWidth}px`, height: `${eachWidth}px` }}
+                  <RenderCell
                     key={cellIndex}
-                    border={1}
-                    borderColor="grey.500"
-                    justifyContent="center"
-                  >
-                    <Typography textAlign="center" variant="h6">
-                      {initial ? cell.originalValue : cell.assignedValue}
-                    </Typography>
-                  </Stack>
+                    dimensions={sudoku.dimensions}
+                    cell={cell}
+                    initial={initial}
+                  />
                 );
               })}
             </Stack>

@@ -20,7 +20,7 @@ interface SolvePuzzleProps {
 type SolverOptions = "backTrack" | "bruteForce" | "stochastic" | "walkSat";
 
 export const SolvePuzzle: FC<SolvePuzzleProps> = ({ sudoku, setSolved }) => {
-  const [solver, setSolver] = useState<SolverOptions>("backTrack");
+  const [solver, setSolver] = useState<SolverOptions>("bruteForce");
 
   const sudokuSolver = (() => {
     if (solver === "walkSat") return new BruteForce(sudoku);

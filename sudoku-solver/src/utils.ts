@@ -8,10 +8,18 @@ export const cellPixelSize: Record<number, number> = {
   36: 20,
 };
 
-const emptyCell: Cell = {
+export const BoxWidthMap: Record<number, number> = {
+  4: 2,
+  9: 3,
+  16: 4,
+  25: 5,
+  36: 6,
+};
+
+const emptyCell: Omit<Cell, "row" | "col"> = {
   originalValue: undefined,
   assignedValue: undefined,
-  testValue: undefined,
+  possibleValues: [],
 };
 
 export function parsePuzzle(
@@ -41,11 +49,22 @@ export function parsePuzzle(
 
       const sudoku: string[][] = newRows.map((row) => row.split(" "));
 
-      const sudokuGrid: SudokuGrid = sudoku.map((row) => {
-        return row.map((cell) => {
+      const sudokuGrid: SudokuGrid = sudoku.map((row, rowIdx) => {
+        return row.map((cell, colIdx) => {
           return cell === "-"
-            ? { ...emptyCell, originalValue: undefined }
-            : { ...emptyCell, originalValue: cell, assignedValue: cell };
+            ? {
+                ...emptyCell,
+                originalValue: undefined,
+                row: rowIdx,
+                col: colIdx,
+              }
+            : {
+                ...emptyCell,
+                originalValue: cell,
+                assignedValue: cell,
+                row: rowIdx,
+                col: colIdx,
+              };
         });
       });
 
@@ -63,4 +82,57 @@ export function parsePuzzle(
       reader.readAsText(event.target.files[0]);
     }
   });
+}
+
+export function findPossibilities(sudoku: Puzzle): Puzzle {
+  const sudokuGrid = sudoku.sudokuGrid.map((row) =>
+    row.map((cell) => findPossibleValues(cell, sudoku.sudokuGrid))
+  );
+  return {
+    ...sudoku,
+    sudokuGrid,
+  };
+}
+
+function findPossibleValues(cell: Cell, grid: SudokuGrid): Cell {
+  if (cell.originalValue) return cell;
+  cell.possibleValues = [];
+  for (let i = 1; i <= grid.length; i++) {
+    if (isNumberValid(grid, cell, i)) {
+      cell.possibleValues.push(i.toString());
+    }
+  }
+  return cell;
+}
+
+function isNumberValid(grid: SudokuGrid, cell: Cell, num: number) {
+  const { row, col } = cell;
+  const sudokuRow: Cell[] = grid[row];
+  const sudokuCol: Cell[] = grid.map((row) => row[col]);
+  const sudokuBox: Cell[] = getBox(grid, row, col);
+
+  const rowColBox = [...sudokuRow, ...sudokuCol, ...sudokuBox];
+  const used: string[] = [];
+
+  rowColBox.forEach((cell) => {
+    if (cell.originalValue && !used.includes(cell.originalValue)) {
+      used.push(cell.originalValue);
+    }
+  });
+
+  return !used.includes(num.toString());
+}
+
+function getBox(grid: SudokuGrid, row: number, col: number): Cell[] {
+  const size = BoxWidthMap[grid.length];
+  const box: Cell[] = [];
+  const boxRowStart = Math.floor(row / size) * size;
+  const boxColStart = Math.floor(col / size) * size;
+  for (let i = boxRowStart; i < boxRowStart + size; i++) {
+    for (let j = boxColStart; j < boxColStart + size; j++) {
+      box.push(grid[i][j]);
+    }
+  }
+
+  return box;
 }

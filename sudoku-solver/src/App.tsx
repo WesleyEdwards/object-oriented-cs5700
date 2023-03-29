@@ -7,9 +7,7 @@ import { Puzzle } from "./solvers/SolverTemplate";
 
 function App() {
   const [sudoku, setSudoku] = useState<Puzzle>();
-  const [solvedSudoku, setSolvedSudoku] = useState<Puzzle | null | undefined>(
-    undefined
-  );
+  const [solvedSudoku, setSolvedSudoku] = useState<Puzzle | null | undefined>();
 
   return (
     <Container maxWidth="lg" sx={{ py: "4rem" }}>

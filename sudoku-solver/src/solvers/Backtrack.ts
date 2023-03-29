@@ -6,8 +6,6 @@ export class Backtrack implements SolverTemplate {
   constructor(puzzle: Puzzle) {
     this.initialPuzzle = puzzle;
     this.grid = { ...puzzle.sudokuGrid };
-    console.log(puzzle.sudokuGrid);
-    console.log(this.grid);
   }
 
   solve() {

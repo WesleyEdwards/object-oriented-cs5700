@@ -6,8 +6,11 @@ export interface SolverTemplate {
 export type Cell = {
   originalValue: string | undefined;
   assignedValue: string | undefined;
-  testValue: string | undefined;
+  possibleValues: string[];
+  row: number;
+  col: number;
 };
+
 export type SudokuGrid = Cell[][];
 
 export interface Puzzle {
