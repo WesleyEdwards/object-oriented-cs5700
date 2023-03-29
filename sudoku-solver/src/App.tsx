@@ -1,5 +1,5 @@
-import { Container, Divider, Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import { Alert, Container, Divider, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { PuzzleView } from "./components/PuzzleView";
 import { SolvePuzzle } from "./components/SolvePuzzle";
 import { UploadFile } from "./components/UploadFile";
@@ -9,6 +9,13 @@ function App() {
   const [sudoku, setSudoku] = useState<Puzzle>();
   const [solvedSudoku, setSolvedSudoku] = useState<Puzzle | null | undefined>();
 
+  const setSudokuPuzzle = (sudoku?: Puzzle) => {
+    setSudoku(sudoku);
+    if (!sudoku) {
+      setSolvedSudoku(undefined);
+    }
+  };
+
   return (
     <Container maxWidth="lg" sx={{ py: "4rem" }}>
       <Stack spacing="2rem">
@@ -16,13 +23,16 @@ function App() {
           Sudoku Solver
         </Typography>
         <Divider />
-        <UploadFile sudoku={sudoku} setSudoku={setSudoku} />
+        <UploadFile sudoku={sudoku} setSudoku={setSudokuPuzzle} />
         {sudoku && (
           <>
             <PuzzleView sudoku={sudoku} />
             <Divider />
             <SolvePuzzle sudoku={sudoku} setSolved={setSolvedSudoku} />
           </>
+        )}
+        {solvedSudoku === null && (
+          <Alert severity="error">This is Not Solvable</Alert>
         )}
         {solvedSudoku && <div>Puzzle Solved</div>}
       </Stack>

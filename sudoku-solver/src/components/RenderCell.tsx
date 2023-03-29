@@ -1,7 +1,7 @@
 import { Grid, Stack, Typography } from "@mui/material";
 import { FC } from "react";
+import { BoxWidthMap, cellPixelSize } from "../lib/helpers";
 import { Cell } from "../solvers/SolverTemplate";
-import { cellPixelSize, BoxWidthMap } from "../utils";
 
 export const RenderCell: FC<{
   dimensions: number;

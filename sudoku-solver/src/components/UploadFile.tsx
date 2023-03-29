@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Puzzle } from "../solvers/SolverTemplate";
 import ClearIcon from "@mui/icons-material/Clear";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import { findPossibilities, parsePuzzle } from "../utils";
+import { findPossibilities, parsePuzzle } from "../lib/utils";
 
 type UploadFileProps = {
   setSudoku: (sudoku: Puzzle | undefined) => void;
@@ -18,9 +18,7 @@ export const UploadFile = (props: UploadFileProps) => {
         const formatted = findPossibilities(sudoku);
         setSudoku(formatted);
       })
-      .catch(() => {
-        alert("Invalid file format");
-      });
+      .catch(() => alert("Invalid file format"));
   };
 
   const inputRef = useRef<HTMLInputElement>(null);

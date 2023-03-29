@@ -1,26 +1,5 @@
-import { Cell, Puzzle, SudokuGrid } from "./solvers/SolverTemplate";
-
-export const cellPixelSize: Record<number, number> = {
-  4: 40,
-  9: 40,
-  16: 25,
-  25: 25,
-  36: 20,
-};
-
-export const BoxWidthMap: Record<number, number> = {
-  4: 2,
-  9: 3,
-  16: 4,
-  25: 5,
-  36: 6,
-};
-
-const emptyCell: Omit<Cell, "row" | "col"> = {
-  originalValue: undefined,
-  assignedValue: undefined,
-  possibleValues: [],
-};
+import { Cell, Puzzle, SudokuGrid } from "../solvers/SolverTemplate";
+import { BoxWidthMap, emptyCell } from "./helpers";
 
 export function parsePuzzle(
   event: React.ChangeEvent<HTMLInputElement>
@@ -50,22 +29,13 @@ export function parsePuzzle(
       const sudoku: string[][] = newRows.map((row) => row.split(" "));
 
       const sudokuGrid: SudokuGrid = sudoku.map((row, rowIdx) => {
-        return row.map((cell, colIdx) => {
-          return cell === "-"
-            ? {
-                ...emptyCell,
-                originalValue: undefined,
-                row: rowIdx,
-                col: colIdx,
-              }
-            : {
-                ...emptyCell,
-                originalValue: cell,
-                assignedValue: cell,
-                row: rowIdx,
-                col: colIdx,
-              };
-        });
+        return row.map((cell, colIdx) => ({
+          ...emptyCell,
+          originalValue: cell === "-" ? undefined : cell,
+          assignedValue: cell === "-" ? undefined : cell,
+          row: rowIdx,
+          col: colIdx,
+        }));
       });
 
       const formattedSudoku: Puzzle = {

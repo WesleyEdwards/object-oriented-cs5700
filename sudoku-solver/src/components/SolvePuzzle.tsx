@@ -20,7 +20,7 @@ interface SolvePuzzleProps {
 type SolverOptions = "backTrack" | "bruteForce" | "stochastic" | "walkSat";
 
 export const SolvePuzzle: FC<SolvePuzzleProps> = ({ sudoku, setSolved }) => {
-  const [solver, setSolver] = useState<SolverOptions>("bruteForce");
+  const [solver, setSolver] = useState<SolverOptions>("backTrack");
 
   const sudokuSolver = (() => {
     if (solver === "walkSat") return new BruteForce(sudoku);
@@ -31,6 +31,7 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({ sudoku, setSolved }) => {
 
   const solvePuzzle = () => {
     const solved = sudokuSolver.solve();
+    console.log(solved);
     setSolved(solved);
   };
 
@@ -43,12 +44,12 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({ sudoku, setSolved }) => {
           value={solver}
           onChange={(e) => setSolver(e.target.value as SolverOptions)}
         >
-          <MenuItem value={"walkSat"}>Walk Sat</MenuItem>
-          <MenuItem value={"bruteForce"}>Bute Force</MenuItem>
+          {/* <MenuItem value={"walkSat"}>Walk Sat</MenuItem>
+          <MenuItem value={"bruteForce"}>Bute Force</MenuItem> */}
           <MenuItem value={"backTrack"}>Back Track</MenuItem>
-          <MenuItem value={"stochastic"}>
+          {/* <MenuItem value={"stochastic"}>
             {"Stochastic (optimization)"}
-          </MenuItem>
+          </MenuItem> */}
         </Select>
       </FormControl>
       <Button

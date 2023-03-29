@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
+import { cellPixelSize } from "../lib/helpers";
 import { Puzzle } from "../solvers/SolverTemplate";
-import { cellPixelSize } from "../utils";
 import { RenderCell } from "./RenderCell";
 
 type PuzzleViewProps = {
