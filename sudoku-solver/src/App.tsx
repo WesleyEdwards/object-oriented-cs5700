@@ -26,7 +26,7 @@ function App() {
         <UploadFile sudoku={sudoku} setSudoku={setSudokuPuzzle} />
         {sudoku && (
           <>
-            <PuzzleView sudoku={sudoku} />
+            <PuzzleView sudoku={sudoku} originalOrWorking="originalGrid" />
             <Divider />
             <SolvePuzzle sudoku={sudoku} setSolved={setSolvedSudoku} />
           </>
@@ -34,7 +34,9 @@ function App() {
         {solvedSudoku === null && (
           <Alert severity="error">This is Not Solvable</Alert>
         )}
-        {solvedSudoku && <div>Puzzle Solved</div>}
+        {solvedSudoku && (
+          <PuzzleView sudoku={solvedSudoku} originalOrWorking={"workingGrid"} />
+        )}
       </Stack>
     </Container>
   );

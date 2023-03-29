@@ -16,5 +16,6 @@ export type SudokuGrid = Cell[][];
 export interface Puzzle {
   fileName: string;
   dimensions: number;
-  sudokuGrid: SudokuGrid;
+  originalGrid: SudokuGrid;
+  workingGrid: SudokuGrid;
 }

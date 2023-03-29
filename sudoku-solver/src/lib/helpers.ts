@@ -3,8 +3,8 @@ import { Cell } from "../solvers/SolverTemplate";
 export const cellPixelSize: Record<number, number> = {
   4: 40,
   9: 40,
-  16: 25,
-  25: 25,
+  16: 30,
+  25: 40,
   36: 20,
 };
 
@@ -21,3 +21,5 @@ export const emptyCell: Omit<Cell, "row" | "col"> = {
   assignedValue: undefined,
   possibleValues: [],
 };
+
+export type WhichGrid = "originalGrid" | "workingGrid"

@@ -1,3 +1,4 @@
+import { solveFunction } from "./solveFunction";
 import { Puzzle, SudokuGrid, SolverTemplate } from "./SolverTemplate";
 
 export class Backtrack implements SolverTemplate {
@@ -5,13 +6,14 @@ export class Backtrack implements SolverTemplate {
   private grid: SudokuGrid;
   constructor(puzzle: Puzzle) {
     this.initialPuzzle = puzzle;
-    this.grid = puzzle.sudokuGrid;
+    this.grid = puzzle.workingGrid;
   }
 
   solve() {
     if (!this.checkSolvable()) {
       return null;
     }
+    const solved = solveFunction(this.grid);
     return this.initialPuzzle;
   }
 

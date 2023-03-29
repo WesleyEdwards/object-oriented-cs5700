@@ -24,6 +24,8 @@ export function parsePuzzle(
         return;
       }
 
+      newRows.shift(); // Top row of 1 2 3 4 that is in all the files
+
       newRows.length = rowLength;
 
       const sudoku: string[][] = newRows.map((row) => row.split(" "));
@@ -41,7 +43,8 @@ export function parsePuzzle(
       const formattedSudoku: Puzzle = {
         dimensions: parseInt(firstRow),
         fileName: event.target.files[0].name,
-        sudokuGrid,
+        workingGrid: sudokuGrid,
+        originalGrid: sudokuGrid,
       };
       resolve(formattedSudoku);
     };
@@ -55,12 +58,12 @@ export function parsePuzzle(
 }
 
 export function findPossibilities(sudoku: Puzzle): Puzzle {
-  const sudokuGrid = sudoku.sudokuGrid.map((row) =>
-    row.map((cell) => findPossibleValues(cell, sudoku.sudokuGrid))
+  const sudokuGrid = sudoku.workingGrid.map((row) =>
+    row.map((cell) => findPossibleValues(cell, sudoku.workingGrid))
   );
   return {
     ...sudoku,
-    sudokuGrid,
+    workingGrid: sudokuGrid,
   };
 }
 

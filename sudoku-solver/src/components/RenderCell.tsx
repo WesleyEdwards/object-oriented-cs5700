@@ -1,13 +1,13 @@
 import { Grid, Stack, Typography } from "@mui/material";
 import { FC } from "react";
-import { BoxWidthMap, cellPixelSize } from "../lib/helpers";
+import { BoxWidthMap, cellPixelSize, WhichGrid } from "../lib/helpers";
 import { Cell } from "../solvers/SolverTemplate";
 
 export const RenderCell: FC<{
   dimensions: number;
   cell: Cell;
-  initial: boolean;
-}> = ({ dimensions, cell, initial = true }) => {
+  initial: WhichGrid;
+}> = ({ dimensions, cell, initial = "originalGrid" }) => {
   const eachWidth = cellPixelSize[dimensions];
   const boxWidth = BoxWidthMap[dimensions];
   return (
@@ -22,9 +22,9 @@ export const RenderCell: FC<{
       alignItems="center"
       justifyContent="center"
     >
-      {cell.originalValue ? (
+      {cell.originalValue || cell.assignedValue ? (
         <Typography textAlign="center" variant="h6">
-          {initial ? cell.originalValue : cell.assignedValue}
+          {initial === "originalGrid" ? cell.originalValue : cell.assignedValue}
         </Typography>
       ) : (
         <Grid container>
