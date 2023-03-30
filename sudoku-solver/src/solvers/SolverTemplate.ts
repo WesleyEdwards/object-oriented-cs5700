@@ -15,10 +15,12 @@ export interface Puzzle {
   dimensions: number;
   originalGrid: SudokuGrid;
   workingGrid: SudokuGrid;
+  possibleValues: string[];
 }
 
 export interface SolveMethodTemplate {
   findAll(): SudokuGrid;
+  findOne(): SudokuGrid | null;
   checkRow(): void;
   checkCol(): void;
   checkBox(): void;

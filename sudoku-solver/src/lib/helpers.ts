@@ -21,5 +21,3 @@ export const emptyCell: Omit<Cell, "row" | "col"> = {
   assignedValue: undefined,
   possibleValues: [],
 };
-
-export type WhichGrid = "originalGrid" | "workingGrid"

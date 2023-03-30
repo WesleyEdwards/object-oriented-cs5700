@@ -24,6 +24,13 @@ export class NakedSingle implements SolveMethodTemplate {
     return this.grid;
   }
 
+  findOne(): SudokuGrid | null {
+    this.checkRow();
+    this.checkCol();
+    this.checkBox();
+    return this.grid;
+  }
+
   checkRow() {
     for (let row = 0; row < this.dimensions; row++) {
       const rowCells = this.grid[row];

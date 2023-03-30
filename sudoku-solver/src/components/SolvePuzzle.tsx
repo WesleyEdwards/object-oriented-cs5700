@@ -7,6 +7,8 @@ import {
 } from "../solvers/SolverTemplate";
 import { NakedSingle } from "../lib/solvingTechniques.ts/NakedSingle";
 import { FindInitialPossibilities } from "../lib/solvingTechniques.ts/FindInitialPossibilities";
+import { UniqueCandidate } from "../lib/solvingTechniques.ts/UniqueCandidate";
+import { SoleCandidate } from "../lib/solvingTechniques.ts/SoleCandidate";
 
 interface SolvePuzzleProps {
   sudoku: Puzzle;
@@ -20,6 +22,7 @@ type StepInfo = {
 
 export const SolvePuzzle: FC<SolvePuzzleProps> = ({ sudoku, setSolved }) => {
   const [step, setStep] = useState<number>(0);
+
   const solvePuzzle = () => {
     const { solver } = SolveSteps[step];
     const newSudoku = solver.findAll();
@@ -28,6 +31,15 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({ sudoku, setSolved }) => {
     setStep(step + 1);
     return;
   };
+  const solveOneStep = () => {
+    const { solver } = SolveSteps[step];
+    const res = solver.findOne();
+    if (res === null) {
+      setStep(step + 1);
+      return;
+    }
+    setSolved(res);
+  };
 
   const SolveSteps: Record<number, StepInfo> = {
     0: {
@@ -35,10 +47,14 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({ sudoku, setSolved }) => {
       solver: new FindInitialPossibilities(sudoku.workingGrid),
     },
     1: {
-      stepName: "Naked Single",
-      solver: new NakedSingle(sudoku.workingGrid),
+      stepName: "Sole Candidate",
+      solver: new SoleCandidate(sudoku.workingGrid),
     },
     2: {
+      stepName: "Unique Candidate",
+      solver: new UniqueCandidate(sudoku.workingGrid, sudoku.possibleValues),
+    },
+    3: {
       stepName: "Hidden Single",
       solver: new NakedSingle(sudoku.workingGrid),
     },
@@ -47,17 +63,32 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({ sudoku, setSolved }) => {
   const maxSteps = Object.keys(SolveSteps).length;
 
   return (
-    <Stack direction="row" justifyContent="center" gap="2rem">
+    <Stack
+      direction="row"
+      justifyContent="center"
+      gap="2rem"
+      alignItems="center"
+    >
       {step === maxSteps ? (
         <Typography>All Done!</Typography>
       ) : (
-        <Button
-          variant="outlined"
-          onClick={solvePuzzle}
-          sx={{ minWidth: "12rem", alignSelf: "center", height: "3.5rem" }}
-        >
+        <>
           {SolveSteps[step].stepName}
-        </Button>
+          <Button
+            variant="outlined"
+            onClick={solvePuzzle}
+            sx={{ minWidth: "12rem", alignSelf: "center" }}
+          >
+            Solve All
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={solveOneStep}
+            sx={{ minWidth: "12rem", alignSelf: "center" }}
+          >
+            One Step
+          </Button>
+        </>
       )}
     </Stack>
   );

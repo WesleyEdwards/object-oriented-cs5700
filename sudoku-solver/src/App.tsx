@@ -33,7 +33,7 @@ function App() {
               dimensions={sudoku.dimensions}
             />
             <Divider />
-            <SolvePuzzle sudoku={sudoku} setSolved={setNewSudoku} />I
+            <SolvePuzzle sudoku={sudoku} setSolved={setNewSudoku} />
           </>
         )}
       </Stack>

@@ -11,6 +11,20 @@ export class FindInitialPossibilities implements SolveMethodTemplate {
     this.grid = grid;
   }
 
+  findOne() {
+    for (let row = 0; row < this.grid.length; row++) {
+      for (let col = 0; col < this.grid.length; col++) {
+        const cell = this.grid[row][col];
+        if (cell.originalValue || cell.possibleValues.length > 0) continue;
+        const possibleValues = this.findPossibleValues(cell);
+        if (possibleValues.possibleValues.length > 0) {
+          return this.grid;
+        }
+      }
+    }
+    return null;
+  }
+
   findAll(): SudokuGrid {
     const sudokuGrid = this.grid.map((row) =>
       row.map((cell) => this.findPossibleValues(cell))
