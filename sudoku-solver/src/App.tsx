@@ -3,17 +3,19 @@ import { useEffect, useState } from "react";
 import { PuzzleView } from "./components/PuzzleView";
 import { SolvePuzzle } from "./components/SolvePuzzle";
 import { UploadFile } from "./components/UploadFile";
-import { Puzzle } from "./solvers/SolverTemplate";
+import { Puzzle, SudokuGrid } from "./solvers/SolverTemplate";
 
 function App() {
   const [sudoku, setSudoku] = useState<Puzzle>();
-  const [solvedSudoku, setSolvedSudoku] = useState<Puzzle | null | undefined>();
+  const [error, setError] = useState<string>();
 
-  const setSudokuPuzzle = (sudoku?: Puzzle) => {
-    setSudoku(sudoku);
-    if (!sudoku) {
-      setSolvedSudoku(undefined);
-    }
+  const setNewSudoku = (working: SudokuGrid | null) => {
+    if (working === null) return setError("No solution found");
+    if (sudoku === undefined) return;
+    setSudoku({
+      ...sudoku,
+      workingGrid: working,
+    });
   };
 
   return (
@@ -23,19 +25,16 @@ function App() {
           Sudoku Solver
         </Typography>
         <Divider />
-        <UploadFile sudoku={sudoku} setSudoku={setSudokuPuzzle} />
+        <UploadFile sudoku={sudoku} setSudoku={setSudoku} />
         {sudoku && (
           <>
-            <PuzzleView sudoku={sudoku} originalOrWorking="originalGrid" />
+            <PuzzleView
+              grid={sudoku.workingGrid}
+              dimensions={sudoku.dimensions}
+            />
             <Divider />
-            <SolvePuzzle sudoku={sudoku} setSolved={setSolvedSudoku} />
+            <SolvePuzzle sudoku={sudoku} setSolved={setNewSudoku} />I
           </>
-        )}
-        {solvedSudoku === null && (
-          <Alert severity="error">This is Not Solvable</Alert>
-        )}
-        {solvedSudoku && (
-          <PuzzleView sudoku={solvedSudoku} originalOrWorking={"workingGrid"} />
         )}
       </Stack>
     </Container>

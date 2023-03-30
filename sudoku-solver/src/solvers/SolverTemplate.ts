@@ -1,7 +1,4 @@
-export interface SolverTemplate {
-  solve(): Puzzle | null;
-  solveSection(): void;
-}
+import { BoxWidthMap } from "../lib/helpers";
 
 export type Cell = {
   originalValue: string | undefined;
@@ -19,3 +16,15 @@ export interface Puzzle {
   originalGrid: SudokuGrid;
   workingGrid: SudokuGrid;
 }
+
+export interface SolveMethodTemplate {
+  findAll(): SudokuGrid;
+  checkRow(): void;
+  checkCol(): void;
+  checkBox(): void;
+}
+
+// Naked Single
+// Hidden Single
+// Naked Pair
+// Hidden Pair

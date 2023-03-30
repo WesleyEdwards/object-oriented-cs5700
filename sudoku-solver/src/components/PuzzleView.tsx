@@ -1,26 +1,23 @@
 import { Stack, Typography } from "@mui/material";
 import { cellPixelSize, WhichGrid } from "../lib/helpers";
-import { Puzzle } from "../solvers/SolverTemplate";
+import { Puzzle, SudokuGrid } from "../solvers/SolverTemplate";
 import { RenderCell } from "./RenderCell";
 
 type PuzzleViewProps = {
-  sudoku: Puzzle;
-  originalOrWorking: WhichGrid;
+  grid: SudokuGrid;
+  dimensions: number;
 };
 
 export const PuzzleView = (props: PuzzleViewProps) => {
-  const { sudoku, originalOrWorking = "originalGrid" } = props;
+  const { dimensions, grid } = props;
 
-  const eachWidth = cellPixelSize[sudoku.dimensions];
-  const widthHeight = eachWidth * sudoku.dimensions;
+  const eachWidth = cellPixelSize[dimensions];
+  const widthHeight = eachWidth * dimensions;
 
   return (
     <>
-      {originalOrWorking === "originalGrid" && (
-        <Typography textAlign="center">Unsolved Puzzle</Typography>
-      )}
       <Stack direction="column" height={`${widthHeight}px`} alignSelf="center">
-        {sudoku[originalOrWorking].map((row, rowIndex) => {
+        {grid.map((row, rowIndex) => {
           return (
             <Stack
               direction="row"
@@ -31,9 +28,8 @@ export const PuzzleView = (props: PuzzleViewProps) => {
                 return (
                   <RenderCell
                     key={cellIndex}
-                    dimensions={sudoku.dimensions}
+                    dimensions={dimensions}
                     cell={cell}
-                    initial={originalOrWorking}
                   />
                 );
               })}

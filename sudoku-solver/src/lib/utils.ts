@@ -1,8 +1,9 @@
+import { ChangeEvent } from "react";
 import { Cell, Puzzle, SudokuGrid } from "../solvers/SolverTemplate";
 import { BoxWidthMap, emptyCell } from "./helpers";
 
 export function parsePuzzle(
-  event: React.ChangeEvent<HTMLInputElement>
+  event: ChangeEvent<HTMLInputElement>
 ): Promise<Puzzle> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -57,46 +58,7 @@ export function parsePuzzle(
   });
 }
 
-export function findPossibilities(sudoku: Puzzle): Puzzle {
-  const sudokuGrid = sudoku.workingGrid.map((row) =>
-    row.map((cell) => findPossibleValues(cell, sudoku.workingGrid))
-  );
-  return {
-    ...sudoku,
-    workingGrid: sudokuGrid,
-  };
-}
-
-function findPossibleValues(cell: Cell, grid: SudokuGrid): Cell {
-  if (cell.originalValue) return cell;
-  cell.possibleValues = [];
-  for (let i = 1; i <= grid.length; i++) {
-    if (isNumberValid(grid, cell, i)) {
-      cell.possibleValues.push(i.toString());
-    }
-  }
-  return cell;
-}
-
-function isNumberValid(grid: SudokuGrid, cell: Cell, num: number) {
-  const { row, col } = cell;
-  const sudokuRow: Cell[] = grid[row];
-  const sudokuCol: Cell[] = grid.map((row) => row[col]);
-  const sudokuBox: Cell[] = getBox(grid, row, col);
-
-  const rowColBox = [...sudokuRow, ...sudokuCol, ...sudokuBox];
-  const used: string[] = [];
-
-  rowColBox.forEach((cell) => {
-    if (cell.originalValue && !used.includes(cell.originalValue)) {
-      used.push(cell.originalValue);
-    }
-  });
-
-  return !used.includes(num.toString());
-}
-
-function getBox(grid: SudokuGrid, row: number, col: number): Cell[] {
+export function getBox(grid: SudokuGrid, row: number, col: number): Cell[] {
   const size = BoxWidthMap[grid.length];
   const box: Cell[] = [];
   const boxRowStart = Math.floor(row / size) * size;

@@ -6,8 +6,7 @@ import { Cell } from "../solvers/SolverTemplate";
 export const RenderCell: FC<{
   dimensions: number;
   cell: Cell;
-  initial: WhichGrid;
-}> = ({ dimensions, cell, initial = "originalGrid" }) => {
+}> = ({ dimensions, cell }) => {
   const eachWidth = cellPixelSize[dimensions];
   const boxWidth = BoxWidthMap[dimensions];
   return (
@@ -24,7 +23,7 @@ export const RenderCell: FC<{
     >
       {cell.originalValue || cell.assignedValue ? (
         <Typography textAlign="center" variant="h6">
-          {initial === "originalGrid" ? cell.originalValue : cell.assignedValue}
+          {cell.assignedValue}
         </Typography>
       ) : (
         <Grid container>
