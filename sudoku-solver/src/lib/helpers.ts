@@ -1,3 +1,6 @@
+
+export const validWidths = [4, 9, 16, 25, 36];
+
 export const cellPixelSize: Record<number, number> = {
   4: 40,
   9: 40,

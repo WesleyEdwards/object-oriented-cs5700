@@ -40,9 +40,6 @@ export class UniqueCandidate implements SolveMethodTemplate {
       const existsInRow = this.checkRow(cell, value);
       const existsInCol = this.checkCol(cell, value);
       const existsInBox = this.checkBox(cell, value);
-      console.log(
-        existsInBox.toString() + existsInCol.toString() + existsInRow.toString()
-      );
       if (existsInBox || existsInCol || existsInRow) {
         continue;
       }

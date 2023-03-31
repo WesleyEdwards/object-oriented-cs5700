@@ -15,7 +15,7 @@ export class SolveManager {
       possibleValues
     );
     this.soleCandidate = new SoleCandidate(workingGrid, possibleValues);
-    this.backtrack = new Backtrack(workingGrid);
+    this.backtrack = new Backtrack(workingGrid, possibleValues);
   }
 
   findAll(type: SolverPossibility): SudokuGrid | null {
@@ -25,8 +25,10 @@ export class SolveManager {
         return this.initialSolver.findAll();
       case "soleCandidate":
         return this.soleCandidate.findAll();
-      case "backtrack":
-        return this.backtrack.findAll();
+      case "backtrack": {
+        return this.initialSolver.findAll();
+        //   return this.backtrack.findAll();
+      }
     }
   }
 
@@ -40,9 +42,10 @@ export class SolveManager {
     return null;
   }
 
-  updateHints() {
-    this.initialSolver.findAll();
-  }
+  //   updateHints(): SudokuGrid {
+  //     this.initialSolver.findAll();
+  //     return this.initialSolver.findRedundants();
+  //   }
 
   get isSolved(): boolean {
     return this.initialSolver.isSolved;

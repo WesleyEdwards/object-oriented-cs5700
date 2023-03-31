@@ -24,28 +24,36 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
   const solveManager = new SolveManager(workingGrid, possibleValues);
 
   const solvePuzzle = () => {
-    const { solver } = SolveSteps[step];
-    const newSudoku = solveManager.findAll(solver);
+    const newSudoku = solveManager.findAll(solverStepsThing);
     if (newSudoku === null) return setGrid("unsolvable");
-    setGrid(newSudoku);
+    if (step < 9) {
+      setGrid(newSudoku);
+    }
     setStep(step + 1);
-    solveManager.updateHints();
     if (solveManager.isSolved) return setGrid("solved");
+    // const updated = solveManager.updateHints();
+    // console.log(updated);
+    // setGrid(updated);
   };
 
-  const SolveSteps: Record<number, StepInfo> = {
-    0: {
-      stepName: "Find Possibilities",
-      solver: "possibility",
-    },
-    1: {
-      stepName: "Sole Candidate",
-      solver: "soleCandidate",
-    },
-    2: {
-      stepName: "Brute Force",
-      solver: "backtrack",
-    },
+  const solverStepsThing = (() => {
+    switch (step) {
+      case 0:
+        return "possibility";
+      case 1:
+        return "soleCandidate";
+      case 2:
+        return "backtrack";
+      default:
+        return "possibility";
+    }
+  })();
+
+  const tryToSolve = () => {
+    const newSudoku = solveManager.findAll("soleCandidate");
+    const newSudoku1 = solveManager.findAll("possibility");
+    if (newSudoku1 === null) return setGrid("unsolvable");
+    setGrid(newSudoku1);
   };
 
   return (
@@ -55,13 +63,20 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
       gap="2rem"
       alignItems="center"
     >
-      {`Step ${step + 1}, ${SolveSteps[step].stepName}`}
+      {`Step ${step + 1}, ${solverStepsThing ?? "IDK which"}`}
       <Button
         variant="outlined"
         onClick={solvePuzzle}
         sx={{ minWidth: "12rem", alignSelf: "center" }}
       >
         Solve Step
+      </Button>
+      <Button
+        variant="outlined"
+        onClick={tryToSolve}
+        sx={{ minWidth: "12rem", alignSelf: "center" }}
+      >
+        Try to solve...
       </Button>
     </Stack>
   );

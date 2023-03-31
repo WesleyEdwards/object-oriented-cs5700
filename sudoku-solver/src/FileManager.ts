@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { validWidths } from "./lib/helpers";
 import { Puzzle, SudokuGrid } from "./solvers/SolverTemplate";
 
 export class FileManager {
@@ -18,10 +19,10 @@ export class FileManager {
 
         const rowLength = parseInt(firstRow);
 
-        if (![4, 9, 16, 25, 36].includes(rowLength)) {
-          reject("Invalid puzzle");
-          return;
-        }
+        if (isNaN(rowLength)) return reject("Invalid puzzle Length");
+
+        if (!validWidths.includes(rowLength))
+          return reject("Invalid puzzle size");
 
         const possibleValues = newRows[0].split(" ");
         newRows.shift();
@@ -30,15 +31,15 @@ export class FileManager {
 
         const sudoku: string[][] = newRows.map((row) => row.split(" "));
 
-        const sudokuGrid: SudokuGrid = sudoku.map((row, rowIdx) => {
-          return row.map((cell, colIdx) => ({
+        const sudokuGrid: SudokuGrid = sudoku.map((row, rowIdx) =>
+          row.map((cell, colIdx) => ({
             possibleValues: [],
             originalValue: cell === "-" ? undefined : cell,
             assignedValue: cell === "-" ? undefined : cell,
             row: rowIdx,
             col: colIdx,
-          }));
-        });
+          }))
+        );
 
         const formattedSudoku: Puzzle = {
           dimensions: parseInt(firstRow),
@@ -47,6 +48,16 @@ export class FileManager {
           originalGrid: sudokuGrid,
           possibleValues,
         };
+
+        const valid = formattedSudoku.workingGrid.every((row) =>
+          row.every((cell) => {
+            if (cell.assignedValue === undefined) return true;
+            return formattedSudoku.possibleValues.includes(cell.assignedValue);
+          })
+        );
+
+        if (!valid) return reject("Sudoku is invalid.");
+
         resolve(formattedSudoku);
       };
       reader.onerror = (e) => {

@@ -4,6 +4,7 @@ import {
   SudokuGrid,
 } from "../../solvers/SolverTemplate";
 import { getBox } from "../utils";
+import { BoxWidthMap } from "../helpers";
 
 export class FindInitialPossibilities implements SolveMethodTemplate {
   private grid: SudokuGrid;
@@ -17,6 +18,7 @@ export class FindInitialPossibilities implements SolveMethodTemplate {
     const sudokuGrid = this.grid.map((row) =>
       row.map((cell) => this.findPossibleValues(cell))
     );
+    // this.findRedundants();
     return sudokuGrid;
   }
 
@@ -76,4 +78,73 @@ export class FindInitialPossibilities implements SolveMethodTemplate {
       row.every((cell) => cell.assignedValue !== undefined)
     );
   }
+
+  findRedundants(): SudokuGrid {
+    const boxes = this.groupByBoxes();
+    const rowRepeats: RowRepeat[] = [];
+    boxes.forEach((box) => {
+      const rowReps: RowRepeat[] = this.findRowRepeats(box);
+      rowRepeats.push(...rowReps);
+    });
+    rowRepeats.forEach((repeat) => {
+      const { row, value, originBoxCols } = repeat;
+
+      this.grid[row].map((cell) => {
+        if (!originBoxCols.includes(cell.col)) return cell;
+        return cell.possibleValues.splice(
+          cell.possibleValues.indexOf(value),
+          1
+        );
+      });
+    });
+    return this.grid;
+  }
+
+  findRowRepeats(box: Cell[]): RowRepeat[] {
+    const howManyRows = BoxWidthMap[this.grid.length];
+    const repeats: RowRepeat[] = [];
+
+    for (let i = 0; i < howManyRows; i++) {
+      const row = box.filter((cell) => cell.row === i);
+      const assignedValues: string[] = row
+        .map((cell) => cell.possibleValues)
+        .flat()
+        .filter((c) => c !== undefined) as string[];
+      const assignedValuesNotInOtherRows = assignedValues.filter((value) => {
+        const otherRows = box.filter((cell) => cell.row !== i);
+        const otherRowValues = otherRows
+          .map((cell) => cell.possibleValues)
+          .flat();
+        return !otherRowValues.includes(value);
+      });
+      const uniqueValues = [...new Set(assignedValuesNotInOtherRows)];
+      if (uniqueValues.length > 0) {
+        repeats.push({
+          row: i,
+          value: uniqueValues[0],
+          originBoxCols: row.map((cell) => cell.col),
+        });
+      }
+    }
+
+    return repeats;
+  }
+
+  groupByBoxes(): Cell[][] {
+    const boxGroupings = [];
+    const width = BoxWidthMap[this.grid.length];
+    for (let i = 0; i < this.grid.length; i += width) {
+      for (let j = 0; j < this.grid.length; j += width) {
+        const box = getBox(this.grid, i, j);
+        boxGroupings.push(box);
+      }
+    }
+    return boxGroupings;
+  }
 }
+
+type RowRepeat = {
+  row: number;
+  value: string;
+  originBoxCols: number[];
+};

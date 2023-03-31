@@ -8,18 +8,22 @@ import { FileManager } from "../FileManager";
 type UploadFileProps = {
   setSudoku: (sudoku: Puzzle | undefined) => void;
   sudoku?: Puzzle;
+  setError(message: string): void;
 };
 export const UploadFile = (props: UploadFileProps) => {
-  const { setSudoku, sudoku } = props;
+  const { setSudoku, sudoku, setError } = props;
 
   const fileManager = new FileManager();
 
-  const handleSelectFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectFile = (event: React.ChangeEvent<HTMLInputElement>) =>
     fileManager
       .parsePuzzle(event)
-      .then(setSudoku)
-      .catch(() => alert("Invalid file format"));
-  };
+      .then((sudoku) => {
+        setSudoku(sudoku);
+      })
+      .catch((e) => {
+        setError(e);
+      });
 
   const inputRef = useRef<HTMLInputElement>(null);
 

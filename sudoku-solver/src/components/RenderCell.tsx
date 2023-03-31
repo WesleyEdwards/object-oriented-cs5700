@@ -30,7 +30,7 @@ export const RenderCell: FC<{
           );
         }
 
-        if (boxWidth > 3 && cell.possibleValues.length > 0) {
+        if (boxWidth > 5 && cell.possibleValues.length > 0) {
           return (
             <div
               style={{
