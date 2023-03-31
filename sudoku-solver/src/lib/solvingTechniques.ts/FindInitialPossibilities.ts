@@ -18,7 +18,6 @@ export class FindInitialPossibilities implements SolveMethodTemplate {
     const sudokuGrid = this.grid.map((row) =>
       row.map((cell) => this.findPossibleValues(cell))
     );
-    // this.findRedundants();
     return sudokuGrid;
   }
 

@@ -20,41 +20,40 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
   possibleValues,
   setGrid,
 }) => {
-  const [step, setStep] = useState<number>(0);
+  // const [step, setStep] = useState<number>(0);
   const solveManager = new SolveManager(workingGrid, possibleValues);
 
-  const solvePuzzle = () => {
-    const newSudoku = solveManager.findAll(solverStepsThing);
+  // const solvePuzzle = () => {
+  //   const newSudoku = solveManager.findAll(solverStepsThing);
+  //   if (newSudoku === null) return setGrid("unsolvable");
+  //   if (step < 9) {
+  //     setGrid(newSudoku);
+  //   }
+  //   setStep(step + 1);
+  //   if (solveManager.isSolved) return setGrid("solved");
+  //   // const updated = solveManager.updateHints();
+  //   // console.log(updated);
+  //   // setGrid(updated);
+  // };
+
+  const tryToSolve = (version: SolverPossibility) => {
+    const newSudoku = solveManager.findAll(version);
     if (newSudoku === null) return setGrid("unsolvable");
-    if (step < 9) {
-      setGrid(newSudoku);
-    }
-    setStep(step + 1);
-    if (solveManager.isSolved) return setGrid("solved");
-    // const updated = solveManager.updateHints();
-    // console.log(updated);
-    // setGrid(updated);
+    setGrid(newSudoku);
   };
 
-  const solverStepsThing = (() => {
-    switch (step) {
-      case 0:
-        return "possibility";
-      case 1:
-        return "soleCandidate";
-      case 2:
-        return "backtrack";
-      default:
-        return "possibility";
-    }
-  })();
-
-  const tryToSolve = () => {
-    const newSudoku = solveManager.findAll("soleCandidate");
-    const newSudoku1 = solveManager.findAll("possibility");
-    if (newSudoku1 === null) return setGrid("unsolvable");
-    setGrid(newSudoku1);
-  };
+  // const solverStepsThing = (() => {
+  //   switch (step) {
+  //     case 0:
+  //       return "possibility";
+  //     case 1:
+  //       return "soleCandidate";
+  //     case 2:
+  //       return "backtrack";
+  //     default:
+  //       return "possibility";
+  //   }
+  // })();
 
   return (
     <Stack
@@ -63,20 +62,26 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
       gap="2rem"
       alignItems="center"
     >
-      {`Step ${step + 1}, ${solverStepsThing ?? "IDK which"}`}
       <Button
         variant="outlined"
-        onClick={solvePuzzle}
+        onClick={() => tryToSolve("possibility")}
         sx={{ minWidth: "12rem", alignSelf: "center" }}
       >
-        Solve Step
+        find possibilities
       </Button>
       <Button
         variant="outlined"
-        onClick={tryToSolve}
+        onClick={() => tryToSolve("soleCandidate")}
         sx={{ minWidth: "12rem", alignSelf: "center" }}
       >
-        Try to solve...
+        Sole
+      </Button>
+      <Button
+        variant="outlined"
+        onClick={() => tryToSolve("backtrack")}
+        sx={{ minWidth: "12rem", alignSelf: "center" }}
+      >
+        Brute Force
       </Button>
     </Stack>
   );

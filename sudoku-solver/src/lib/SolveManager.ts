@@ -26,8 +26,7 @@ export class SolveManager {
       case "soleCandidate":
         return this.soleCandidate.findAll();
       case "backtrack": {
-        return this.initialSolver.findAll();
-        //   return this.backtrack.findAll();
+        return this.backtrack.findAll();
       }
     }
   }
