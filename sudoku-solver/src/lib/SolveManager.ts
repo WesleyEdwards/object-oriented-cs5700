@@ -1,9 +1,8 @@
 import { Backtrack } from "../solvers/Backtrack";
 import { SudokuGrid } from "../solvers/SolverTemplate";
 import { FindInitialPossibilities } from "./solvingTechniques.ts/FindInitialPossibilities";
-import { RowInteraction } from "./solvingTechniques.ts/RowInteraction";
 import { SoleCandidate } from "./solvingTechniques.ts/SoleCandidate";
-import { UniqueCandidate } from "./solvingTechniques.ts/UniqueCandidate";
+
 export type SolverPossibility = "possibility" | "soleCandidate" | "backtrack";
 
 export class SolveManager {
@@ -45,7 +44,7 @@ export class SolveManager {
     this.initialSolver.findAll();
   }
 
-  //   solveAll(): SudokuGrid | null {
-  //     return this.backtrack.findAll();
-  //   }
+  get isSolved(): boolean {
+    return this.initialSolver.isSolved;
+  }
 }

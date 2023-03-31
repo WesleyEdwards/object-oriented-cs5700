@@ -4,8 +4,6 @@ import {
   SolveMethodTemplate,
   SudokuGrid,
 } from "../../solvers/SolverTemplate";
-import { BoxWidthMap } from "../helpers";
-import { SolverPossibility } from "../SolveManager";
 import { getBox } from "../utils";
 import { FindInitialPossibilities } from "./FindInitialPossibilities";
 

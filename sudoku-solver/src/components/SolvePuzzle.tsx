@@ -2,11 +2,12 @@ import { Button, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { SudokuGrid } from "../solvers/SolverTemplate";
 import { SolveManager, SolverPossibility } from "../lib/SolveManager";
+import { GridStatus } from "../App";
 
 interface SolvePuzzleProps {
   workingGrid: SudokuGrid;
   possibleValues: string[];
-  setSolved: (sudoku: SudokuGrid | null) => void;
+  setGrid: (sudoku: GridStatus) => void;
 }
 
 type StepInfo = {
@@ -17,7 +18,7 @@ type StepInfo = {
 export const SolvePuzzle: FC<SolvePuzzleProps> = ({
   workingGrid,
   possibleValues,
-  setSolved,
+  setGrid,
 }) => {
   const [step, setStep] = useState<number>(0);
   const solveManager = new SolveManager(workingGrid, possibleValues);
@@ -25,11 +26,11 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
   const solvePuzzle = () => {
     const { solver } = SolveSteps[step];
     const newSudoku = solveManager.findAll(solver);
-    if (newSudoku === null) return setSolved(null);
-    setSolved(newSudoku);
+    if (newSudoku === null) return setGrid("unsolvable");
+    setGrid(newSudoku);
     setStep(step + 1);
     solveManager.updateHints();
-    return;
+    if (solveManager.isSolved) return setGrid("solved");
   };
 
   const SolveSteps: Record<number, StepInfo> = {
@@ -47,8 +48,6 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
     },
   };
 
-  const maxSteps = Object.keys(SolveSteps).length;
-
   return (
     <Stack
       direction="row"
@@ -56,27 +55,14 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
       gap="2rem"
       alignItems="center"
     >
-      {step === maxSteps ? (
-        <Typography>All Done!</Typography>
-      ) : (
-        <>
-          {SolveSteps[step].stepName}
-          <Button
-            variant="outlined"
-            onClick={solvePuzzle}
-            sx={{ minWidth: "12rem", alignSelf: "center" }}
-          >
-            Solve All
-          </Button>
-          {/* <Button
-            variant="outlined"
-            onClick={solveOneStep}
-            sx={{ minWidth: "12rem", alignSelf: "center" }}
-          >
-            One Step
-          </Button> */}
-        </>
-      )}
+      {`Step ${step + 1}, ${SolveSteps[step].stepName}`}
+      <Button
+        variant="outlined"
+        onClick={solvePuzzle}
+        sx={{ minWidth: "12rem", alignSelf: "center" }}
+      >
+        Solve Step
+      </Button>
     </Stack>
   );
 };

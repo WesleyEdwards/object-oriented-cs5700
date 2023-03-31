@@ -1,6 +1,5 @@
 import {
   Cell,
-  Puzzle,
   SolveMethodTemplate,
   SudokuGrid,
 } from "../../solvers/SolverTemplate";

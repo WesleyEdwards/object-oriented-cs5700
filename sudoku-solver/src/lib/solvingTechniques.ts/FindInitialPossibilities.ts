@@ -70,4 +70,10 @@ export class FindInitialPossibilities implements SolveMethodTemplate {
     const values = boxCells.map((cell) => cell.assignedValue);
     return values.includes(value);
   }
+
+  get isSolved(): boolean {
+    return this.grid.every((row) =>
+      row.every((cell) => cell.assignedValue !== undefined)
+    );
+  }
 }

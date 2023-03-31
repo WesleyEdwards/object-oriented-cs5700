@@ -1,5 +1,3 @@
-import { Cell } from "../solvers/SolverTemplate";
-
 export const cellPixelSize: Record<number, number> = {
   4: 40,
   9: 40,
@@ -14,10 +12,4 @@ export const BoxWidthMap: Record<number, number> = {
   16: 4,
   25: 5,
   36: 6,
-};
-
-export const emptyCell: Omit<Cell, "row" | "col"> = {
-  originalValue: undefined,
-  assignedValue: undefined,
-  possibleValues: [],
 };
