@@ -1,6 +1,6 @@
 import { SudokuGrid } from "../solvers/SolverTemplate";
 import { FindInitialPossibilities } from "./solvingTechniques.ts/FindInitialPossibilities";
-import { NakedSingle } from "./solvingTechniques.ts/NakedSingle";
+import { RowInteraction } from "./solvingTechniques.ts/RowInteraction";
 import { SoleCandidate } from "./solvingTechniques.ts/SoleCandidate";
 import { UniqueCandidate } from "./solvingTechniques.ts/UniqueCandidate";
 export type SolverPossibility =
@@ -13,7 +13,7 @@ export class SolveManager {
   private initialSolver: FindInitialPossibilities;
   private soleCandidate: SoleCandidate;
   private uniqueCandidate: UniqueCandidate;
-  private nakedSingle: NakedSingle;
+  private nakedSingle: RowInteraction;
   constructor(workingGrid: SudokuGrid, possibleValues: string[]) {
     this.initialSolver = new FindInitialPossibilities(
       workingGrid,
@@ -21,7 +21,7 @@ export class SolveManager {
     );
     this.soleCandidate = new SoleCandidate(workingGrid);
     this.uniqueCandidate = new UniqueCandidate(workingGrid, possibleValues);
-    this.nakedSingle = new NakedSingle(workingGrid);
+    this.nakedSingle = new RowInteraction(workingGrid, possibleValues);
   }
 
   findAll(type: SolverPossibility): SudokuGrid | null {

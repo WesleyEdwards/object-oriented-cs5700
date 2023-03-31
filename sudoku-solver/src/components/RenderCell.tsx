@@ -30,13 +30,13 @@ export const RenderCell: FC<{
           );
         }
 
-        if (boxWidth > 3) {
+        if (boxWidth > 3 && cell.possibleValues.length > 0) {
           return (
             <div
               style={{
                 display: "flex",
                 width: "100%",
-                height: "100",
+                height: "100%",
                 backgroundColor: "lightgrey",
               }}
             />
