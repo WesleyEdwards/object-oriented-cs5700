@@ -1,27 +1,22 @@
+import { Backtrack } from "../solvers/Backtrack";
 import { SudokuGrid } from "../solvers/SolverTemplate";
 import { FindInitialPossibilities } from "./solvingTechniques.ts/FindInitialPossibilities";
 import { RowInteraction } from "./solvingTechniques.ts/RowInteraction";
 import { SoleCandidate } from "./solvingTechniques.ts/SoleCandidate";
 import { UniqueCandidate } from "./solvingTechniques.ts/UniqueCandidate";
-export type SolverPossibility =
-  | "possibility"
-  | "soleCandidate"
-  | "uniqueCandidate"
-  | "nakedSingle";
+export type SolverPossibility = "possibility" | "soleCandidate" | "backtrack";
 
 export class SolveManager {
   private initialSolver: FindInitialPossibilities;
   private soleCandidate: SoleCandidate;
-  private uniqueCandidate: UniqueCandidate;
-  private nakedSingle: RowInteraction;
+  private backtrack: Backtrack;
   constructor(workingGrid: SudokuGrid, possibleValues: string[]) {
     this.initialSolver = new FindInitialPossibilities(
       workingGrid,
       possibleValues
     );
-    this.soleCandidate = new SoleCandidate(workingGrid);
-    this.uniqueCandidate = new UniqueCandidate(workingGrid, possibleValues);
-    this.nakedSingle = new RowInteraction(workingGrid, possibleValues);
+    this.soleCandidate = new SoleCandidate(workingGrid, possibleValues);
+    this.backtrack = new Backtrack(workingGrid);
   }
 
   findAll(type: SolverPossibility): SudokuGrid | null {
@@ -31,10 +26,8 @@ export class SolveManager {
         return this.initialSolver.findAll();
       case "soleCandidate":
         return this.soleCandidate.findAll();
-      case "uniqueCandidate":
-        return this.uniqueCandidate.findAll();
-      case "nakedSingle":
-        return this.nakedSingle.findAll();
+      case "backtrack":
+        return this.backtrack.findAll();
     }
   }
 
@@ -44,14 +37,15 @@ export class SolveManager {
         return this.initialSolver.findOne();
       case "soleCandidate":
         return this.soleCandidate.findOne();
-      case "uniqueCandidate":
-        return this.uniqueCandidate.findOne();
-      case "nakedSingle":
-        return this.nakedSingle.findOne();
     }
+    return null;
   }
 
   updateHints() {
     this.initialSolver.findAll();
   }
+
+  //   solveAll(): SudokuGrid | null {
+  //     return this.backtrack.findAll();
+  //   }
 }

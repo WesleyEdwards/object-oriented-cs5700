@@ -96,6 +96,30 @@ export class RowInteraction implements SolveMethodTemplate {
         return true;
       }
     }
+
+    const otherBoxValues = getNonBoxCellsInRow(this.grid, cell.row, cell.col);
+    for (let i = 0; i < otherBoxValues.length; i++) {
+      const checkCell = otherBoxValues[i];
+      for (let j = 0; j < checkCell.possibleValues.length; j++) {
+        if (checkCell.possibleValues[j] === value) {
+          const otherCellsInJBox = getBox(
+            this.grid,
+            checkCell.row,
+            checkCell.col
+          );
+          for (let k = 0; k < otherCellsInJBox.length; k++) {
+            const otherCellInJBox = otherCellsInJBox[k];
+            // if (otherCellInJBox.row === cell.row) {
+            //   continue;
+            // }
+            if (otherCellInJBox.possibleValues.includes(value)) {
+              console.log("found a col interaction" + value);
+              return true;
+            }
+          }
+        }
+      }
+    }
     return false;
   }
 

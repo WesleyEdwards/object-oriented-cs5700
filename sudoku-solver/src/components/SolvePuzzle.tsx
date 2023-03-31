@@ -32,17 +32,6 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
     return;
   };
 
-  const solveOneStep = () => {
-    const { solver } = SolveSteps[step];
-    const res = solveManager.findOne(solver);
-    if (solver !== "possibility") solveManager.updateHints();
-    if (res === null) {
-      setStep(step + 1);
-      return;
-    }
-    setSolved(res);
-  };
-
   const SolveSteps: Record<number, StepInfo> = {
     0: {
       stepName: "Find Possibilities",
@@ -53,12 +42,8 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
       solver: "soleCandidate",
     },
     2: {
-      stepName: "Unique Candidate",
-      solver: "uniqueCandidate",
-    },
-    3: {
-      stepName: "Hidden Single",
-      solver: "nakedSingle",
+      stepName: "Brute Force",
+      solver: "backtrack",
     },
   };
 
@@ -83,13 +68,13 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
           >
             Solve All
           </Button>
-          <Button
+          {/* <Button
             variant="outlined"
             onClick={solveOneStep}
             sx={{ minWidth: "12rem", alignSelf: "center" }}
           >
             One Step
-          </Button>
+          </Button> */}
         </>
       )}
     </Stack>

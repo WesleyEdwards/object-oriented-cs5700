@@ -26,10 +26,8 @@ export class UniqueCandidate implements SolveMethodTemplate {
     for (let row = 0; row < this.grid.length; row++) {
       for (let col = 0; col < this.grid.length; col++) {
         const cell = this.grid[row][col];
-        if (cell.possibleValues.length > 0) {
-          if (this.findUniqueCandidate(cell)) {
-            return this.grid;
-          }
+        if (this.findUniqueCandidate(cell)) {
+          return this.grid;
         }
       }
     }
@@ -43,9 +41,13 @@ export class UniqueCandidate implements SolveMethodTemplate {
       const existsInRow = this.checkRow(cell, value);
       const existsInCol = this.checkCol(cell, value);
       const existsInBox = this.checkBox(cell, value);
+      console.log(
+        existsInBox.toString() + existsInCol.toString() + existsInRow.toString()
+      );
       if (existsInBox || existsInCol || existsInRow) {
         continue;
       }
+      console.log(cell);
       cell.assignedValue = value;
       cell.possibleValues = [];
       return true;
@@ -78,6 +80,7 @@ export class UniqueCandidate implements SolveMethodTemplate {
     for (let i = 0; i < box.length; i++) {
       const checkCell = box[i];
       if (checkCell.assignedValue === value) {
+        console.log("box", checkCell);
         return true;
       }
     }

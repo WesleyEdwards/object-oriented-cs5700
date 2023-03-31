@@ -5,17 +5,22 @@ import {
   SudokuGrid,
 } from "../../solvers/SolverTemplate";
 import { BoxWidthMap } from "../helpers";
+import { SolverPossibility } from "../SolveManager";
 import { getBox } from "../utils";
+import { FindInitialPossibilities } from "./FindInitialPossibilities";
 
 export class SoleCandidate implements SolveMethodTemplate {
   private grid: SudokuGrid;
+  private findPossibles: FindInitialPossibilities;
 
-  constructor(grid: SudokuGrid) {
+  constructor(grid: SudokuGrid, possibleValues: string[]) {
     this.grid = grid;
+    this.findPossibles = new FindInitialPossibilities(grid, possibleValues);
   }
 
   findAll(): SudokuGrid {
     while (this.findOne()) {
+      this.findPossibles.findAll();
       this.findOne();
     }
     return this.grid;
