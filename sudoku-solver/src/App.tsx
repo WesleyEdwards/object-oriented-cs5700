@@ -1,5 +1,5 @@
-import { Alert, Container, Divider, Stack, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Container, Divider, Stack, Typography } from "@mui/material";
+import { useState } from "react";
 import { PuzzleView } from "./components/PuzzleView";
 import { SolvePuzzle } from "./components/SolvePuzzle";
 import { UploadFile } from "./components/UploadFile";
@@ -26,16 +26,25 @@ function App() {
         </Typography>
         <Divider />
         <UploadFile sudoku={sudoku} setSudoku={setSudoku} />
-        {sudoku && (
-          <>
-            <PuzzleView
-              grid={sudoku.workingGrid}
-              dimensions={sudoku.dimensions}
-            />
-            <Divider />
-            <SolvePuzzle sudoku={sudoku} setSolved={setNewSudoku} />
-          </>
-        )}
+        {(() => {
+          if (sudoku) {
+            const { workingGrid } = sudoku;
+            return (
+              <>
+                <PuzzleView
+                  grid={sudoku.workingGrid}
+                  dimensions={sudoku.dimensions}
+                />
+                <Divider />
+                <SolvePuzzle
+                  workingGrid={workingGrid}
+                  possibleValues={sudoku.possibleValues}
+                  setSolved={setNewSudoku}
+                />
+              </>
+            );
+          }
+        })()}
       </Stack>
     </Container>
   );

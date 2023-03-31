@@ -3,7 +3,7 @@ import { Cell } from "../solvers/SolverTemplate";
 export const cellPixelSize: Record<number, number> = {
   4: 40,
   9: 40,
-  16: 30,
+  16: 50,
   25: 40,
   36: 20,
 };

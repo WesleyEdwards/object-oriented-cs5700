@@ -1,6 +1,6 @@
 import { Grid, Stack, Typography } from "@mui/material";
 import { FC } from "react";
-import { BoxWidthMap, cellPixelSize, WhichGrid } from "../lib/helpers";
+import { BoxWidthMap, cellPixelSize } from "../lib/helpers";
 import { Cell } from "../solvers/SolverTemplate";
 
 export const RenderCell: FC<{
@@ -21,32 +21,51 @@ export const RenderCell: FC<{
       alignItems="center"
       justifyContent="center"
     >
-      {cell.originalValue || cell.assignedValue ? (
-        <Typography textAlign="center" variant="h6">
-          {cell.assignedValue}
-        </Typography>
-      ) : (
-        <Grid container>
-          {cell.possibleValues.map((value, index) => {
-            return (
-              <div
-                style={{ width: eachWidth / 3, height: eachWidth / 3 }}
-                key={index}
-              >
-                <Grid item key={index}>
-                  <Typography
-                    textAlign="center"
-                    color={"grey"}
-                    fontSize={`${eachWidth / 3}px`}
-                  >
-                    {value}
-                  </Typography>
-                </Grid>
-              </div>
-            );
-          })}
-        </Grid>
-      )}
+      {(() => {
+        if (cell.originalValue || cell.assignedValue) {
+          return (
+            <Typography textAlign="center" variant="h6">
+              {cell.assignedValue}
+            </Typography>
+          );
+        }
+
+        if (boxWidth > 3) {
+          return (
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "100",
+                backgroundColor: "lightgrey",
+              }}
+            />
+          );
+        }
+
+        return (
+          <Grid container>
+            {cell.possibleValues.map((value, index) => {
+              return (
+                <div
+                  style={{ width: eachWidth / 3, height: eachWidth / 3 }}
+                  key={index}
+                >
+                  <Grid item key={index}>
+                    <Typography
+                      textAlign="center"
+                      color={"grey"}
+                      fontSize={`${eachWidth / 3}px`}
+                    >
+                      {value}
+                    </Typography>
+                  </Grid>
+                </div>
+              );
+            })}
+          </Grid>
+        );
+      })()}
     </Stack>
   );
 };

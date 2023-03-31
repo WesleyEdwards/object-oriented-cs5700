@@ -19,11 +19,7 @@ export const PuzzleView = (props: PuzzleViewProps) => {
       <Stack direction="column" height={`${widthHeight}px`} alignSelf="center">
         {grid.map((row, rowIndex) => {
           return (
-            <Stack
-              direction="row"
-              width={`${widthHeight}px`}
-              key={rowIndex + 1000}
-            >
+            <Stack direction="row" width={`${widthHeight}px`} key={rowIndex}>
               {row.map((cell, cellIndex) => {
                 return (
                   <RenderCell

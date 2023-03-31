@@ -4,7 +4,6 @@ import {
   SolveMethodTemplate,
   SudokuGrid,
 } from "../../solvers/SolverTemplate";
-import { BoxWidthMap } from "../helpers";
 import { getBox } from "../utils";
 
 export class UniqueCandidate implements SolveMethodTemplate {
@@ -38,15 +37,12 @@ export class UniqueCandidate implements SolveMethodTemplate {
   }
 
   findUniqueCandidate(cell: Cell): boolean {
-    const box = getBox(this.grid, cell.row, cell.col);
-
     for (let i = 0; i < this.possibleValues.length; i++) {
       const value = this.possibleValues[i];
-      let count = 0;
 
-      const existsInRow = this.checkTheRow(cell, value);
-      const existsInCol = this.checkTheCol(cell, value);
-      const existsInBox = this.checkTheBox(box, value);
+      const existsInRow = this.checkRow(cell, value);
+      const existsInCol = this.checkCol(cell, value);
+      const existsInBox = this.checkBox(cell, value);
       if (existsInBox || existsInCol || existsInRow) {
         continue;
       }
@@ -57,7 +53,7 @@ export class UniqueCandidate implements SolveMethodTemplate {
     return false;
   }
 
-  checkTheRow(cell: Cell, value: string): boolean {
+  checkRow(cell: Cell, value: string): boolean {
     for (let i = 0; i < this.grid.length; i++) {
       const checkCell = this.grid[cell.row][i];
       if (checkCell.assignedValue === value) {
@@ -67,7 +63,7 @@ export class UniqueCandidate implements SolveMethodTemplate {
     return false;
   }
 
-  checkTheCol(cell: Cell, value: string): boolean {
+  checkCol(cell: Cell, value: string): boolean {
     for (let i = 0; i < this.grid.length; i++) {
       const checkCell = this.grid[i][cell.col];
       if (checkCell.assignedValue === value) {
@@ -77,7 +73,8 @@ export class UniqueCandidate implements SolveMethodTemplate {
     return false;
   }
 
-  checkTheBox(box: Cell[], value: string): boolean {
+  checkBox(cell: Cell, value: string): boolean {
+    const box = getBox(this.grid, cell.row, cell.col);
     for (let i = 0; i < box.length; i++) {
       const checkCell = box[i];
       if (checkCell.assignedValue === value) {
@@ -85,17 +82,5 @@ export class UniqueCandidate implements SolveMethodTemplate {
       }
     }
     return false;
-  }
-
-  checkRow() {
-    return;
-  }
-
-  checkCol() {
-    return;
-  }
-
-  checkBox() {
-    return;
   }
 }

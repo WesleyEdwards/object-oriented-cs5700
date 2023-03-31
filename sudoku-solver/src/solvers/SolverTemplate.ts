@@ -1,5 +1,3 @@
-import { BoxWidthMap } from "../lib/helpers";
-
 export type Cell = {
   originalValue: string | undefined;
   assignedValue: string | undefined;
@@ -21,12 +19,7 @@ export interface Puzzle {
 export interface SolveMethodTemplate {
   findAll(): SudokuGrid;
   findOne(): SudokuGrid | null;
-  checkRow(): void;
-  checkCol(): void;
-  checkBox(): void;
+  checkRow(cell: Cell, value: string): boolean;
+  checkCol(cell: Cell, value: string): boolean;
+  checkBox(cell: Cell, value: string): boolean;
 }
-
-// Naked Single
-// Hidden Single
-// Naked Pair
-// Hidden Pair

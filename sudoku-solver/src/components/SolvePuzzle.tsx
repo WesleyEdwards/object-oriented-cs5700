@@ -1,39 +1,41 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
-import {
-  Puzzle,
-  SolveMethodTemplate,
-  SudokuGrid,
-} from "../solvers/SolverTemplate";
-import { NakedSingle } from "../lib/solvingTechniques.ts/NakedSingle";
-import { FindInitialPossibilities } from "../lib/solvingTechniques.ts/FindInitialPossibilities";
-import { UniqueCandidate } from "../lib/solvingTechniques.ts/UniqueCandidate";
-import { SoleCandidate } from "../lib/solvingTechniques.ts/SoleCandidate";
+import { SudokuGrid } from "../solvers/SolverTemplate";
+import { SolveManager, SolverPossibility } from "../lib/SolveManager";
 
 interface SolvePuzzleProps {
-  sudoku: Puzzle;
+  workingGrid: SudokuGrid;
+  possibleValues: string[];
   setSolved: (sudoku: SudokuGrid | null) => void;
 }
 
 type StepInfo = {
   stepName: string;
-  solver: SolveMethodTemplate;
+  solver: SolverPossibility;
 };
 
-export const SolvePuzzle: FC<SolvePuzzleProps> = ({ sudoku, setSolved }) => {
+export const SolvePuzzle: FC<SolvePuzzleProps> = ({
+  workingGrid,
+  possibleValues,
+  setSolved,
+}) => {
   const [step, setStep] = useState<number>(0);
+  const solveManager = new SolveManager(workingGrid, possibleValues);
 
   const solvePuzzle = () => {
     const { solver } = SolveSteps[step];
-    const newSudoku = solver.findAll();
+    const newSudoku = solveManager.findAll(solver);
     if (newSudoku === null) return setSolved(null);
     setSolved(newSudoku);
     setStep(step + 1);
+    solveManager.updateHints();
     return;
   };
+
   const solveOneStep = () => {
     const { solver } = SolveSteps[step];
-    const res = solver.findOne();
+    const res = solveManager.findOne(solver);
+    if (solver !== "possibility") solveManager.updateHints();
     if (res === null) {
       setStep(step + 1);
       return;
@@ -44,19 +46,19 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({ sudoku, setSolved }) => {
   const SolveSteps: Record<number, StepInfo> = {
     0: {
       stepName: "Find Possibilities",
-      solver: new FindInitialPossibilities(sudoku.workingGrid),
+      solver: "possibility",
     },
     1: {
       stepName: "Sole Candidate",
-      solver: new SoleCandidate(sudoku.workingGrid),
+      solver: "soleCandidate",
     },
     2: {
       stepName: "Unique Candidate",
-      solver: new UniqueCandidate(sudoku.workingGrid, sudoku.possibleValues),
+      solver: "uniqueCandidate",
     },
     3: {
       stepName: "Hidden Single",
-      solver: new NakedSingle(sudoku.workingGrid),
+      solver: "nakedSingle",
     },
   };
 
