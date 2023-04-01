@@ -20,21 +20,7 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
   possibleValues,
   setGrid,
 }) => {
-  // const [step, setStep] = useState<number>(0);
   const solveManager = new SolveManager(workingGrid, possibleValues);
-
-  // const solvePuzzle = () => {
-  //   const newSudoku = solveManager.findAll(solverStepsThing);
-  //   if (newSudoku === null) return setGrid("unsolvable");
-  //   if (step < 9) {
-  //     setGrid(newSudoku);
-  //   }
-  //   setStep(step + 1);
-  //   if (solveManager.isSolved) return setGrid("solved");
-  //   // const updated = solveManager.updateHints();
-  //   // console.log(updated);
-  //   // setGrid(updated);
-  // };
 
   const tryToSolve = (version: SolverPossibility) => {
     const newSudoku = solveManager.findAll(version);
@@ -42,18 +28,12 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
     setGrid(newSudoku);
   };
 
-  // const solverStepsThing = (() => {
-  //   switch (step) {
-  //     case 0:
-  //       return "possibility";
-  //     case 1:
-  //       return "soleCandidate";
-  //     case 2:
-  //       return "backtrack";
-  //     default:
-  //       return "possibility";
-  //   }
-  // })();
+  const buttons: Record<string, SolverPossibility> = {
+    "Check Possibilities": "possibility",
+    "Sole Candidates": "soleCandidate",
+    "Hidden Singles": "hiddenSingle",
+    "Brute Force": "backtrack",
+  };
 
   return (
     <Stack
@@ -62,27 +42,16 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
       gap="2rem"
       alignItems="center"
     >
-      <Button
-        variant="outlined"
-        onClick={() => tryToSolve("possibility")}
-        sx={{ minWidth: "12rem", alignSelf: "center" }}
-      >
-        find possibilities
-      </Button>
-      <Button
-        variant="outlined"
-        onClick={() => tryToSolve("soleCandidate")}
-        sx={{ minWidth: "12rem", alignSelf: "center" }}
-      >
-        Sole
-      </Button>
-      <Button
-        variant="outlined"
-        onClick={() => tryToSolve("backtrack")}
-        sx={{ minWidth: "12rem", alignSelf: "center" }}
-      >
-        Brute Force
-      </Button>
+      {Object.entries(buttons).map(([name, solver]) => (
+        <Button
+          key={name}
+          variant="outlined"
+          onClick={() => tryToSolve(solver)}
+          sx={{ minWidth: "12rem", alignSelf: "center" }}
+        >
+          {name}
+        </Button>
+      ))}
     </Stack>
   );
 };

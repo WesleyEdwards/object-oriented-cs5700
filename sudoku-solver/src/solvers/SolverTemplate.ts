@@ -17,9 +17,9 @@ export interface Puzzle {
 }
 
 export interface SolveMethodTemplate {
-  findAll(): SudokuGrid;
-  findOne(): SudokuGrid | null;
-  checkRow(cell: Cell, value: string): boolean;
-  checkCol(cell: Cell, value: string): boolean;
-  checkBox(cell: Cell, value: string): boolean;
+  findAll(grid: SudokuGrid): SudokuGrid;
+  // findOne(): SudokuGrid | null;
+  // checkRow(cell: Cell, value: string): boolean;
+  // checkCol(cell: Cell, value: string): boolean;
+  // checkBox(cell: Cell, value: string): boolean;
 }

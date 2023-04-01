@@ -1,7 +1,8 @@
 import { Cell, SudokuGrid } from "../solvers/SolverTemplate";
 import { BoxWidthMap } from "./helpers";
 
-export function getBox(grid: SudokuGrid, row: number, col: number): Cell[] {
+export function getBox(grid: SudokuGrid, cell: Cell): Cell[] {
+  const { row, col } = cell;
   const size = BoxWidthMap[grid.length];
   const box: Cell[] = [];
   const boxRowStart = Math.floor(row / size) * size;
