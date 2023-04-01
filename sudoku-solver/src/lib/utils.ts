@@ -16,6 +16,23 @@ export function getBox(grid: SudokuGrid, cell: Cell): Cell[] {
   return box;
 }
 
+export function getGridBoxes(grid: SudokuGrid): Cell[][] {
+  const size = BoxWidthMap[grid.length];
+  const boxes: Cell[][] = [];
+  for (let i = 0; i < grid.length; i += size) {
+    for (let j = 0; j < grid.length; j += size) {
+      const box: Cell[] = [];
+      for (let k = i; k < i + size; k++) {
+        for (let l = j; l < j + size; l++) {
+          box.push(grid[k][l]);
+        }
+      }
+      boxes.push(box);
+    }
+  }
+  return boxes;
+}
+
 export function getNonBoxCellsInRow(
   grid: SudokuGrid,
   row: number,

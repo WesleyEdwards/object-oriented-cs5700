@@ -4,14 +4,11 @@ import { Cell, SudokuGrid } from "./SolverTemplate";
 
 export class Backtrack {
   private grid: SudokuGrid;
-  private possibleValues: string[];
-  constructor(grid: SudokuGrid, possibleValues: string[]) {
+  constructor(grid: SudokuGrid) {
     this.grid = grid;
-    this.possibleValues = possibleValues;
   }
 
   findAll(): SudokuGrid {
-    console.log(this.grid);
     return this.solve();
   }
 
@@ -67,7 +64,7 @@ export class Backtrack {
       (row) => row[cell.col].assignedValue ?? ""
     );
     if (sudokuCol.includes(num.toString())) return false;
-    const sudokuBox: string[] = getBox(this.grid, cell.row, cell.col).map(
+    const sudokuBox: string[] = getBox(this.grid, cell).map(
       (cell) => cell.assignedValue ?? ""
     );
     if (sudokuBox.includes(num.toString())) return false;

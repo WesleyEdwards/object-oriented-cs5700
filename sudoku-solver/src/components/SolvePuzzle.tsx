@@ -10,11 +10,6 @@ interface SolvePuzzleProps {
   setGrid: (sudoku: GridStatus) => void;
 }
 
-type StepInfo = {
-  stepName: string;
-  solver: SolverPossibility;
-};
-
 export const SolvePuzzle: FC<SolvePuzzleProps> = ({
   workingGrid,
   possibleValues,
@@ -33,6 +28,8 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
     "Sole Candidates": "soleCandidate",
     "Hidden Singles": "hiddenSingle",
     "Brute Force": "backtrack",
+    "Naked Double": "nakedDouble",
+    EVERYTHING: "all",
   };
 
   return (
