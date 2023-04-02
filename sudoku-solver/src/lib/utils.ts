@@ -68,3 +68,14 @@ export function getNonBoxCellsInCol(
   }
   return cells;
 }
+
+export const turnToText = (grid: SudokuGrid): string => {
+  let text = "";
+  grid.forEach((row) => {
+    row.forEach((cell) => {
+      text += cell.assignedValue + " ";
+    });
+    text += "\n";
+  });
+  return text;
+};

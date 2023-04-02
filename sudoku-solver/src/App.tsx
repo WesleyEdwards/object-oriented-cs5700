@@ -5,6 +5,7 @@ import { SolvePuzzle } from "./components/SolvePuzzle";
 import { UploadFile } from "./components/UploadFile";
 import { reducer } from "./lib/StateManager";
 import { Puzzle, SudokuGrid } from "./solvers/SolverTemplate";
+import { DoneSolving } from "./components/DoneSolving";
 
 export type GridStatus = SudokuGrid | "unsolvable" | "solved";
 
@@ -52,7 +53,7 @@ function App() {
                 />
                 <Divider />
                 {state.status === "solved" ? (
-                  <div>done</div>
+                  <DoneSolving puzzle={state.puzzle} />
                 ) : (
                   <SolvePuzzle
                     workingGrid={workingGrid}
