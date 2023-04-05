@@ -24,7 +24,6 @@ function App() {
 
   const setInitialSudoku = (initial: Puzzle | undefined) => {
     if (initial) return dispatch({ action: "setSolving", puzzle: initial });
-
     dispatch({ action: "initialScreen" });
   };
 

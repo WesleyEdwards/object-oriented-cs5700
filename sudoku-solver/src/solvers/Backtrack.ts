@@ -1,14 +1,15 @@
 import { BoxWidthMap } from "../lib/helpers";
 import { getBox } from "../lib/utils";
-import { Cell, SudokuGrid } from "./SolverTemplate";
+import { Cell, SolveMethodTemplate, SudokuGrid } from "./SolverTemplate";
 
-export class Backtrack {
+export class Backtrack implements SolveMethodTemplate {
   private grid: SudokuGrid;
-  constructor(grid: SudokuGrid) {
-    this.grid = grid;
+  constructor() {
+    this.grid = [];
   }
 
-  findAll(): SudokuGrid {
+  findAll(grid: SudokuGrid): SudokuGrid {
+    this.grid = grid;
     return this.solve();
   }
 

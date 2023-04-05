@@ -18,7 +18,7 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
   const solveManager = new SolveManager(workingGrid, possibleValues);
 
   const tryToSolve = (version: SolverPossibility) => {
-    const newSudoku = solveManager.findAll(version);
+    const newSudoku = solveManager.solveUsingMethod(version);
     if (newSudoku === null) return setGrid("unsolvable");
     if (solveManager.isSolved) return setGrid("solved");
     setGrid(newSudoku);

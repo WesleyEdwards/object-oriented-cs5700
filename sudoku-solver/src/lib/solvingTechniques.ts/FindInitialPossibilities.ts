@@ -64,8 +64,7 @@ export class FindInitialPossibilities implements SolveMethodTemplate {
   }
 
   checkBox(grid: SudokuGrid, cell: Cell, value: string): boolean {
-    const { row, col } = cell;
-    const boxCells = getBox(grid, row, col);
+    const boxCells = getBox(grid, cell);
     const values = boxCells.map((cell) => cell.assignedValue);
     return values.includes(value);
   }

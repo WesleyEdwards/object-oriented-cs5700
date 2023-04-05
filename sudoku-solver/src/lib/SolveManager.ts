@@ -1,5 +1,5 @@
 import { Backtrack } from "../solvers/Backtrack";
-import { SudokuGrid } from "../solvers/SolverTemplate";
+import { SolveMethodTemplate, SudokuGrid } from "../solvers/SolverTemplate";
 import { FindInitialPossibilities } from "./solvingTechniques.ts/FindInitialPossibilities";
 import { HiddenSingle } from "./solvingTechniques.ts/HiddenSingle";
 import { NakedDouble } from "./solvingTechniques.ts/NakedDouble";
@@ -14,22 +14,22 @@ export type SolverPossibility =
   | "backtrack";
 
 export class SolveManager {
-  private initialSolver: FindInitialPossibilities;
-  private soleCandidate: SoleCandidate;
-  private hiddenSingle: HiddenSingle;
-  private backtrack: Backtrack;
+  private initialSolver: SolveMethodTemplate;
+  private soleCandidate: SolveMethodTemplate;
+  private hiddenSingle: SolveMethodTemplate;
+  private backtrack: SolveMethodTemplate;
   private grid: SudokuGrid;
-  private nakedDouble: NakedDouble;
+  private nakedDouble: SolveMethodTemplate;
   constructor(workingGrid: SudokuGrid, possibleValues: string[]) {
     this.grid = workingGrid;
     this.initialSolver = new FindInitialPossibilities(possibleValues);
     this.soleCandidate = new SoleCandidate();
     this.hiddenSingle = new HiddenSingle();
-    this.backtrack = new Backtrack(workingGrid);
-    this.nakedDouble = new NakedDouble();
+    this.backtrack = new Backtrack();
+    this.nakedDouble = new NakedDouble(possibleValues);
   }
 
-  findAll(type: SolverPossibility): SudokuGrid | null {
+  solveUsingMethod(type: SolverPossibility): SudokuGrid | null {
     switch (type) {
       case "possibility":
         return this.initialSolver.findAll(this.grid);
@@ -38,10 +38,10 @@ export class SolveManager {
       case "hiddenSingle":
         return this.hiddenSingle.findAll(this.grid);
       case "backtrack": {
-        return this.backtrack.findAll();
+        return this.backtrack.findAll(this.grid);
       }
       case "nakedDouble": {
-        return this.nakedDouble.findOne(this.grid);
+        return this.nakedDouble.findAll(this.grid);
       }
       case "all": {
         for (let i = 0; i < 20; i++) {

@@ -5,7 +5,6 @@ import {
   SudokuGrid,
 } from "../../solvers/SolverTemplate";
 import { getBox } from "../utils";
-import { FindInitialPossibilities } from "./FindInitialPossibilities";
 
 export class SoleCandidate implements SolveMethodTemplate {
   findAll(grid: SudokuGrid): SudokuGrid {
