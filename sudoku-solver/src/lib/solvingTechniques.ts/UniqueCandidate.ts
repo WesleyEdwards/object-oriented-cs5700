@@ -1,11 +1,11 @@
 import {
   Cell,
-  SolveMethodTemplate,
+  CellSolution,
   SudokuGrid,
 } from "../../solvers/SolverTemplate";
 import { getBox } from "../utils";
 
-export class UniqueCandidate implements SolveMethodTemplate {
+export class UniqueCandidate implements CellSolution {
   private grid: SudokuGrid;
   private possibleValues: string[];
 

@@ -1,5 +1,5 @@
 import { Backtrack } from "../solvers/Backtrack";
-import { SolveMethodTemplate, SudokuGrid } from "../solvers/SolverTemplate";
+import { CellSolution, SudokuGrid } from "../solvers/SolverTemplate";
 import { FindInitialPossibilities } from "./solvingTechniques.ts/FindInitialPossibilities";
 import { HiddenSingle } from "./solvingTechniques.ts/HiddenSingle";
 import { NakedDouble } from "./solvingTechniques.ts/NakedDouble";
@@ -14,12 +14,12 @@ export type SolverPossibility =
   | "backtrack";
 
 export class SolveManager {
-  private initialSolver: SolveMethodTemplate;
-  private soleCandidate: SolveMethodTemplate;
-  private hiddenSingle: SolveMethodTemplate;
-  private backtrack: SolveMethodTemplate;
+  private initialSolver: CellSolution;
+  private soleCandidate: CellSolution;
+  private hiddenSingle: CellSolution;
+  private backtrack: CellSolution;
   private grid: SudokuGrid;
-  private nakedDouble: SolveMethodTemplate;
+  private nakedDouble: CellSolution;
   constructor(workingGrid: SudokuGrid, possibleValues: string[]) {
     this.grid = workingGrid;
     this.initialSolver = new FindInitialPossibilities(possibleValues);
@@ -38,21 +38,26 @@ export class SolveManager {
       case "hiddenSingle":
         return this.hiddenSingle.findAll(this.grid);
       case "backtrack": {
+        this.solveAll();
         return this.backtrack.findAll(this.grid);
       }
       case "nakedDouble": {
         return this.nakedDouble.findAll(this.grid);
       }
       case "all": {
-        this.initialSolver.findAll(this.grid);
-        for (let i = 0; i < 20; i++) {
-          this.soleCandidate.findAll(this.grid);
-          this.hiddenSingle.findAll(this.grid);
-          this.nakedDouble.findAll(this.grid);
-        }
-        return this.grid;
+        return this.solveAll();
       }
     }
+  }
+
+  solveAll() {
+    this.initialSolver.findAll(this.grid);
+    for (let i = 0; i < 20; i++) {
+      this.soleCandidate.findAll(this.grid);
+      this.hiddenSingle.findAll(this.grid);
+      this.nakedDouble.findAll(this.grid);
+    }
+    return this.grid;
   }
 
   get isSolved(): boolean {

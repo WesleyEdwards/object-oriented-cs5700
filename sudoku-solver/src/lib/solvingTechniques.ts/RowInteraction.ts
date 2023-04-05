@@ -1,13 +1,13 @@
 import {
   Cell,
   Puzzle,
-  SolveMethodTemplate,
+  CellSolution,
   SudokuGrid,
 } from "../../solvers/SolverTemplate";
 import { BoxWidthMap } from "../helpers";
 import { getBox, getNonBoxCellsInRow } from "../utils";
 
-export class RowInteraction implements SolveMethodTemplate {
+export class RowInteraction implements CellSolution {
   private grid: SudokuGrid;
   private possibleValues: string[];
 

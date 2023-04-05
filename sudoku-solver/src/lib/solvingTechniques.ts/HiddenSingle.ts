@@ -1,11 +1,7 @@
-import {
-  Cell,
-  SolveMethodTemplate,
-  SudokuGrid,
-} from "../../solvers/SolverTemplate";
+import { Cell, CellSolution, SudokuGrid } from "../../solvers/SolverTemplate";
 import { getBox } from "../utils";
 
-export class HiddenSingle implements SolveMethodTemplate {
+export class HiddenSingle implements CellSolution {
   findAll(grid: SudokuGrid): SudokuGrid {
     while (this.findOne(grid)) {
       this.findOne(grid);

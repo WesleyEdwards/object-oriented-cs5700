@@ -1,11 +1,13 @@
 import { BoxWidthMap } from "../lib/helpers";
 import { getBox } from "../lib/utils";
-import { Cell, SolveMethodTemplate, SudokuGrid } from "./SolverTemplate";
+import { Cell, CellSolution, SudokuGrid } from "./SolverTemplate";
 
-export class Backtrack implements SolveMethodTemplate {
+export class Backtrack implements CellSolution {
   private grid: SudokuGrid;
+  private width: number;
   constructor() {
     this.grid = [];
+    this.width = this.grid.length;
   }
 
   findAll(grid: SudokuGrid): SudokuGrid {
@@ -32,14 +34,11 @@ export class Backtrack implements SolveMethodTemplate {
       return this.solveSudoku(grid, row, col + 1);
     }
 
-    for (let num = 1; num <= grid[row][col].possibleValues.length; num++) {
+    for (let num = 0; num <= grid[row][col].possibleValues.length - 1; num++) {
       if (
-        this.isNumberValid(
-          grid[row][col],
-          grid[row][col].possibleValues[num - 1]
-        )
+        this.isNumberValid(grid[row][col], grid[row][col].possibleValues[num])
       ) {
-        grid[row][col].assignedValue = grid[row][col].possibleValues[num - 1];
+        grid[row][col].assignedValue = grid[row][col].possibleValues[num];
         if (this.solveSudoku(grid, row, col + 1)) {
           return true;
         }
@@ -56,15 +55,10 @@ export class Backtrack implements SolveMethodTemplate {
   }
 
   isNumberValid(cell: Cell, num: string): boolean {
-    const sudokuRow: string[] = this.grid[cell.row].map(
-      (cell) => cell.assignedValue ?? ""
-    );
-    if (sudokuRow.includes(num.toString())) return false;
-
-    const sudokuCol: string[] = this.grid.map(
-      (row) => row[cell.col].assignedValue ?? ""
-    );
-    if (sudokuCol.includes(num.toString())) return false;
+    for (let i = 0; i < this.width; i++) {
+      if (this.grid[cell.row][i].assignedValue === num) return false;
+      if (this.grid[i][cell.col].assignedValue === num) return false;
+    }
     const sudokuBox: string[] = getBox(this.grid, cell).map(
       (cell) => cell.assignedValue ?? ""
     );

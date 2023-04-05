@@ -1,12 +1,8 @@
-import {
-  Cell,
-  SolveMethodTemplate,
-  SudokuGrid,
-} from "../../solvers/SolverTemplate";
+import { Cell, CellSolution, SudokuGrid } from "../../solvers/SolverTemplate";
 import { BoxWidthMap } from "../helpers";
-import { getBox, getGridBoxes } from "../utils";
+import { getGridBoxes } from "../utils";
 
-export class NakedDouble implements SolveMethodTemplate {
+export class NakedDouble implements CellSolution {
   possibleValues: string[];
   constructor(possibleValues: string[]) {
     this.possibleValues = possibleValues;

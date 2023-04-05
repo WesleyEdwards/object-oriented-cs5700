@@ -16,7 +16,7 @@ export interface Puzzle {
   possibleValues: string[];
 }
 
-export interface SolveMethodTemplate {
+export interface CellSolution {
   findAll(grid: SudokuGrid): SudokuGrid;
   // findOne(): SudokuGrid | null;
   // checkRow(cell: Cell, value: string): boolean;

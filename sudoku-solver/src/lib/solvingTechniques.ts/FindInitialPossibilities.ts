@@ -1,11 +1,7 @@
-import {
-  Cell,
-  SolveMethodTemplate,
-  SudokuGrid,
-} from "../../solvers/SolverTemplate";
+import { Cell, CellSolution, SudokuGrid } from "../../solvers/SolverTemplate";
 import { getBox } from "../utils";
 
-export class FindInitialPossibilities implements SolveMethodTemplate {
+export class FindInitialPossibilities implements CellSolution {
   private possibleValues: string[];
   constructor(possibleValues: string[]) {
     this.possibleValues = possibleValues;
