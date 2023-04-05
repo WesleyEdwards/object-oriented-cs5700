@@ -67,11 +67,7 @@ export class RowInteraction implements CellSolution {
       const checkCell = otherBoxValues[i];
       for (let j = 0; j < checkCell.possibleValues.length; j++) {
         if (checkCell.possibleValues[j] === value) {
-          const otherCellsInJBox = getBox(
-            this.grid,
-            checkCell.row,
-            checkCell.col
-          );
+          const otherCellsInJBox = getBox(this.grid, checkCell);
           for (let k = 0; k < otherCellsInJBox.length; k++) {
             const otherCellInJBox = otherCellsInJBox[k];
             // if (otherCellInJBox.col === cell.col) {
@@ -102,11 +98,7 @@ export class RowInteraction implements CellSolution {
       const checkCell = otherBoxValues[i];
       for (let j = 0; j < checkCell.possibleValues.length; j++) {
         if (checkCell.possibleValues[j] === value) {
-          const otherCellsInJBox = getBox(
-            this.grid,
-            checkCell.row,
-            checkCell.col
-          );
+          const otherCellsInJBox = getBox(this.grid, checkCell);
           for (let k = 0; k < otherCellsInJBox.length; k++) {
             const otherCellInJBox = otherCellsInJBox[k];
             // if (otherCellInJBox.row === cell.row) {
@@ -124,7 +116,7 @@ export class RowInteraction implements CellSolution {
   }
 
   checkBox(cell: Cell, value: string): boolean {
-    const box = getBox(this.grid, cell.row, cell.col);
+    const box = getBox(this.grid, cell);
     for (let i = 0; i < box.length; i++) {
       const checkCell = box[i];
       if (checkCell.assignedValue === value) {

@@ -1,8 +1,4 @@
-import {
-  Cell,
-  CellSolution,
-  SudokuGrid,
-} from "../../solvers/SolverTemplate";
+import { Cell, CellSolution, SudokuGrid } from "../../solvers/SolverTemplate";
 import { getBox } from "../utils";
 
 export class UniqueCandidate implements CellSolution {
@@ -72,7 +68,7 @@ export class UniqueCandidate implements CellSolution {
   }
 
   checkBox(cell: Cell, value: string): boolean {
-    const box = getBox(this.grid, cell.row, cell.col);
+    const box = getBox(this.grid, cell);
     for (let i = 0; i < box.length; i++) {
       const checkCell = box[i];
       if (checkCell.assignedValue === value) {

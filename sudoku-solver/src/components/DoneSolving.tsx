@@ -4,10 +4,14 @@ import { Puzzle } from "../solvers/SolverTemplate";
 import { Button, Stack } from "@mui/material";
 import { turnToText } from "../lib/utils";
 
-export const DoneSolving: FC<{ puzzle: Puzzle }> = ({ puzzle }) => {
+interface DoneSolvingProps {
+  puzzle: Puzzle;
+  download: (fileData: string, fileName: string) => void;
+}
+export const DoneSolving: FC<DoneSolvingProps> = ({ puzzle, download }) => {
   const downloadFile = () => {
     const sudokuText = turnToText(puzzle.workingGrid);
-    createBlobAndDownload(sudokuText, `${puzzle.fileName} (solved).txt`);
+    download(sudokuText, `${puzzle.fileName} (solved).txt`);
   };
 
   return (
@@ -19,17 +23,3 @@ export const DoneSolving: FC<{ puzzle: Puzzle }> = ({ puzzle }) => {
     </Stack>
   );
 };
-
-function createBlobAndDownload(fileDatA: string, fileName: string) {
-  const blob = new Blob([fileDatA], {
-    type: "text/calendar;charset=utf-8",
-  });
-  const url = URL.createObjectURL(blob);
-
-  const downloadLink = document.createElement("a");
-  downloadLink.href = url;
-  downloadLink.download = fileName;
-  document.body.appendChild(downloadLink);
-  downloadLink.click();
-  document.body.removeChild(downloadLink);
-}

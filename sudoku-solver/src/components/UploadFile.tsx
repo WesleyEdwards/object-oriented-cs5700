@@ -3,20 +3,19 @@ import { useEffect, useRef, useState } from "react";
 import { Puzzle } from "../solvers/SolverTemplate";
 import ClearIcon from "@mui/icons-material/Clear";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import { FileManager } from "../FileManager";
+import { FileAdapter } from "../FileAdapter";
 
 type UploadFileProps = {
   setSudoku: (sudoku: Puzzle | undefined) => void;
   sudoku?: Puzzle;
   setError(message: string): void;
+  adapter: FileAdapter;
 };
 export const UploadFile = (props: UploadFileProps) => {
-  const { setSudoku, sudoku, setError } = props;
-
-  const fileManager = new FileManager();
+  const { setSudoku, sudoku, setError, adapter } = props;
 
   const handleSelectFile = (event: React.ChangeEvent<HTMLInputElement>) =>
-    fileManager
+    adapter
       .parsePuzzle(event)
       .then((sudoku) => {
         setSudoku(sudoku);

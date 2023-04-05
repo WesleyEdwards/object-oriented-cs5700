@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 import { validWidths } from "./lib/helpers";
 import { Puzzle, SudokuGrid } from "./solvers/SolverTemplate";
 
-export class FileManager {
+export class FileAdapter {
   parsePuzzle(event: ChangeEvent<HTMLInputElement>): Promise<Puzzle> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -67,5 +67,19 @@ export class FileManager {
         reader.readAsText(event.target.files[0]);
       }
     });
+  }
+
+  downloadFile(fileData: string, fileName: string) {
+    const blob = new Blob([fileData], {
+      type: "text/calendar;charset=utf-8",
+    });
+    const url = URL.createObjectURL(blob);
+
+    const downloadLink = document.createElement("a");
+    downloadLink.href = url;
+    downloadLink.download = fileName;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   }
 }
