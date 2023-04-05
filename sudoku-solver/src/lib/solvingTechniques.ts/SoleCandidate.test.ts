@@ -12,7 +12,7 @@ const testGrid = [
     { assignedValue, possibleValues: ["4"], row: 0, col: 3 },
   ],
   [
-    { assignedValue, possibleValues, row: 1, col: 0 },
+    { assignedValue, possibleValues: ["5", "6"], row: 1, col: 0 },
     { assignedValue, possibleValues, row: 1, col: 1 },
     { assignedValue, possibleValues, row: 1, col: 2 },
     { assignedValue, possibleValues, row: 1, col: 3 },
