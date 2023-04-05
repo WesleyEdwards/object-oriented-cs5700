@@ -44,12 +44,13 @@ export class SolveManager {
         return this.nakedDouble.findAll(this.grid);
       }
       case "all": {
+        this.initialSolver.findAll(this.grid);
         for (let i = 0; i < 20; i++) {
-          this.initialSolver.findAll(this.grid);
           this.soleCandidate.findAll(this.grid);
           this.hiddenSingle.findAll(this.grid);
+          this.nakedDouble.findAll(this.grid);
         }
-        return this.initialSolver.findAll(this.grid);
+        return this.grid;
       }
     }
   }

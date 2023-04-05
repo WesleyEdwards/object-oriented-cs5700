@@ -24,68 +24,47 @@ export class NakedDouble implements SolveMethodTemplate {
     const boxes: Cell[][] = getGridBoxes(grid);
 
     const doubleRows: DoubleRowInfo[] = this.findDoubleRowInfo(boxes);
-    // console.log(doubleRows);
     grid.forEach((row) => {
       row.forEach((cell) => {
         if (cell.assignedValue) return;
         doubleRows.forEach((info) => {
           if (info.cell1.row !== cell.row) return;
           if (this.inSameBox(info.cell1, cell)) return;
-          if (this.inSameBox(info.cell2, cell)) return;
-          // if (info.cell1.col === cell.col) return;
-          // if (info.cell2.col === cell.col) return;
           if (cell.possibleValues.length === 1)
             cell.assignedValue = cell.possibleValues[0];
-          // console.log(info.cell1, info.cell2, cell);
           cell.possibleValues = cell.possibleValues.filter((v) => {
-            if (v === info.value) {
-              console.log(
-                "Removing",
-                v,
-                "from",
-                "(",
-                cell.row.toString(),
-                cell.col.toString(),
-                ")",
-                "because of",
-                info
-              );
-            }
+            if (v === info.value)
+              console.log("removed row", cell.row, cell.col, v);
             return v !== info.value;
           });
         });
       });
     });
-    // const doubleCols: DoubleColInfo[] = this.findDoubleColInfo(boxes);
-    // // console.log(doubleCols);
-    // grid.forEach((row) => {
-    //   row.forEach((cell) => {
-    //     if (cell.assignedValue) return;
-    //     doubleCols.forEach((info) => {
-    //       if (info.cell1.col !== cell.col) return;
-    //       if (info.cell1.row === cell.row) return;
-    //       if (info.cell2.row === cell.row) return;
-    //       if (cell.possibleValues.length === 1)
-    //         cell.assignedValue = cell.possibleValues[0];
-    //       cell.possibleValues = cell.possibleValues.filter((v) => {
-
-    //         return v !== info.value;
-    //       });
-    //     });
-    //   });
-    // });
+    const doubleCols: DoubleColInfo[] = this.findDoubleColInfo(boxes);
+    grid.forEach((row) => {
+      row.forEach((cell) => {
+        if (cell.assignedValue) return;
+        doubleCols.forEach((info) => {
+          if (info.cell1.col !== cell.col) return;
+          if (this.inSameBox(info.cell1, cell)) return;
+          if (cell.possibleValues.length === 1)
+            cell.assignedValue = cell.possibleValues[0];
+          cell.possibleValues = cell.possibleValues.filter((v) => {
+            if (v === info.value)
+              console.log("removed col", cell.row, cell.col, v);
+            return v !== info.value;
+          });
+        });
+      });
+    });
 
     return grid;
   }
 
   inSameBox(cell1: Cell, cell2: Cell): boolean {
     const boxWidth = BoxWidthMap[this.possibleValues.length];
-    const boxRowValue = (cell: Cell) => {
-      return Math.floor(cell.row / boxWidth);
-    };
-    const boxColValue = (cell: Cell) => {
-      return Math.floor(cell.col / boxWidth);
-    };
+    const boxRowValue = (cell: Cell) => Math.floor(cell.row / boxWidth);
+    const boxColValue = (cell: Cell) => Math.floor(cell.col / boxWidth);
     return (
       boxRowValue(cell1) === boxRowValue(cell2) &&
       boxColValue(cell1) === boxColValue(cell2)

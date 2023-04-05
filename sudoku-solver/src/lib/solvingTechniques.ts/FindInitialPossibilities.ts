@@ -4,7 +4,6 @@ import {
   SudokuGrid,
 } from "../../solvers/SolverTemplate";
 import { getBox } from "../utils";
-import { BoxWidthMap } from "../helpers";
 
 export class FindInitialPossibilities implements SolveMethodTemplate {
   private possibleValues: string[];
@@ -13,10 +12,13 @@ export class FindInitialPossibilities implements SolveMethodTemplate {
   }
 
   findAll(grid: SudokuGrid): SudokuGrid {
-    const sudokuGrid = grid.map((row) =>
-      row.map((cell) => this.findPossibleValues(grid, cell))
-    );
-    return sudokuGrid;
+    for (let row = 0; row < grid.length; row++) {
+      for (let col = 0; col < grid.length; col++) {
+        const cell = grid[row][col];
+        this.findPossibleValues(grid, cell);
+      }
+    }
+    return grid;
   }
 
   findOne(grid: SudokuGrid): SudokuGrid | null {
