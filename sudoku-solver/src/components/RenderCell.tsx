@@ -22,7 +22,7 @@ export const RenderCell: FC<{
       justifyContent="center"
     >
       {(() => {
-        if (cell.originalValue || cell.assignedValue) {
+        if (cell.assignedValue) {
           return (
             <Typography textAlign="center" variant="h6">
               {cell.assignedValue}

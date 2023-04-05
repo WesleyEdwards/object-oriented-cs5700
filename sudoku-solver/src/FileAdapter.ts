@@ -34,7 +34,6 @@ export class FileAdapter {
         const sudokuGrid: SudokuGrid = sudoku.map((row, rowIdx) =>
           row.map((cell, colIdx) => ({
             possibleValues: [],
-            originalValue: cell === "-" ? undefined : cell,
             assignedValue: cell === "-" ? undefined : cell,
             row: rowIdx,
             col: colIdx,

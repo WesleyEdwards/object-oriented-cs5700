@@ -30,8 +30,8 @@ export class NakedDouble implements CellSolution {
             cell.assignedValue = cell.possibleValues[0];
           cell.possibleValues = cell.possibleValues.filter((v) => {
             if (v === info.value)
-              // console.log("removed row", cell.row, cell.col, v);
-              return v !== info.value;
+              console.log("removed row", cell.row, cell.col, v);
+            return v !== info.value;
           });
         });
       });
@@ -47,8 +47,8 @@ export class NakedDouble implements CellSolution {
             cell.assignedValue = cell.possibleValues[0];
           cell.possibleValues = cell.possibleValues.filter((v) => {
             if (v === info.value)
-              // console.log("removed col", cell.row, cell.col, v);
-              return v !== info.value;
+              console.log("removed col", cell.row, cell.col, v);
+            return v !== info.value;
           });
         });
       });

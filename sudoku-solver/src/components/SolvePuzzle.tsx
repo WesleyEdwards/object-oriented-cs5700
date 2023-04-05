@@ -27,9 +27,9 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
   const buttons: Record<string, SolverPossibility> = {
     "Check Possibilities": "possibility",
     // "Sole Candidates": "soleCandidate",
-    // "Hidden Singles": "hiddenSingle",
+    "Hidden Singles": "hiddenSingle",
     "Brute Force": "backtrack",
-    // "Naked Double": "nakedDouble",
+    "Naked Double": "nakedDouble",
     EVERYTHING: "all",
   };
 

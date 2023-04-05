@@ -1,5 +1,4 @@
 export type Cell = {
-  originalValue: string | undefined;
   assignedValue: string | undefined;
   possibleValues: string[];
   row: number;
