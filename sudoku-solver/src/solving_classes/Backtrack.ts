@@ -1,4 +1,4 @@
-import { Cell, CellSolution, SudokuGrid } from "../../solvers/SolverTemplate";
+import { Cell, CellSolution, SudokuGrid } from "./SolverTemplate";
 
 export class Backtrack implements CellSolution {
   private sudoku: Cell[][];

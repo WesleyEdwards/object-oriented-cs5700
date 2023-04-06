@@ -1,10 +1,9 @@
+import { getBox } from "../lib/utils";
 import {
-  Cell,
-  Puzzle,
   CellSolution,
   SudokuGrid,
-} from "../../solvers/SolverTemplate";
-import { getBox } from "../utils";
+  Cell,
+} from "../solving_classes/SolverTemplate";
 
 export class SoleCandidate implements CellSolution {
   findAll(grid: SudokuGrid): SudokuGrid {

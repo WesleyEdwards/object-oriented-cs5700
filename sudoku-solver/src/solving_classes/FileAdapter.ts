@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
-import { validWidths } from "./lib/helpers";
-import { Puzzle, SudokuGrid } from "./solvers/SolverTemplate";
+import { validWidths } from "../lib/helpers";
+import { Puzzle, SudokuGrid } from "./SolverTemplate";
 
 export class FileAdapter {
   parsePuzzle(event: ChangeEvent<HTMLInputElement>): Promise<Puzzle> {

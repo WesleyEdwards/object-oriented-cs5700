@@ -1,5 +1,5 @@
-import { Cell, CellSolution, SudokuGrid } from "../../solvers/SolverTemplate";
-import { getBox } from "../utils";
+import { Cell, CellSolution, SudokuGrid } from "../solving_classes/SolverTemplate";
+import { getBox } from "../lib/utils";
 
 export class FindInitialPossibilities implements CellSolution {
   private possibleValues: string[];

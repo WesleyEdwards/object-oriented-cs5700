@@ -1,6 +1,6 @@
 import DownloadIcon from "@mui/icons-material/Download";
 import { FC } from "react";
-import { Puzzle } from "../solvers/SolverTemplate";
+import { Puzzle } from "../solving_classes/SolverTemplate";
 import { Button, Stack } from "@mui/material";
 import { turnToText } from "../lib/utils";
 

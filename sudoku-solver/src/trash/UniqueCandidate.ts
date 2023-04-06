@@ -1,4 +1,4 @@
-import { Cell, CellSolution, SudokuGrid } from "../solvers/SolverTemplate";
+import { Cell, CellSolution, SudokuGrid } from "../solving_classes/SolverTemplate";
 import { getBox } from "../lib/utils";
 
 export class UniqueCandidate implements CellSolution {

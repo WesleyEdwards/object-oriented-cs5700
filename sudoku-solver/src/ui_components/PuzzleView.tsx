@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
-import { cellPixelSize } from "../lib/helpers";
-import { Puzzle, SudokuGrid } from "../solvers/SolverTemplate";
+import { Puzzle, SudokuGrid } from "../solving_classes/SolverTemplate";
 import { RenderCell } from "./RenderCell";
+import { cellPixelSize } from "../lib/helpers";
 
 type PuzzleViewProps = {
   grid: SudokuGrid;

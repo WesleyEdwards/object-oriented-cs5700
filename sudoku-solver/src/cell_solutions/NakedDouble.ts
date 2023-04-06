@@ -1,6 +1,10 @@
-import { Cell, CellSolution, SudokuGrid } from "../../solvers/SolverTemplate";
-import { BoxWidthMap } from "../helpers";
-import { getGridBoxes } from "../utils";
+import { BoxWidthMap } from "../lib/helpers";
+import { getGridBoxes } from "../lib/utils";
+import {
+  CellSolution,
+  SudokuGrid,
+  Cell,
+} from "../solving_classes/SolverTemplate";
 
 export class NakedDouble implements CellSolution {
   possibleValues: string[];

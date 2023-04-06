@@ -1,5 +1,9 @@
-import { Cell, CellSolution, SudokuGrid } from "../../solvers/SolverTemplate";
-import { getBox } from "../utils";
+import { getBox } from "../lib/utils";
+import {
+  CellSolution,
+  SudokuGrid,
+  Cell,
+} from "../solving_classes/SolverTemplate";
 
 export class HiddenSingle implements CellSolution {
   findAll(grid: SudokuGrid): SudokuGrid {

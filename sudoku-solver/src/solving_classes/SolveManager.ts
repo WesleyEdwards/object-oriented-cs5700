@@ -1,9 +1,9 @@
-import { CellSolution, SudokuGrid } from "../solvers/SolverTemplate";
-import { Backtrack } from "./solvingTechniques.ts/Backtrack";
-import { FindInitialPossibilities } from "./solvingTechniques.ts/FindInitialPossibilities";
-import { HiddenSingle } from "./solvingTechniques.ts/HiddenSingle";
-import { NakedDouble } from "./solvingTechniques.ts/NakedDouble";
-import { SoleCandidate } from "./solvingTechniques.ts/SoleCandidate";
+import { CellSolution, SudokuGrid } from "./SolverTemplate";
+import { Backtrack } from "./Backtrack";
+import { FindInitialPossibilities } from "../cell_solutions/FindInitialPossibilities";
+import { HiddenSingle } from "../cell_solutions/HiddenSingle";
+import { NakedDouble } from "../cell_solutions/NakedDouble";
+import { SoleCandidate } from "../cell_solutions/SoleCandidate";
 
 export type SolverPossibility =
   | "possibility"

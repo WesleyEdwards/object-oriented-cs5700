@@ -1,7 +1,7 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC } from "react";
-import { SudokuGrid } from "../solvers/SolverTemplate";
-import { SolveManager, SolverPossibility } from "../lib/SolveManager";
+import { SudokuGrid } from "../solving_classes/SolverTemplate";
+import { SolveManager, SolverPossibility } from "../solving_classes/SolveManager";
 import { GridStatus } from "../App";
 
 interface SolvePuzzleProps {

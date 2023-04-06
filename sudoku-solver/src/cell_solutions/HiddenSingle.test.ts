@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { HiddenSingle } from "./HiddenSingle";
-import { SudokuGrid } from "../../solvers/SolverTemplate";
+import { SudokuGrid } from "../solving_classes/SolverTemplate";
 
 const possibleValues = ["5"];
 const assignedValue = undefined;

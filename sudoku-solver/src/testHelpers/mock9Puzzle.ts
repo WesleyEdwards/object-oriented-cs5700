@@ -1,4 +1,4 @@
-import { Puzzle } from "../solvers/SolverTemplate";
+import { Puzzle } from "../solving_classes/SolverTemplate";
 
 export const mock9Puzzle: Puzzle = {
   fileName: "9x9",

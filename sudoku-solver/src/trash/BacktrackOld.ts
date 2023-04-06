@@ -1,6 +1,6 @@
-import { BoxWidthMap } from "../lib/helpers";
+import { BoxWidthMap } from "../helpers";
 import { getBox } from "../lib/utils";
-import { Cell, CellSolution, SudokuGrid } from "../solvers/SolverTemplate";
+import { Cell, CellSolution, SudokuGrid } from "../solving_classes/SolverTemplate";
 
 export class BacktrackOld implements CellSolution {
   private grid: SudokuGrid;

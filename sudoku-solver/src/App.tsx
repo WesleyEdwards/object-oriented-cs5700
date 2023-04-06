@@ -1,12 +1,12 @@
 import { Alert, Container, Divider, Stack, Typography } from "@mui/material";
 import { useReducer, useState } from "react";
-import { PuzzleView } from "./components/PuzzleView";
-import { SolvePuzzle } from "./components/SolvePuzzle";
-import { UploadFile } from "./components/UploadFile";
-import { reducer } from "./lib/StateManager";
-import { Puzzle, SudokuGrid } from "./solvers/SolverTemplate";
-import { DoneSolving } from "./components/DoneSolving";
-import { FileAdapter } from "./FileAdapter";
+import { PuzzleView } from "./ui_components/PuzzleView";
+import { SolvePuzzle } from "./ui_components/SolvePuzzle";
+import { UploadFile } from "./ui_components/UploadFile";
+import { Puzzle, SudokuGrid } from "./solving_classes/SolverTemplate";
+import { DoneSolving } from "./ui_components/DoneSolving";
+import { FileAdapter } from "./solving_classes/FileAdapter";
+import { reducer } from "./solving_classes/StateManager";
 
 export type GridStatus = SudokuGrid | "unsolvable" | "solved";
 

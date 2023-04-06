@@ -1,4 +1,4 @@
-import { Cell, SudokuGrid } from "../solvers/SolverTemplate";
+import { Cell, SudokuGrid } from "../solving_classes/SolverTemplate";
 import { BoxWidthMap } from "./helpers";
 
 export function getBox(grid: SudokuGrid, cell: Cell): Cell[] {
