@@ -1,5 +1,5 @@
-import { Button, Stack, Typography } from "@mui/material";
-import { FC, useState } from "react";
+import { Button, Divider, Stack, Typography } from "@mui/material";
+import { FC } from "react";
 import { SudokuGrid } from "../solvers/SolverTemplate";
 import { SolveManager, SolverPossibility } from "../lib/SolveManager";
 import { GridStatus } from "../App";
@@ -26,31 +26,47 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
 
   const buttons: Record<string, SolverPossibility> = {
     "Check Possibilities": "possibility",
-    // "Sole Candidates": "soleCandidate",
+    "Sole Candidates": "soleCandidate",
     "Hidden Singles": "hiddenSingle",
-    "Brute Force": "backtrack",
     "Naked Double": "nakedDouble",
-    EVERYTHING: "all",
+    "Brute Force": "backtrack",
   };
 
   return (
-    <Stack
-      direction="row"
-      justifyContent="center"
-      gap="2rem"
-      alignItems="center"
-    >
-      {Object.entries(buttons).map(([name, solver]) => (
-        <Button
-          key={name}
-          variant="outlined"
-          onClick={() => tryToSolve(solver)}
-          sx={{ minWidth: "12rem", alignSelf: "center" }}
-        >
-          {name}
+    <>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        gap="2rem"
+        alignItems="center"
+      >
+        {Object.entries(buttons).map(([name, solver]) => (
+          <Button
+            key={name}
+            variant="outlined"
+            onClick={() => tryToSolve(solver)}
+            sx={{ minWidth: "12rem", alignSelf: "center" }}
+          >
+            {name}
+          </Button>
+        ))}
+      </Stack>
+      <Divider />
+      <Stack
+        direction="row"
+        justifyContent="center"
+        gap="2rem"
+        alignItems="center"
+      >
+        <Typography variant="h6">Solve Everything</Typography>
+        <Button variant="contained" onClick={() => tryToSolve("all")}>
+          Using only cell solutions
         </Button>
-      ))}
-    </Stack>
+        <Button variant="contained" onClick={() => tryToSolve("backtrack")}>
+          Brute force included
+        </Button>
+      </Stack>
+    </>
   );
 };
 

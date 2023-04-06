@@ -1,8 +1,8 @@
 import { BoxWidthMap } from "../lib/helpers";
 import { getBox } from "../lib/utils";
-import { Cell, CellSolution, SudokuGrid } from "./SolverTemplate";
+import { Cell, CellSolution, SudokuGrid } from "../solvers/SolverTemplate";
 
-export class Backtrack implements CellSolution {
+export class BacktrackOld implements CellSolution {
   private grid: SudokuGrid;
   private width: number;
   constructor() {

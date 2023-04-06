@@ -1,5 +1,5 @@
-import { Backtrack } from "../solvers/Backtrack";
 import { CellSolution, SudokuGrid } from "../solvers/SolverTemplate";
+import { Backtrack } from "./solvingTechniques.ts/Backtrack";
 import { FindInitialPossibilities } from "./solvingTechniques.ts/FindInitialPossibilities";
 import { HiddenSingle } from "./solvingTechniques.ts/HiddenSingle";
 import { NakedDouble } from "./solvingTechniques.ts/NakedDouble";
@@ -25,7 +25,7 @@ export class SolveManager {
     this.initialSolver = new FindInitialPossibilities(possibleValues);
     this.soleCandidate = new SoleCandidate();
     this.hiddenSingle = new HiddenSingle();
-    this.backtrack = new Backtrack();
+    this.backtrack = new Backtrack(possibleValues);
     this.nakedDouble = new NakedDouble(possibleValues);
   }
 
@@ -38,7 +38,7 @@ export class SolveManager {
       case "hiddenSingle":
         return this.hiddenSingle.findAll(this.grid);
       case "backtrack": {
-        this.solveAll();
+        this.initialSolver.findAll(this.grid);
         return this.backtrack.findAll(this.grid);
       }
       case "nakedDouble": {
@@ -52,7 +52,7 @@ export class SolveManager {
 
   solveAll() {
     this.initialSolver.findAll(this.grid);
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 30; i++) {
       this.soleCandidate.findAll(this.grid);
       this.hiddenSingle.findAll(this.grid);
       this.nakedDouble.findAll(this.grid);
