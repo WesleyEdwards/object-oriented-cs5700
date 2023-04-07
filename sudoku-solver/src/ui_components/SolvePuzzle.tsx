@@ -1,7 +1,10 @@
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { SudokuGrid } from "../lib/SolverTemplate";
-import { SolveManager, SolverPossibility } from "../solving_classes/SolveManager";
+import {
+  SolverFacade,
+  SolverPossibility,
+} from "../solving_classes/SolverFacade";
 import { GridStatus } from "../App";
 
 interface SolvePuzzleProps {
@@ -15,7 +18,7 @@ export const SolvePuzzle: FC<SolvePuzzleProps> = ({
   possibleValues,
   setGrid,
 }) => {
-  const solveManager = new SolveManager(workingGrid, possibleValues);
+  const solveManager = new SolverFacade(workingGrid, possibleValues);
 
   const tryToSolve = (version: SolverPossibility) => {
     const newSudoku = solveManager.solveUsingMethod(version);

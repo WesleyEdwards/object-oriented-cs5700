@@ -13,7 +13,7 @@ export type SolverPossibility =
   | "nakedDouble"
   | "backtrack";
 
-export class SolveManager {
+export class SolverFacade {
   private initialSolver: CellSolution;
   private soleCandidate: CellSolution;
   private hiddenSingle: CellSolution;

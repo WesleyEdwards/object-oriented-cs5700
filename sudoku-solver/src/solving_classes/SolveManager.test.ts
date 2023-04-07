@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SolveManager } from "./SolveManager";
+import { SolverFacade } from "./SolverFacade";
 
 const assignedValue = undefined;
 const possibleValues = ["1", "2", "3", "4"];
@@ -60,7 +60,7 @@ const expectedResults = [
 describe("FindInitialPossibilities", () => {
   describe("findAll", () => {
     it("Should solve all the puzzle", () => {
-      const solve = new SolveManager(testGrid, possibleValues);
+      const solve = new SolverFacade(testGrid, possibleValues);
       const solved = { ...solve.solveAll() };
 
       // Make sure there are no possibilities lying around

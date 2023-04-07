@@ -3,6 +3,7 @@
 ## About
 
 - This is being hosted at https://wesleyedwards.github.io/object-oriented-cs5700/
+- UML found in the 'uml' folder
 
 ## How to run
 
@@ -33,6 +34,7 @@
 
 ## Patterns
 
-- the Template pattern is used to create the different solving algorithms, and can be found in 'lib/SolverTemplate.ts', it is called 'CellSolution'
-- The implementation of the state pattern is defined in 'lib/StateManager.ts'
-- The File Manager ('lib/FileAdapter.ts') uses the Adapter pattern.
+- Template: used to create the different solving algorithms, and can be found in 'lib/SolverTemplate.ts', it is called 'CellSolution'
+- State: defined in 'lib/StateManager.ts'
+- Adapter: The File Manager ('lib/FileAdapter.ts') uses the Adapter pattern.
+- Facade: Used in 'solving_classes/SolverFacade.ts' to encapsulate all solving algorithms
