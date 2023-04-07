@@ -1,4 +1,4 @@
-import { CellSolution, SudokuGrid } from "./SolverTemplate";
+import { CellSolution, SudokuGrid } from "../lib/SolverTemplate";
 import { Backtrack } from "./Backtrack";
 import { FindInitialPossibilities } from "../cell_solutions/FindInitialPossibilities";
 import { HiddenSingle } from "../cell_solutions/HiddenSingle";

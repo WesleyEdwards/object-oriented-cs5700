@@ -1,4 +1,4 @@
-import { Cell, SudokuGrid } from "../solving_classes/SolverTemplate";
+import { Cell, SudokuGrid } from "./SolverTemplate";
 import { BoxWidthMap } from "./helpers";
 
 export function getBox(grid: SudokuGrid, cell: Cell): Cell[] {
@@ -79,3 +79,5 @@ export const turnToText = (grid: SudokuGrid): string => {
   });
   return text;
 };
+
+export const value: string = "0";

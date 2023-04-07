@@ -1,6 +1,6 @@
 import { Button, IconButton, Stack, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { Puzzle } from "../solving_classes/SolverTemplate";
+import { Puzzle } from "../lib/SolverTemplate";
 import ClearIcon from "@mui/icons-material/Clear";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { FileAdapter } from "../lib/FileAdapter";

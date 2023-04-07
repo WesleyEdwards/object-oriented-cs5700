@@ -1,4 +1,4 @@
-import { Puzzle, SudokuGrid } from "../solving_classes/SolverTemplate";
+import { Puzzle, SudokuGrid } from "../lib/SolverTemplate";
 
 const possibleValues = ["1", "2", "3", "4"];
 

@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import { Puzzle, SudokuGrid } from "../solving_classes/SolverTemplate";
+import { Puzzle, SudokuGrid } from "../lib/SolverTemplate";
 import { RenderCell } from "./RenderCell";
 import { cellPixelSize } from "../lib/helpers";
 

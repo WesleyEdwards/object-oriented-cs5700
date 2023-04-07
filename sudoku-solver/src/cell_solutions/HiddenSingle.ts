@@ -1,12 +1,10 @@
 import { getBox } from "../lib/utils";
-import {
-  CellSolution,
-  SudokuGrid,
-  Cell,
-} from "../solving_classes/SolverTemplate";
+import { CellSolution, SudokuGrid, Cell } from "../lib/SolverTemplate";
 
 export class HiddenSingle implements CellSolution {
+  private grid: SudokuGrid = [];
   findAll(grid: SudokuGrid): SudokuGrid {
+    this.grid = grid;
     while (this.findOne(grid)) {
       this.findOne(grid);
     }
@@ -22,9 +20,9 @@ export class HiddenSingle implements CellSolution {
           for (let i = 0; i < cell.possibleValues.length; i++) {
             const value = cell.possibleValues[i];
             if (
-              this.checkRow(cell, value, grid) &&
-              this.checkCol(cell, value, grid) &&
-              this.checkBox(cell, value, grid)
+              this.checkRow(cell, value) &&
+              this.checkCol(cell, value) &&
+              this.checkBox(cell, value)
             ) {
               cell.assignedValue = value;
               cell.possibleValues = [];
@@ -37,8 +35,8 @@ export class HiddenSingle implements CellSolution {
     return null;
   }
 
-  checkRow(cell: Cell, value: string, grid: SudokuGrid): boolean {
-    return grid[cell.row].every((c) => {
+  checkRow(cell: Cell, value: string): boolean {
+    return this.grid[cell.row].every((c) => {
       if (cell.col === c.col) return true;
       if (c.possibleValues.includes(value)) {
         return false;
@@ -47,8 +45,8 @@ export class HiddenSingle implements CellSolution {
     });
   }
 
-  checkCol(cell: Cell, value: string, grid: SudokuGrid): boolean {
-    return grid.every((row) => {
+  checkCol(cell: Cell, value: string): boolean {
+    return this.grid.every((row) => {
       if (row[cell.col].row === cell.row) return true;
       if (row[cell.col].possibleValues.includes(value)) {
         return false;
@@ -57,8 +55,8 @@ export class HiddenSingle implements CellSolution {
     });
   }
 
-  checkBox(cell: Cell, value: string, grid: SudokuGrid): boolean {
-    const box = getBox(grid, cell);
+  checkBox(cell: Cell, value: string): boolean {
+    const box = getBox(this.grid, cell);
     return box.every((c) => {
       if (c.row === cell.row && c.col === cell.col) return true;
       if (c.possibleValues.includes(value)) {

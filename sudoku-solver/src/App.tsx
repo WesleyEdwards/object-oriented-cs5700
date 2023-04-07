@@ -3,7 +3,7 @@ import { useReducer, useState } from "react";
 import { PuzzleView } from "./ui_components/PuzzleView";
 import { SolvePuzzle } from "./ui_components/SolvePuzzle";
 import { UploadFile } from "./ui_components/UploadFile";
-import { Puzzle, SudokuGrid } from "./solving_classes/SolverTemplate";
+import { Puzzle, SudokuGrid } from "./lib/SolverTemplate";
 import { DoneSolving } from "./ui_components/DoneSolving";
 import { FileAdapter } from "./lib/FileAdapter";
 import { reducer } from "./lib/StateManager";

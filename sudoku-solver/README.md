@@ -33,6 +33,6 @@
 
 ## Patterns
 
-- the Template pattern is used to create the different solving algorithms, and can be found in the 'Solver Template' file, it is called 'CellSolution'
+- the Template pattern is used to create the different solving algorithms, and can be found in 'lib/SolverTemplate.ts', it is called 'CellSolution'
 - The implementation of the state pattern is defined in 'lib/StateManager.ts'
 - The File Manager ('lib/FileAdapter.ts') uses the Adapter pattern.

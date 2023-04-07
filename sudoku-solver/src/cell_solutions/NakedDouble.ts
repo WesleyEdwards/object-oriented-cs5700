@@ -1,13 +1,23 @@
 import { BoxWidthMap } from "../lib/helpers";
-import { getGridBoxes } from "../lib/utils";
-import {
-  CellSolution,
-  SudokuGrid,
-  Cell,
-} from "../solving_classes/SolverTemplate";
+import { getBox, getGridBoxes } from "../lib/utils";
+import { CellSolution, SudokuGrid, Cell } from "../lib/SolverTemplate";
+
+type DoubleRowInfo = {
+  row: number;
+  cell1: Cell;
+  cell2: Cell;
+  value: string;
+};
+type DoubleColInfo = {
+  col: number;
+  cell1: Cell;
+  cell2: Cell;
+  value: string;
+};
 
 export class NakedDouble implements CellSolution {
   possibleValues: string[];
+  grid: SudokuGrid = [];
   constructor(possibleValues: string[]) {
     this.possibleValues = possibleValues;
   }
@@ -151,27 +161,34 @@ export class NakedDouble implements CellSolution {
     return doubleCols;
   }
 
-  checkRow(cell: Cell, value: string, grid: SudokuGrid): boolean {
-    return false;
+  checkRow(cell: Cell, value: string): boolean {
+    return this.grid[cell.row].every((c) => {
+      if (cell.col === c.col) return true;
+      if (c.possibleValues.includes(value)) {
+        return false;
+      }
+      return true;
+    });
   }
 
-  checkCol(cell: Cell, value: string, grid: SudokuGrid): boolean {
-    return false;
+  checkCol(cell: Cell, value: string): boolean {
+    return this.grid.every((row) => {
+      if (row[cell.col].row === cell.row) return true;
+      if (row[cell.col].possibleValues.includes(value)) {
+        return false;
+      }
+      return true;
+    });
   }
 
-  checkBox(cell: Cell, value: string, grid: SudokuGrid): boolean {
-    return false;
+  checkBox(cell: Cell, value: string): boolean {
+    const box = getBox(this.grid, cell);
+    return box.every((c) => {
+      if (c.row === cell.row && c.col === cell.col) return true;
+      if (c.possibleValues.includes(value)) {
+        return false;
+      }
+      return true;
+    });
   }
 }
-type DoubleRowInfo = {
-  row: number;
-  cell1: Cell;
-  cell2: Cell;
-  value: string;
-};
-type DoubleColInfo = {
-  col: number;
-  cell1: Cell;
-  cell2: Cell;
-  value: string;
-};

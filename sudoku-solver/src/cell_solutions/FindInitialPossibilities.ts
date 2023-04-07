@@ -1,13 +1,16 @@
-import { Cell, CellSolution, SudokuGrid } from "../solving_classes/SolverTemplate";
+import { Cell, CellSolution, SudokuGrid } from "../lib/SolverTemplate";
 import { getBox } from "../lib/utils";
 
 export class FindInitialPossibilities implements CellSolution {
   private possibleValues: string[];
+  private grid: SudokuGrid;
   constructor(possibleValues: string[]) {
+    this.grid = [];
     this.possibleValues = possibleValues;
   }
 
   findAll(grid: SudokuGrid): SudokuGrid {
+    this.grid = grid;
     for (let row = 0; row < grid.length; row++) {
       for (let col = 0; col < grid.length; col++) {
         const cell = grid[row][col];
@@ -17,13 +20,13 @@ export class FindInitialPossibilities implements CellSolution {
     return grid;
   }
 
-  findOne(grid: SudokuGrid): SudokuGrid | null {
-    for (let row = 0; row < grid.length; row++) {
-      for (let col = 0; col < grid.length; col++) {
-        const cell = grid[row][col];
+  findOne(): SudokuGrid | null {
+    for (let row = 0; row < this.grid.length; row++) {
+      for (let col = 0; col < this.grid.length; col++) {
+        const cell = this.grid[row][col];
         if (cell.assignedValue || cell.possibleValues.length > 0) continue;
-        this.findPossibleValues(grid, cell);
-        return grid;
+        this.findPossibleValues(this.grid, cell);
+        return this.grid;
       }
     }
     return null;
@@ -42,27 +45,27 @@ export class FindInitialPossibilities implements CellSolution {
   }
 
   isNumberValid(grid: SudokuGrid, cell: Cell, value: string) {
-    const existsInRow = this.checkRow(grid, cell, value);
-    const existsInCol = this.checkCol(grid, cell, value);
-    const existsInBox = this.checkBox(grid, cell, value);
+    const existsInRow = this.checkRow(cell, value);
+    const existsInCol = this.checkCol(cell, value);
+    const existsInBox = this.checkBox(cell, value);
 
     return !existsInRow && !existsInCol && !existsInBox;
   }
 
-  checkRow(grid: SudokuGrid, cell: Cell, value: string): boolean {
-    const rowCells = grid[cell.row];
+  checkRow(cell: Cell, value: string): boolean {
+    const rowCells = this.grid[cell.row];
     const values = rowCells.map((cell) => cell.assignedValue);
     return values.includes(value);
   }
 
-  checkCol(grid: SudokuGrid, cell: Cell, value: string): boolean {
-    const colCells = grid.map((row) => row[cell.col]);
+  checkCol(cell: Cell, value: string): boolean {
+    const colCells = this.grid.map((row) => row[cell.col]);
     const values = colCells.map((cell) => cell.assignedValue);
     return values.includes(value);
   }
 
-  checkBox(grid: SudokuGrid, cell: Cell, value: string): boolean {
-    const boxCells = getBox(grid, cell);
+  checkBox(cell: Cell, value: string): boolean {
+    const boxCells = getBox(this.grid, cell);
     const values = boxCells.map((cell) => cell.assignedValue);
     return values.includes(value);
   }

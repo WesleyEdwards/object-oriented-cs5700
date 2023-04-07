@@ -17,8 +17,8 @@ export interface Puzzle {
 
 export interface CellSolution {
   findAll(grid: SudokuGrid): SudokuGrid | null;
-  // findOne(): SudokuGrid | null;
-  // checkRow(cell: Cell, value: string): boolean;
-  // checkCol(cell: Cell, value: string): boolean;
-  // checkBox(cell: Cell, value: string): boolean;
+  findOne(grid?: SudokuGrid): SudokuGrid | null;
+  checkRow(cell: Cell, value: string): boolean;
+  checkCol(cell: Cell, value: string): boolean;
+  checkBox(cell: Cell, value: string): boolean;
 }

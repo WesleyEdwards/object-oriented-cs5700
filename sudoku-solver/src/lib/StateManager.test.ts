@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { reducer, State, Action } from "../lib/StateManager";
+import { reducer, State, Action } from "./StateManager";
 import { Puzzle, SudokuGrid } from "./SolverTemplate";
 
 describe("reducer", () => {

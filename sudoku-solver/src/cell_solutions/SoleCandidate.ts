@@ -1,12 +1,11 @@
-import { getBox } from "../lib/utils";
-import {
-  CellSolution,
-  SudokuGrid,
-  Cell,
-} from "../solving_classes/SolverTemplate";
+import { getBox, value } from "../lib/utils";
+import { CellSolution, SudokuGrid, Cell } from "../lib/SolverTemplate";
 
 export class SoleCandidate implements CellSolution {
+  grid: SudokuGrid = [];
+
   findAll(grid: SudokuGrid): SudokuGrid {
+    this.grid = grid;
     while (this.findOne(grid)) {
       this.findOne(grid);
     }
@@ -20,9 +19,9 @@ export class SoleCandidate implements CellSolution {
         if (cell.possibleValues.length === 1) {
           cell.assignedValue = cell.possibleValues[0];
           cell.possibleValues = [];
-          this.updateBox(grid, cell);
-          this.updateRow(grid, cell);
-          this.updateCol(grid, cell);
+          this.checkBox(cell, value);
+          this.checkRow(cell, value);
+          this.checkCol(cell, value);
           return grid;
         }
       }
@@ -30,33 +29,36 @@ export class SoleCandidate implements CellSolution {
     return null;
   }
 
-  updateBox(grid: SudokuGrid, cell: Cell) {
-    const box = getBox(grid, cell);
+  checkBox(cell: Cell, value: string) {
+    const box = getBox(this.grid, cell);
     box.forEach((c) => {
       if (c.assignedValue) return;
       c.possibleValues = c.possibleValues.filter(
         (value) => value !== cell.assignedValue
       );
     });
+    return true;
   }
 
-  updateRow(grid: SudokuGrid, cell: Cell) {
-    const row = grid[cell.row];
+  checkRow(cell: Cell, value: string) {
+    const row = this.grid[cell.row];
     row.forEach((c) => {
       if (c.assignedValue) return;
       c.possibleValues = c.possibleValues.filter(
         (value) => value !== cell.assignedValue
       );
     });
+    return true;
   }
 
-  updateCol(grid: SudokuGrid, cell: Cell) {
-    const col = grid.map((row) => row[cell.col]);
+  checkCol(cell: Cell, value: string) {
+    const col = this.grid.map((row) => row[cell.col]);
     col.forEach((c) => {
       if (c.assignedValue) return;
       c.possibleValues = c.possibleValues.filter(
         (value) => value !== cell.assignedValue
       );
     });
+    return true;
   }
 }
