@@ -24,11 +24,14 @@ export class Blocks {
     this.blocks.forEach((block) => block.draw());
   }
 
-  update(elapsedTime: number) {
+  update(elapsedTime: number, addScore: () => void) {
     this.timeSinceLast += elapsedTime;
     this.blocks.forEach((block) => {
       block.update(elapsedTime);
-      if (block.posY > 600) this.blocks.shift();
+      if (block.posY > 600) {
+        addScore();
+        this.blocks.shift();
+      }
     });
 
     if (

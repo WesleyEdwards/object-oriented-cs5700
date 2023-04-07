@@ -12,7 +12,7 @@ export class GameState {
   private player: Player;
   private context: CanvasRenderingContext2D;
   private blocks: Blocks;
-  private totalTime: number = 0;
+  private score: number = 0;
   private lostParticles: LostParticle[] | null = null;
 
   constructor(context: CanvasRenderingContext2D) {
@@ -30,20 +30,19 @@ export class GameState {
       this.lostParticles = createLostParticles(this.context, this.player.pos);
     }
     if (this.keys.escape) {
-      handleWin(Math.round(this.totalTime / 10) / 100);
+      handleWin(this.score);
       this.keys.escape = false;
     }
     if (this.lostParticles !== null) {
       this.lostParticles.forEach((particle) => particle.update(elapsedTime));
       return;
     }
-    this.totalTime += elapsedTime;
     this.player.update(this.keys, elapsedTime);
-    this.blocks.update(elapsedTime);
+    this.blocks.update(elapsedTime, () => (this.score += 1));
   }
 
   drawAll() {
-    drawBackground(this.context, this.totalTime);
+    drawBackground(this.context, this.score);
     if (this.lostParticles === null) {
       this.player.draw();
     } else {

@@ -28,7 +28,7 @@ const bgRight = (() => {
 
 export function drawBackground(
   context: CanvasRenderingContext2D,
-  totalTime: number
+  score: number
 ) {
   context.drawImage(bgRight, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   context.drawImage(bgLeft, 0, 0, PLAY_AREA_START, CANVAS_HEIGHT);
@@ -42,17 +42,12 @@ export function drawBackground(
   );
 
   context.fillStyle = colorPalette.timerBg;
-  context.fillRect(PLAY_AREA_END + 20, 20, 100, 50);
+  context.fillRect(PLAY_AREA_END + 20, 20, 120, 50);
 
   context.fillStyle = colorPalette.timerText;
   context.font = "30px Arial";
 
-  context.fillText(
-    `${Math.round(totalTime / 100) / 10}`,
-    PLAY_AREA_END + 25,
-    60,
-    100
-  );
+  context.fillText(`Score: ${score}`, PLAY_AREA_END + 25, 60, 100);
 }
 
 export function drawPlayBorder(context: CanvasRenderingContext2D) {
