@@ -1,4 +1,4 @@
-import { Puzzle, SudokuGrid } from "./SolverTemplate";
+import { Puzzle, SudokuGrid } from "../solving_classes/SolverTemplate";
 
 export type State =
   | { status: "initialScreen" }

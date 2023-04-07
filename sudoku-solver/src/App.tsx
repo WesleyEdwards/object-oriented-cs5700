@@ -5,8 +5,8 @@ import { SolvePuzzle } from "./ui_components/SolvePuzzle";
 import { UploadFile } from "./ui_components/UploadFile";
 import { Puzzle, SudokuGrid } from "./solving_classes/SolverTemplate";
 import { DoneSolving } from "./ui_components/DoneSolving";
-import { FileAdapter } from "./solving_classes/FileAdapter";
-import { reducer } from "./solving_classes/StateManager";
+import { FileAdapter } from "./lib/FileAdapter";
+import { reducer } from "./lib/StateManager";
 
 export type GridStatus = SudokuGrid | "unsolvable" | "solved";
 

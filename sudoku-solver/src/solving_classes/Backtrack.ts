@@ -10,13 +10,14 @@ export class Backtrack implements CellSolution {
   constructor(possibleValues: string[]) {
     this.sudoku = [];
     this.possibleValues = possibleValues;
-    this.SIZE = this.sudoku.length;
+    this.SIZE = possibleValues.length;
     this.BOX_SIZE = Math.sqrt(this.SIZE);
   }
 
   findAll(grid: SudokuGrid): SudokuGrid | null {
     this.sudoku = grid;
     if (this.solveSudoku()) {
+      this.solveSudoku();
       return this.sudoku;
     } else {
       return null;
@@ -27,10 +28,11 @@ export class Backtrack implements CellSolution {
     for (let row = 0; row < this.SIZE; row++) {
       for (let col = 0; col < this.SIZE; col++) {
         const thisCell = this.sudoku[row][col];
-        if (thisCell.assignedValue === this.UNASSIGNED) {
+        console.log(thisCell);
+        if (thisCell.assignedValue === undefined) {
           for (
             let number = 0;
-            number <= thisCell.possibleValues.length - 1;
+            number < thisCell.possibleValues.length;
             number++
           ) {
             if (this.isAllowed(row, col, thisCell.possibleValues.at(number))) {
@@ -38,7 +40,7 @@ export class Backtrack implements CellSolution {
               if (this.solveSudoku()) {
                 return true;
               } else {
-                thisCell.assignedValue = this.UNASSIGNED;
+                thisCell.assignedValue = undefined;
               }
             }
           }
