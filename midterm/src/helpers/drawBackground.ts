@@ -48,7 +48,7 @@ export function drawBackground(
   context.font = "30px Arial";
 
   context.fillText(
-    `${Math.round(totalTime / 10) / 100}`,
+    `${Math.round(totalTime / 100) / 10}`,
     PLAY_AREA_END + 25,
     60,
     100

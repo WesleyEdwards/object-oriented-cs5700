@@ -13,11 +13,17 @@ export class Block {
   emptySpace: number;
   private context: CanvasRenderingContext2D;
   private particles: Particles;
-  constructor(context: CanvasRenderingContext2D, previousEmptySpace: number) {
+  private speed: number = BLOCK_SPEED;
+  constructor(
+    context: CanvasRenderingContext2D,
+    previousEmptySpace: number,
+    additionalSpeed: number
+  ) {
     this.posY = 0;
     this.emptySpace = findNewPosition(previousEmptySpace);
     this.context = context;
     this.particles = new Particles(context);
+    this.speed = BLOCK_SPEED + additionalSpeed;
   }
 
   draw(inStack: boolean = false) {
@@ -43,7 +49,7 @@ export class Block {
   }
 
   update(elapsedTime: number) {
-    this.posY += BLOCK_SPEED * elapsedTime;
+    this.posY += this.speed * elapsedTime;
 
     this.particles.update(elapsedTime, this.emptySpace, this.posY);
   }

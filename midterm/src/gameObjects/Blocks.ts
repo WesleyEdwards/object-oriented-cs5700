@@ -13,8 +13,9 @@ export class Blocks {
   private upNext: Block;
   private timeSinceLast: number = 0;
   private context: CanvasRenderingContext2D;
+  private additionalSpeed: number = 0;
   constructor(context: CanvasRenderingContext2D) {
-    this.upNext = new Block(context, PLAY_AREA_WIDTH / 2);
+    this.upNext = new Block(context, PLAY_AREA_WIDTH / 2, this.additionalSpeed);
     this.context = context;
   }
 
@@ -30,10 +31,18 @@ export class Blocks {
       if (block.posY > 600) this.blocks.shift();
     });
 
-    if (this.timeSinceLast > TIME_BETWEEN_BLOCKS) {
+    if (
+      this.timeSinceLast >
+      TIME_BETWEEN_BLOCKS - this.additionalSpeed * 1000
+    ) {
       const previousEmpty = this.upNext.emptySpace;
       this.blocks.push(this.upNext);
-      this.upNext = new Block(this.context, previousEmpty);
+      this.upNext = new Block(
+        this.context,
+        previousEmpty,
+        this.additionalSpeed
+      );
+      this.additionalSpeed += 0.01;
       this.timeSinceLast = 0;
     }
   }

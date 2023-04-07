@@ -26,7 +26,7 @@ export const colorPalette: Record<ColorName, string> = {
   block: "#DE3163",
   readyBlock: "#FF7F50",
   loseText: "red",
-};
+}
 
 export const particleColors = [
   "#FFBF00",

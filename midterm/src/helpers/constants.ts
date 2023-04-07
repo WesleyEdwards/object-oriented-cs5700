@@ -25,7 +25,7 @@ export const PLAY_AREA_END = CANVAS_WIDTH - LEFT_EXTRA;
 export const PLAYER_MOST_LEFT_POS = CANVAS_BORDER;
 
 // Player
-export const PLAYER_SPEED = 0.3;
+export const PLAYER_SPEED = 0.2;
 export const PLAYER_WIDTH = 25;
 export const PLAYER_TOP = CANVAS_HEIGHT - PLAYER_WIDTH * 1.5;
 
@@ -42,5 +42,5 @@ export const PARTICLE_SPEED = 0.05;
 export const TIME_BETWEEN_BLOCKS = 1000;
 
 export const PARTICLE_WIDTH = 3;
-export const PARTICLE_MAX_DIST = 40;
+export const PARTICLE_MAX_DIST = 100;
 export const MORE_PARTICLES_FACTOR = 2;

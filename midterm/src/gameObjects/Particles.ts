@@ -2,6 +2,7 @@ import {
   EMPTY_WIDTH,
   MORE_PARTICLES_FACTOR,
   PARTICLE_MAX_DIST,
+  PARTICLE_WIDTH,
   PLAY_AREA_WIDTH,
 } from "../helpers/constants";
 import { Particle } from "./Particle";
@@ -51,7 +52,7 @@ function createParticles(
     if (randomPos > emptySpace && randomPos < emptySpace + EMPTY_WIDTH) {
       continue;
     }
-    const particle = new Particle(context, randomPos, posY);
+    const particle = new Particle(context, randomPos, posY - PARTICLE_WIDTH);
     particles.push(particle);
   }
   return particles;
