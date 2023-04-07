@@ -1,0 +1,57 @@
+import {
+  BLOCK_HEIGHT,
+  EMPTY_WIDTH,
+  PLAYER_TOP,
+  PLAYER_WIDTH,
+  PLAY_AREA_WIDTH,
+  TIME_BETWEEN_BLOCKS,
+} from "../helpers/constants";
+import { Block } from "./Block";
+
+export class Blocks {
+  private blocks: Block[] = [];
+  private upNext: Block;
+  private timeSinceLast: number = 0;
+  private context: CanvasRenderingContext2D;
+  constructor(context: CanvasRenderingContext2D) {
+    this.upNext = new Block(context, PLAY_AREA_WIDTH / 2);
+    this.context = context;
+  }
+
+  draw() {
+    this.upNext.draw(true);
+    this.blocks.forEach((block) => block.draw());
+  }
+
+  update(elapsedTime: number) {
+    this.timeSinceLast += elapsedTime;
+    this.blocks.forEach((block) => {
+      block.update(elapsedTime);
+      if (block.posY > 600) this.blocks.shift();
+    });
+
+    if (this.timeSinceLast > TIME_BETWEEN_BLOCKS) {
+      const previousEmpty = this.upNext.emptySpace;
+      this.blocks.push(this.upNext);
+      this.upNext = new Block(this.context, previousEmpty);
+      this.timeSinceLast = 0;
+    }
+  }
+
+  checkCollision(x: number) {
+    if (this.blocks.length === 0) return false;
+    const block = this.blocks[0];
+    if (
+      block.posY + BLOCK_HEIGHT > PLAYER_TOP &&
+      block.posY < PLAYER_TOP + PLAYER_WIDTH
+    ) {
+      if (
+        x < block.emptySpace ||
+        x + PLAYER_WIDTH > block.emptySpace + EMPTY_WIDTH
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+}

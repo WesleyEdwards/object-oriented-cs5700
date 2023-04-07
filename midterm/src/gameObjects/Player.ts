@@ -1,27 +1,22 @@
 import {
-  CANVAS_WIDTH,
   PLAYER_SPEED,
   PLAYER_MOST_LEFT_POS,
   PLAYER_MOST_RIGHT_POS,
-  PLAYER_RADIUS,
   PLAYER_TOP,
+  PLAY_AREA_WIDTH,
+  PLAYER_WIDTH,
+  PLAY_AREA_START,
 } from "../helpers/constants";
 import { images } from "../helpers/drawingHelpers";
-import { DrawManager } from "../helpers/DrawManager";
 import { Direction, Keys } from "../helpers/types";
 
 export class Player {
-  private pos: number = CANVAS_WIDTH / 2 - PLAYER_RADIUS / 2;
+  pos: number = PLAY_AREA_WIDTH / 2;
   private moving: Direction = "none";
-  private drawManager: DrawManager;
+  private context: CanvasRenderingContext2D;
 
   constructor(context: CanvasRenderingContext2D) {
-    this.drawManager = new DrawManager(
-      context,
-      PLAYER_RADIUS,
-      PLAYER_RADIUS,
-      images.player
-    );
+    this.context = context;
   }
 
   update(keys: Keys, elapsedTime: number) {
@@ -42,19 +37,20 @@ export class Player {
     if (direction === "left" && this.pos > PLAYER_MOST_LEFT_POS) {
       this.pos -= PLAYER_SPEED * elapsedTime;
     }
-    if (
-      direction === "right" &&
-      this.pos < PLAYER_MOST_RIGHT_POS - PLAYER_RADIUS
-    ) {
+    if (direction === "right" && this.pos < PLAYER_MOST_RIGHT_POS) {
       this.pos += PLAYER_SPEED * elapsedTime;
     }
   }
 
   draw() {
-    this.drawManager.draw(this.pos, PLAYER_TOP);
-  }
-
-  get centerX() {
-    return this.pos + PLAYER_RADIUS / 2;
+    const image = new Image();
+    image.src = images.player;
+    this.context.drawImage(
+      image,
+      PLAY_AREA_START + this.pos,
+      PLAYER_TOP,
+      PLAYER_WIDTH,
+      PLAYER_WIDTH
+    );
   }
 }
