@@ -37,5 +37,10 @@ export const EMPTY_WIDTH = 100;
 export const BLOCK_HEIGHT = 25;
 
 export const BLOCK_SPEED = 0.15;
+export const PARTICLE_SPEED = 0.05;
 
 export const TIME_BETWEEN_BLOCKS = 1000;
+
+export const PARTICLE_WIDTH = 3;
+export const PARTICLE_MAX_DIST = 40;
+export const MORE_PARTICLES_FACTOR = 2;

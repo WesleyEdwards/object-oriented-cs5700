@@ -6,15 +6,18 @@ import {
   PLAY_AREA_WIDTH,
 } from "../helpers/constants";
 import { colorPalette } from "../helpers/drawingHelpers";
+import { Particles } from "./Particles";
 
 export class Block {
   posY: number;
   emptySpace: number;
   private context: CanvasRenderingContext2D;
+  private particles: Particles;
   constructor(context: CanvasRenderingContext2D, previousEmptySpace: number) {
     this.posY = 0;
     this.emptySpace = findNewPosition(previousEmptySpace);
     this.context = context;
+    this.particles = new Particles(context);
   }
 
   draw(inStack: boolean = false) {
@@ -35,10 +38,14 @@ export class Block {
       PLAY_AREA_WIDTH - this.emptySpace - EMPTY_WIDTH,
       BLOCK_HEIGHT
     );
+
+    this.particles.draw();
   }
 
   update(elapsedTime: number) {
     this.posY += BLOCK_SPEED * elapsedTime;
+
+    this.particles.update(elapsedTime, this.emptySpace, this.posY);
   }
 }
 
