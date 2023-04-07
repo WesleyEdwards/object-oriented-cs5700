@@ -47,12 +47,12 @@ export function drawBackground(
   context.fillStyle = colorPalette.timerText;
   context.font = "30px Arial";
 
-  //   context.fillText(
-  //     `${Math.round(totalTime / 100) / 10}`,
-  //     PLAY_AREA_END + 25,
-  //     60,
-  //     100
-  //   );
+  context.fillText(
+    `${Math.round(totalTime / 10) / 100}`,
+    PLAY_AREA_END + 25,
+    60,
+    100
+  );
 }
 
 export function drawPlayBorder(context: CanvasRenderingContext2D) {

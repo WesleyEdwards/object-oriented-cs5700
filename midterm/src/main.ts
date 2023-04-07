@@ -3,6 +3,7 @@ import { getCanvasContext, setupCanvas } from "./dom/domHelpers";
 import { GameState } from "./GameState";
 import { handleWinUi } from "./dom/winScreen";
 import { initializeGameUi } from "./dom/menu";
+import { handleShowHighScores } from "./dom/handleShowHighScores";
 
 function main() {
   let gameState: GameState | undefined;
@@ -51,7 +52,13 @@ function main() {
     initializeGameUi(startGame);
   }
 
-  initializeGameUi(startGame);
+  function highScores() {
+    prevTime = 0;
+    gameState = undefined;
+    handleShowHighScores(() => initializeGameUi(startGame));
+  }
+
+  initializeGameUi(startGame, highScores);
 }
 
 onload = () => main();

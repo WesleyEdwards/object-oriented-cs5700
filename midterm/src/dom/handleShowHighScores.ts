@@ -1,26 +1,8 @@
 import { createButton, setElementToApp } from "./domHelpers";
+import { getScores } from "./winScreen";
 
-export function handleWinUi(score: number, playAgain: () => void) {
+export function handleShowHighScores(playAgain: () => void) {
   const scores = getScores();
-
-  const currHighScore = scores.length === 0 ? 0 : Math.max(...scores);
-
-  scores.push(score);
-
-  scores.sort((a, b) => b - a);
-  if (scores.length > 5) {
-    scores.shift();
-  }
-  setScores(scores);
-
-  const message =
-    score > currHighScore
-      ? `You got a new High Score of ${score}!`
-      : `Score: ${score}`;
-
-  const congrats = document.createElement("h2");
-  congrats.setAttribute("id", "congrats");
-  congrats.innerHTML = message;
 
   const highScoreDiv = document.createElement("div");
   highScoreDiv.setAttribute("id", "highScoreDiv");
@@ -29,6 +11,11 @@ export function handleWinUi(score: number, playAgain: () => void) {
   titleDiv.innerHTML = "High Scores";
   highScoreDiv.appendChild(titleDiv);
 
+  if (scores.length === 0) {
+    const noScores = document.createElement("div");
+    noScores.innerHTML = "No Scores Yet";
+    highScoreDiv.appendChild(noScores);
+  }
   scores.forEach((score, index) => {
     const scoresDiv = document.createElement("div");
     scoresDiv.innerHTML = `${index + 1}: ${score}`;
@@ -40,21 +27,8 @@ export function handleWinUi(score: number, playAgain: () => void) {
 
   const playButton = createButton("playAgain", "Play Again", playAgain);
 
-  scoreBoard.appendChild(congrats);
   scoreBoard.appendChild(highScoreDiv);
   scoreBoard.appendChild(playButton);
 
   setElementToApp(scoreBoard);
-}
-
-export function getScores(): number[] {
-  const scores = localStorage.getItem("midterm-scores");
-  if (scores) {
-    return JSON.parse(scores);
-  }
-  return [];
-}
-
-function setScores(scores: number[]) {
-  localStorage.setItem("midterm-scores", JSON.stringify(scores));
 }

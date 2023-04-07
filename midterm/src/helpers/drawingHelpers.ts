@@ -11,7 +11,13 @@ export const images: Record<ImageName, string> = {
     "https://images.hdqwalls.com/download/nebula-space-scifi-4k-l7-1366x768.jpg",
 };
 
-type ColorName = "border" | "timerBg" | "timerText" | "block" | "readyBlock";
+type ColorName =
+  | "border"
+  | "timerBg"
+  | "timerText"
+  | "block"
+  | "readyBlock"
+  | "loseText";
 
 export const colorPalette: Record<ColorName, string> = {
   border: "green",
@@ -19,6 +25,7 @@ export const colorPalette: Record<ColorName, string> = {
   timerText: "white",
   block: "#DE3163",
   readyBlock: "#FF7F50",
+  loseText: "red",
 };
 
 export const particleColors = [

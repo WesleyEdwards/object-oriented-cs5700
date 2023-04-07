@@ -1,6 +1,9 @@
 import { createButton, setElementToApp } from "./domHelpers";
 
-export function initializeGameUi(startGame: () => void) {
+export function initializeGameUi(
+  startGame: () => void,
+  highScores?: () => void
+) {
   setElementToApp();
   const onButtonClicked = () => {
     startGame();
@@ -19,6 +22,15 @@ export function initializeGameUi(startGame: () => void) {
   gameSetup.appendChild(instructions);
   const playButton = createButton("play-button", "Play", onButtonClicked);
   gameSetup.appendChild(playButton);
+
+  if (highScores) {
+    const highScoresButton = createButton(
+      "high-scores-button",
+      "High Scores",
+      highScores
+    );
+    gameSetup.appendChild(highScoresButton);
+  }
 
   setElementToApp(gameSetup);
 }

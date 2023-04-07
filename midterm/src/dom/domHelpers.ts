@@ -19,7 +19,7 @@ export function setupCanvas(canvas: HTMLCanvasElement, mainMenu: () => void) {
   endButton.setAttribute("style", "margin-top: 2rem;");
 
   mainDiv.appendChild(canvas);
-  mainDiv.appendChild(endButton);
+  // mainDiv.appendChild(endButton);
 }
 
 export function createButton(id: string, text: string, callback: () => void) {
